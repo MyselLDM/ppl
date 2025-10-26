@@ -1,0 +1,3 @@
+var string first_string      = "hello";
+var int first_int = 32;
+var float first_float = 54;
