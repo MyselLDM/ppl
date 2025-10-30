@@ -49,7 +49,7 @@ const char* CONST_symbol_logical[][2] = {
     {"==", "equal"},    {"<=", "less_equal"},  {">=", "greater_equal"}};
 
 const int REGEX_ARRAY_LEN = 9;
-const char* REGEX_ARRAY[][2] = {{"commment", REGEX_COMMENT_ALL},
+const char* REGEX_ARRAY[][2] = {{"comment", REGEX_COMMENT_ALL},
                                 {"string", REGEX_STRING},
                                 {"float", REGEX_FLOAT},
                                 {"integer", REGEX_INT},
