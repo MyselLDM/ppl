@@ -11,7 +11,7 @@
 #define REGEX_PARSE_INVALID 1
 #define REGEX_PARSE_VALID 0
 
-Tokens tokenizer_token_scan(char* strptr) {
+Tokens tokenizer_token_scan(char* strptr, int debug) {
   Tokens tokens = token_create();
 
   regex_t reg_expression;
@@ -72,7 +72,10 @@ Tokens tokenizer_token_scan(char* strptr) {
             token_push(&tokens, lexeme, token_type, token_type_special);
           }
 
-          printf("%-20s %-15s %-15s\n", lexeme, token_type, token_type_special);
+          if (debug) {
+            printf("%-20s %-15s %-15s\n", lexeme, token_type,
+                   token_type_special);
+          }
 
           free(lexeme);
 

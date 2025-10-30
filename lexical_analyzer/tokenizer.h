@@ -3,7 +3,7 @@
 
 #include "token.h"
 
-Tokens tokenizer_token_scan(char* strptr);
+Tokens tokenizer_token_scan(char* strptr, int debug);
 
 typedef struct {
   const char* name;
