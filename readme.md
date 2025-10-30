@@ -8,6 +8,10 @@ This is a prototype language written in c. This emulates the features of **C1** 
 
 ![my pet](https://static.wikia.nocookie.net/the-unofficial-outcome-memories/images/e/e8/Meowl.jpg/revision/latest?cb=20251009174607)
 
+
+# WORK IN PROGRESS!!!!!
+This project still only has the lexical analysis phase down, please stay tuned for the full release!!
+
 # Prerequisites
 - [MinGW](https://sourceforge.net/projects/mingw/)
 - PCRE2 (for non-POSIX systems)
