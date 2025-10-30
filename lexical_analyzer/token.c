@@ -7,6 +7,7 @@
 Tokens token_create() {
   Tokens tokens;
   tokens.length = 0;
+  tokens.capacity = TOKEN_INIT_SIZE;
   tokens.token = malloc(TOKEN_INIT_SIZE * sizeof(Token));
   return tokens;
 }

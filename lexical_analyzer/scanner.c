@@ -1,27 +1,35 @@
+#include "scanner.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "scanner.h"
+#include "dictionary.h"
 
+// Scans the file
 char* parser_scan_file(char* filename) {
   // Stores pointer of the dot in the filename
   const char* dot = strrchr(filename, '.');
 
+  // Opens the file
+  FILE* file = fopen(filename, "r");
+  if (file == NULL) {
+    printf(
+        "[WARNING] parser_scan_file: Error opening file. Incorrect name or it "
+        "does not "
+        "exist.");
+    exit(1);
+  }
+
   // Compares the stuff of the dot
-  if (!dot || strcmp(dot + 1, "bx") != 0) {
+  // Rejects files with invalid extensions
+  if (!dot || strcmp(dot + 1, LANGUAGE_EXTENSION) != 0) {
     printf(
         "[WARNING] parser_scan_file: Invalid file extension: cannot compile "
         "files that are not \".bx\"\n");
     exit(1);
   } else {
     printf("parser_scan_file: valid file extension. reading file.\n");
-  }
-
-  FILE* file = fopen(filename, "r");
-  if (file == NULL) {
-    perror("Error opening file");
-    exit(1);
   }
 
   fseek(file, 0L, SEEK_END);
@@ -40,7 +48,5 @@ char* parser_scan_file(char* filename) {
 
   fclose(file);
 
-  //    printf("parser_scan_file: parser successsful\nparser_scan_file: file
-  //    contents:\n %s\n", buffer);
   return buffer;
 }

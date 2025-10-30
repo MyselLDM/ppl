@@ -3,6 +3,8 @@
 
 #define TOKEN_INIT_SIZE 16
 
+#include <stddef.h>
+
 typedef struct {
   const char* lexeme;
   const char* token_type;
@@ -14,5 +16,9 @@ typedef struct {
   size_t length;
   size_t capacity;
 } Tokens;
+
+Tokens token_create();
+void token_push(Tokens* tokens, char* lexeme, char* token_type,
+                char* token_type_special);
 
 #endif

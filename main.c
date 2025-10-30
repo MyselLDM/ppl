@@ -6,10 +6,15 @@
 #include "lexical_analyzer/token.h"
 #include "lexical_analyzer/tokenizer.h"
 
-int main() {
-  char* fstr = parser_scan_file("example.bx");
+int main(int argc, char* argv[]) {
+  if (argc != 2) {
+    printf("Usage: %s <filename>\n", argv[0]);
+    return 1;
+  }
+  char* FILE_NAME = argv[1];
+  char* fstr = parser_scan_file(FILE_NAME);
 
-  tokenizer_token_scan(fstr);
+  Tokens tokens = tokenizer_token_scan(fstr);
 
   return 0;
 }
