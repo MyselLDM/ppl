@@ -9,7 +9,10 @@
     "special_characters.h": "c",
     "initializer_list": "c",
     "xstring": "c",
-    "xutility": "c"
+    "xutility": "c",
+    "dictionary.h": "c",
+    "token.h": "c",
+    "scanner.h": "c"
   },
 
   

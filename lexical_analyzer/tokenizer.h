@@ -1,7 +1,9 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-char* tokenizer_token_scan(char* strptr);
+#include "token.h"
+
+Tokens tokenizer_token_scan(char* strptr);
 
 typedef struct {
   const char* name;

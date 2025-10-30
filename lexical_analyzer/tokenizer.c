@@ -6,11 +6,14 @@
 #include <string.h>
 
 #include "dictionary.h"
+#include "token.h"
 
 #define REGEX_PARSE_INVALID 1
 #define REGEX_PARSE_VALID 0
 
-char* tokenizer_token_scan(char* strptr) {
+Tokens tokenizer_token_scan(char* strptr) {
+  Tokens tokens = token_create();
+
   regex_t reg_expression;
   regmatch_t reg_matches[1];
   int strlength = strlen(strptr);
@@ -57,11 +60,16 @@ char* tokenizer_token_scan(char* strptr) {
           char* token_type_special = "";
 
           // Retrieves what specific token type the token is
+          // The text is a special case because it creates
           if (strcmp(token_type, "text") == 0) {
             token_type = dictionary_lookup_text(lexeme);
             token_type_special = lexeme;
           } else {
             token_type_special = dictionary_lookup_symbol(lexeme);
+          }
+
+          if (strcmp(token_type, "comment") != 0) {
+            token_push(&tokens, lexeme, token_type, token_type_special);
           }
 
           printf("%-20s %-15s %-15s\n", lexeme, token_type, token_type_special);
@@ -75,5 +83,5 @@ char* tokenizer_token_scan(char* strptr) {
       }
     }
   }
-  return NULL;
+  return tokens;
 }

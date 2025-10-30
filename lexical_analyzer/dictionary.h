@@ -1,6 +1,9 @@
 #ifndef dictionary
 #define dictionary
 
+// Language Extension
+#define LANGUAGE_EXTENSION "bx"
+
 // Regular Expressions for seperating tokens
 #define REGEX_STRING "(\"[^\"]*\"|'[^']*')"
 #define REGEX_OPERATORS_ARITHMETIC "\\+\\+?=?|\\-\\-?=?|\\*=?|/=?|%=?|\\^=?|="
@@ -11,7 +14,7 @@
 #define REGEX_TEXT "[a-zA-Z_][a-zA-Z0-9_]*"
 
 // Regex for invalid tokens
-#define REGEX_INVALID "[^\t\n]+"
+#define REGEX_INVALID "[^ \t\n]+"
 
 #define REGEX_COMMENT_INLINE "//[^\n/]+"
 #define REGEX_COMMENT_BLOCK "///[^*]*///"
