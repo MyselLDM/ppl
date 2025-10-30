@@ -1,5 +1,5 @@
-#ifndef dictionary
-#define dictionary
+#ifndef DICTIONARY_H
+#define DICTIONARY_H
 
 // Language Extension
 #define LANGUAGE_EXTENSION "bx"
