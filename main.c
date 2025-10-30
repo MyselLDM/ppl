@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "lexical_analyzer/parser.h"
+#include "lexical_analyzer/scanner.h"
+#include "lexical_analyzer/token.h"
 #include "lexical_analyzer/tokenizer.h"
 
 int main() {

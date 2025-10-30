@@ -1,5 +1,6 @@
 {
   "files.associations": {
+    "*.bx": "bx",
     "string.h": "c",
     "stdio.h": "c",
     "stdlib.h": "c",
@@ -9,5 +10,30 @@
     "initializer_list": "c",
     "xstring": "c",
     "xutility": "c"
+  },
+
+  
+  "editor.experimental.syntaxCustomizations": {
+    "bx": {
+      "scopeName": "source.bx",
+      "grammar": "${workspaceFolder}/.vscode/bx.tmLanguage.json"
+    }
+  },
+
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "keyword.control.bx",
+        "settings": { "foreground": "#FF5555", "fontStyle": "bold" }
+      },
+      {
+        "scope": "string.quoted.bx",
+        "settings": { "foreground": "#F1FA8C" }
+      },
+      {
+        "scope": "constant.numeric.bx",
+        "settings": { "foreground": "#BD93F9" }
+      }
+    ]
   }
 }
