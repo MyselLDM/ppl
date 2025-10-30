@@ -1,0 +1,11 @@
+{
+  "scopeName": "source.bx",
+  "patterns": [
+    { "name": "comment.line.bx", "match": "//.*$" },
+    { "name": "string.quoted.bx", "match": "(\"[^\"]*\"|'[^']*')" },
+    { "name": "constant.numeric.bx", "match": "-?[0-9]+(?:\\.[0-9]+)?" },
+    { "name": "keyword.control.bx", "match": "\\b(if|else|for|while|var|true|false|break|continue)\\b" },
+    { "name": "keyword.operator.bx", "match": "==|!=|<=|>=|\\+|\\-|\\*|/|%|=|<|>|!" },
+    { "name": "variable.other.bx", "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b" }
+  ]
+}

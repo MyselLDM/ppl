@@ -5,25 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-// // Regular Expressions for seperating tokens
+#include "dictionary.h"
 
-#define REGEX_STRING "(\"[^\"]*\"|'[^']*')"
-#define REGEX_OPERATORS "\\+|\\-|\\*|/|%|\\^|="
-#define REGEX_FLOAT "-?[0-9]+\\.[0-9]+"
-#define REGEX_INT "-?[0-9]+"
-#define REGEX_DELIMITERS "\\(|\\)|{|}|;"
-#define REGEX_TEXT "[a-zA-Z_][a-zA-Z0-9_]*"
-
-#define REGEX_ALL                                                 \
-  REGEX_STRING "|" REGEX_FLOAT "|" REGEX_INT "|" REGEX_DELIMITERS \
-               "|" REGEX_TEXT "|" REGEX_OPERATORS
-
-const int REGEX_LEN = 6;
-const char* REGEX_ARRAY[][2] = {
-    {"STRING", REGEX_STRING}, {"FLOAT", REGEX_FLOAT},
-    {"INT", REGEX_INT},       {"DELIMITERS", REGEX_DELIMITERS},
-    {"TEXT", REGEX_TEXT},     {"OPERATORS", REGEX_OPERATORS},
-};
+#define REGEX_PARSE_INVALID 1
+#define REGEX_PARSE_VALID 0
 
 char* tokenizer_token_scan(char* strptr) {
   regex_t reg_expression;
@@ -32,8 +17,6 @@ char* tokenizer_token_scan(char* strptr) {
   int offset = 0;
 
   while (offset < strlength) {
-    int matched = 0;
-
     // Skip whitespace
     if (strptr[offset] == ' ' || strptr[offset] == '\t' ||
         strptr[offset] == '\n') {
@@ -41,7 +24,8 @@ char* tokenizer_token_scan(char* strptr) {
       continue;
     }
 
-    for (int i = 0; i < REGEX_LEN; i++) {
+    // Walk through all regexes, view "dictionary.h"
+    for (int i = 0; i < REGEX_ARRAY_LEN; i++) {
       // Compile regex
       const char* R_IDENTIFIER = REGEX_ARRAY[i][0];
       const char* R_REGEX = REGEX_ARRAY[i][1];
@@ -54,29 +38,42 @@ char* tokenizer_token_scan(char* strptr) {
         int end = reg_matches[0].rm_eo;
 
         // Only accept matches that start exactly at current offset
+        // because it searches for the first substring that matches the goddamn
+        // regex, so there are stupid instances where you would have to check if
+        // the substring that you are actually looking for is in the fucking
+        // first match
+
         // PS THIS TOOK SO LONG TO FIGURE OUT
         if (start == 0) {
           int len = end - start;
+
+          // Get the lexeme
           char* lexeme = malloc(len + 1);
           strncpy(lexeme, strptr + offset, len);
           lexeme[len] = '\0';
 
-          printf("%-20s %-15s\n", R_IDENTIFIER, lexeme);
+          // Get the token types of the lexeme
+          char* token_type = R_IDENTIFIER;
+          char* token_type_special = "";
+
+          // Retrieves what specific token type the token is
+          if (strcmp(token_type, "text") == 0) {
+            token_type = dictionary_lookup_text(lexeme);
+            token_type_special = lexeme;
+          } else {
+            token_type_special = dictionary_lookup_symbol(lexeme);
+          }
+
+          printf("%-20s %-15s %-15s\n", lexeme, token_type, token_type_special);
+
           free(lexeme);
 
-          offset += end;  // move past match
-          matched = 1;
+          offset += end;
           regfree(&reg_expression);
           break;  // break AFTER freeing
         }
       }
     }
-
-    // No match → move forward by one char
-    if (!matched) {
-      offset++;
-    }
   }
-
   return NULL;
 }
