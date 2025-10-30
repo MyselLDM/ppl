@@ -2,6 +2,12 @@
   "files.associations": {
     "string.h": "c",
     "stdio.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "pcre2posix.h": "c",
+    "tokenizer.h": "c",
+    "special_characters.h": "c",
+    "initializer_list": "c",
+    "xstring": "c",
+    "xutility": "c"
   }
 }

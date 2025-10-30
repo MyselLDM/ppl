@@ -3,9 +3,6 @@
 #include <string.h>
 #include "parser.h"
 
-const char* reserved_words[] = {"if", "else", "for", "while", "true", "false", "break", "var", "print", "continue"};
-const char* data_types[] = {"int", "float", "bool", "char"};
-
 char* parser_scan_file(char* filename) {
 
     // Stores pointer of the dot in the filename
@@ -41,6 +38,6 @@ char* parser_scan_file(char* filename) {
 
     fclose(file);
 
-    printf("parser_scan_file: parser successsful\nparser_scan_file: file contents:\n %s\n", buffer);
+//    printf("parser_scan_file: parser successsful\nparser_scan_file: file contents:\n %s\n", buffer);
     return buffer;
 }
