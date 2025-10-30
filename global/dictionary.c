@@ -14,7 +14,7 @@ const char* CONST_words_reserved[] = {"switch", "func",    "string", "return",
 
 const char* CONST_words_noise[] = {"int", "float", "bool", "char"};
 
-const char* CONST_symbol_delimiters[][2] = {
+const char* CONST_symbol_delimiter[][2] = {
     {";", "semicolon"}, {"(", "l_paren"}, {")", "r_paren"},  {"{", "l_brace"},
     {"}", "r_brace"},   {",", "comma"},   {"\'", "s_quote"}, {"\"", "d_quote"},
 };
@@ -53,19 +53,20 @@ const char* REGEX_ARRAY[][2] = {{"comment", REGEX_COMMENT_ALL},
                                 {"string", REGEX_STRING},
                                 {"float", REGEX_FLOAT},
                                 {"integer", REGEX_INT},
-                                {"delimiters", REGEX_DELIMITERS},
+                                {"delimiter", REGEX_DELIMITER},
                                 {"text", REGEX_TEXT},
                                 {"arithmetic", REGEX_OPERATORS_ARITHMETIC},
                                 {"logical", REGEX_OPERATORS_LOGICAL},
                                 {"!! INVALID", REGEX_INVALID}};
 
+// This function confirms the symbol of the lexeme
 char* dictionary_lookup_symbol(char* lexeme) {
   // Delimiters Lookup
   for (int i = 0;
-       i < sizeof(CONST_symbol_delimiters) / sizeof(CONST_symbol_delimiters[0]);
+       i < sizeof(CONST_symbol_delimiter) / sizeof(CONST_symbol_delimiter[0]);
        i++) {
-    if (strcmp(lexeme, CONST_symbol_delimiters[i][0]) == 0) {
-      return CONST_symbol_delimiters[i][1];
+    if (strcmp(lexeme, CONST_symbol_delimiter[i][0]) == 0) {
+      return CONST_symbol_delimiter[i][1];
     }
   }
 
@@ -89,6 +90,9 @@ char* dictionary_lookup_symbol(char* lexeme) {
   return "";
 }
 
+// This function confirms the type of the text lexeme, it returns identifier as
+// a default fallback This is due to that the identifier is the final fallback
+// that isnt an invalid string.
 char* dictionary_lookup_text(char* lexeme) {
   // Keyword Lookup
   for (int i = 0;

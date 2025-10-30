@@ -3,7 +3,9 @@
 
 #include "token.h"
 
-Tokens tokenizer_token_scan(char* strptr, int debug);
+Tokens tokenizer_token_scan(char* strptr);
+void tokenizer_regexes_free();
+void tokenizer_regexes_init();
 
 typedef struct {
   const char* name;
