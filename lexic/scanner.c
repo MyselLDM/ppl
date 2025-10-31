@@ -11,28 +11,26 @@
 char* parser_scan_file(char* filename) {
   // Stores pointer of the dot in the filename
   const char* dot = strrchr(filename, '.');
-  debug_print("%s: passed filename: %s\n", __func__, filename);
+  DEBUG_PRINT("[!!WARNING!!]: passed filename: %s", filename);
 
   // Opens the file
   FILE* file = fopen(filename, "r");
   if (file == NULL) {
-    debug_print(
-        "[WARNING] %s: Error opening file. Incorrect name or it does not "
-        "exist.\n",
-        __func__);
+    DEBUG_PRINT(
+        "Error opening file. Incorrect name or it does not "
+        "exist.");
     exit(1);
   }
 
   // Compares the stuff of the dot
   // Rejects files with invalid extensions
   if (!dot || strcmp(dot + 1, LANGUAGE_EXTENSION) != 0) {
-    debug_print(
-        "[WARNING] %s: Invalid file extension: cannot compile "
-        "files that are not \".bx\"\n",
-        __func__);
+    DEBUG_PRINT(
+        "[!!WARNING!!]: Invalid file extension: cannot compile "
+        "files that are not \".bx\"");
     exit(1);
   } else {
-    printf("%s: valid file extension. reading file.\n", __func__);
+    printf("valid file extension. reading file.");
   }
 
   fseek(file, 0L, SEEK_END);
@@ -41,7 +39,7 @@ char* parser_scan_file(char* filename) {
 
   char* buffer = malloc(size + 1);
   if (!buffer) {
-    debug_print("[WARNING] %s: memory allocation failed", __func__);
+    DEBUG_PRINT("[!!WARNING!!]: memory allocation failed");
     fclose(file);
     exit(1);
   }
@@ -49,8 +47,7 @@ char* parser_scan_file(char* filename) {
   size_t bytesRead = fread(buffer, 1, size, file);
   buffer[bytesRead] = '\0';
 
-  debug_print("%s: SUCCESS! read %ld bytes. closing file...\n", __func__,
-              bytesRead);
+  DEBUG_PRINT("[!!SUCCESS!!] read %ld bytes. closing file...", bytesRead);
 
   fclose(file);
 

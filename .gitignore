@@ -2,3 +2,4 @@ pcre
 
 string_builder.*
 *.log
+*.exe

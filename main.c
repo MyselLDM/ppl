@@ -3,9 +3,9 @@
 #include <string.h>
 
 #include "global/debug_print.h"
-#include "lexical_analyzer/scanner.h"
-#include "lexical_analyzer/token.h"
-#include "lexical_analyzer/tokenizer.h"
+#include "lexic/scanner.h"
+#include "lexic/token.h"
+#include "lexic/tokenizer.h"
 
 int main(int argc, char* argv[]) {
   // CLI Argument Checking
@@ -22,18 +22,13 @@ int main(int argc, char* argv[]) {
   char* FILE_NAME = argv[1];
   char* fstr = parser_scan_file(FILE_NAME);
 
-  DEBUG_PRINT(
-      "============================================\n%s: Successfully parsed "
-      "file\n============================================\n",
-      __func__);
+  DEBUG_PRINT("[!!MAIN!!] Successfully parsed '%s'\n", FILE_NAME);
+  DEBUG_PRINT("[!!MAIN!!] Starting tokenization of '%s'\n", FILE_NAME);
 
   // Tokenizes the file input and stores it in a struct array
   Tokens tokens = tokenizer_token_scan(fstr);
 
-  DEBUG_PRINT(
-      "============================================\n%s: Successfully parsed "
-      "tokens\n============================================\n",
-      __func__);
+  DEBUG_PRINT("[!!MAIN!!] Successfully tokenized '%s'\n", FILE_NAME);
 
   debug_close();
 
