@@ -7,7 +7,7 @@
 // Regular Expressions for seperating tokens
 #define REGEX_STRING "(\"[^\"]*\"|'[^']*')"
 #define REGEX_OPERATORS_ARITHMETIC "\\+\\+?=?|\\-\\-?=?|\\*=?|/=?|%=?|\\^=?|="
-#define REGEX_OPERATORS_LOGICAL "<|>|!|==|!=|<=|>="
+#define REGEX_OPERATORS_LOGICAL "<=?|>=?|==|!=?|&&|\\|\\|"
 #define REGEX_FLOAT "-?[0-9]+\\.[0-9]+"
 #define REGEX_INT "-?[0-9]+"
 #define REGEX_DELIMITER "\\(|\\)|{|}|;"
@@ -33,7 +33,7 @@ extern const char* CONST_words_reserved[8];
 extern const char* CONST_words_noise[4];
 extern const char* CONST_symbol_delimiter[8][2];
 extern const char* CONST_symbol_arithmetic[15][2];
-extern const char* CONST_symbol_logical[6][2];
+extern const char* CONST_symbol_logical[9][2];
 
 extern const int REGEX_ARRAY_LEN;
 extern const char* REGEX_ARRAY[9][2];

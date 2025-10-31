@@ -14,6 +14,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  // Initializes the debug system
   debug = 1;
   debug_init("debug.log");
   DEBUG_PRINT("%s: Successfully parsed CLI arguments\n", __func__);
@@ -29,6 +30,11 @@ int main(int argc, char* argv[]) {
   Tokens tokens = tokenizer_token_scan(fstr);
 
   DEBUG_PRINT("[!!MAIN!!] Successfully tokenized '%s'\n", FILE_NAME);
+
+  // TODO: Create the AST from the tokenized file
+  // AST ast = ast_create(tokens);
+
+  // TODO: Analyze the semantics of the AST
 
   debug_close();
 

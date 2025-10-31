@@ -46,7 +46,9 @@ const char* CONST_symbol_arithmetic[][2] = {
 
 const char* CONST_symbol_logical[][2] = {
     {"<", "less_than"}, {">", "greater_than"}, {"!=", "not_equal"},
-    {"==", "equal"},    {"<=", "less_equal"},  {">=", "greater_equal"}};
+    {"==", "equal"},    {"<=", "less_equal"},  {">=", "greater_equal"},
+    {"&&", "and"},      {"||", "or"},          {"!", "not"},
+};
 
 const int REGEX_ARRAY_LEN = 9;
 const char* REGEX_ARRAY[][2] = {{"comment", REGEX_COMMENT_ALL},

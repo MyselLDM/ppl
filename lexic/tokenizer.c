@@ -1,6 +1,13 @@
 #include "tokenizer.h"
 
+#if defined(_WIN32) || defined(_WIN64)
+// Windows build
 #include <pcre2posix.h>
+#else
+// macOS or Linux (POSIX systems)
+#include <regex.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +21,14 @@
 
 // Precompile regexes once
 regex_t compiled_regex[9];
+
+/*
+DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH
+DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH
+DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH
+DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH
+DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH DO NOT TOUCH
+*/
 
 void tokenizer_regexes_init() {
   for (int i = 0; i < REGEX_ARRAY_LEN; i++) {
