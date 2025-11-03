@@ -1,5 +1,7 @@
 var char first_char = 'a';
 var char second_char = 'b';
+var string first_string = "hello";
+var string second_string = "Hello World";
 var int first_int = 32;
 var third_int = 34 * 32 ^ 2 + 32 - 2 + first_int;
 var s = '432';

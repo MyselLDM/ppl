@@ -14,13 +14,15 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  // Parses the file returns the entire file as a string
+  char* FILE_NAME = argv[1];
+
   // Initializes the debug system
   debug = 1;
+
   debug_init("debug.log");
   DEBUG_PRINT("%s: Successfully parsed CLI arguments\n", __func__);
 
-  // Parses the file returns the entire file as a string
-  char* FILE_NAME = argv[1];
   char* fstr = parser_scan_file(FILE_NAME);
 
   DEBUG_PRINT("[!!MAIN!!] Successfully parsed '%s'\n", FILE_NAME);

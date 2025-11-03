@@ -8,7 +8,6 @@ This is a prototype language written in c. This emulates the features of **C1** 
 
 ![my pet](https://static.wikia.nocookie.net/the-unofficial-outcome-memories/images/e/e8/Meowl.jpg/revision/latest?cb=20251009174607)
 
-
 # WORK IN PROGRESS!!!!!
 This project still only has the lexical analysis phase down, please stay tuned for the full release!!
 
@@ -24,7 +23,7 @@ This project still only has the lexical analysis phase down, please stay tuned f
 4. It will show you an option, if I ever spelt it wrong, make sure to find something along the lines of `MinGW` I forgot
 5. After it compiles, go to the root folder `pcre2-10.47` and paste it to the project file, and rename it as 
 6. **Make sure your `gcc` has parameters: `-L "{pcre}\cmake"` & `-I "{pcre}\cmake\interface"`**
-
+-
 # Installation (MacOS/Linux)
 **Linux and MacOS** contains the **POSIX regex**, so there is no need to install them.
 1. Clone the repository using `git clone`

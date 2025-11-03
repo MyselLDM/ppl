@@ -11,7 +11,7 @@
 char* parser_scan_file(char* filename) {
   // Stores pointer of the dot in the filename
   const char* dot = strrchr(filename, '.');
-  DEBUG_PRINT("[!!WARNING!!]: passed filename: %s", filename);
+  DEBUG_PRINT("passed filename: %s", filename);
 
   // Opens the file
   FILE* file = fopen(filename, "r");

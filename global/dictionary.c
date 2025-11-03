@@ -9,10 +9,10 @@ const char* CONST_words_keyword[] = {"if",    "else",    "for",   "while",
                                      "true",  "false",   "break", "var",
                                      "print", "continue"};
 
-const char* CONST_words_reserved[] = {"switch", "func",    "string", "return",
-                                      "case",   "default", "const",  "null"};
+const char* CONST_words_reserved[] = {"switch",  "func",  "return", "case",
+                                      "default", "const", "null"};
 
-const char* CONST_words_noise[] = {"int", "float", "bool", "char"};
+const char* CONST_words_noise[] = {"int", "float", "bool", "char", "string"};
 
 const char* CONST_symbol_delimiter[][2] = {
     {";", "semicolon"}, {"(", "l_paren"}, {")", "r_paren"},  {"{", "l_brace"},
@@ -50,8 +50,9 @@ const char* CONST_symbol_logical[][2] = {
     {"&&", "and"},      {"||", "or"},          {"!", "not"},
 };
 
-const int REGEX_ARRAY_LEN = 9;
+const int REGEX_ARRAY_LEN = 10;
 const char* REGEX_ARRAY[][2] = {{"comment", REGEX_COMMENT_ALL},
+                                {"character", REGEX_CHAR},
                                 {"string", REGEX_STRING},
                                 {"float", REGEX_FLOAT},
                                 {"integer", REGEX_INT},
