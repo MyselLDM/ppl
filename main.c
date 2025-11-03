@@ -18,8 +18,6 @@ int main(int argc, char* argv[]) {
   char* FILE_NAME = argv[1];
 
   // Initializes the debug system
-  debug = 1;
-
   debug_init("debug.log");
   DEBUG_PRINT("%s: Successfully parsed CLI arguments\n", __func__);
 
