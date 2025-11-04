@@ -40,6 +40,7 @@ extern const char* CONST_symbol_logical[9][2];
 extern const int REGEX_ARRAY_LEN;
 extern const char* REGEX_ARRAY[10][2];
 
+int str_equals(const char* a, const char* b);
 char* dictionary_lookup_symbol(char* lexeme);
 char* dictionary_lookup_text(char* lexeme);
 

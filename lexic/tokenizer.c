@@ -116,7 +116,7 @@ Tokens tokenizer_token_scan(char* strptr) {
                     reg_matches[0].rm_eo);
 
         // Checks if the lexeme is a text or a symbol
-        if (strcmp(token_type, "text") == 0) {
+        if (str_equals(token_type, "text") == 0) {
           token_type = dictionary_lookup_text(lexeme);
           token_type_special = strdup(lexeme);  // safe copy
         } else {
@@ -132,7 +132,7 @@ Tokens tokenizer_token_scan(char* strptr) {
             "%s",
             lexeme, token_type, token_type_special);
 
-        if (strcmp(token_type, "comment") != 0) {
+        if (str_equals(token_type, "comment") != 0) {
           token_push(&tokens, lexeme, token_type, token_type_special, line);
         } else {
           DEBUG_PRINT("COMMENT IGNORED: %s", lexeme);
