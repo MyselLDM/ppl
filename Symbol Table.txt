@@ -63,12 +63,13 @@ Line     Offset   Lexeme                    Token                     Token Spec
 9        24       ^                         operator                  power                    
 9        26       2                         constant                  float                    
 9        28       +                         operator                  add                      
-9        30       32                        constant                  float                    
-9        33       -                         operator                  subtract                 
-9        35       2                         constant                  float                    
-9        37       +                         operator                  add                      
-9        39       first_int                 text                      identifier               
-9        48       ;                         delimiter                 semicolon                
+9        30       32.43                     constant                  float                    
+9        35       .323.54                   INVALID                                            
+9        43       -                         operator                  subtract                 
+9        45       2                         constant                  float                    
+9        47       +                         operator                  add                      
+9        49       first_int                 text                      identifier               
+9        58       ;                         delimiter                 semicolon                
 10       0        var                       text                      keyword                  
 10       4        s                         text                      identifier               
 10       6        =                         operator                  assignment               

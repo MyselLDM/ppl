@@ -6,7 +6,7 @@ var float fist_float = 32.54;
 var float fi_float = 32.54 - 43.34 + 32;
 var int first_int = 32;
 var sx = 32.re;
-var third_int = 34 * 32 ^ 2 + 32 - 2 + first_int;
+var third_int = 34 * 32 ^ 2 + 32.43.323.54 - 2 + first_int;
 var s = '432';
 
 

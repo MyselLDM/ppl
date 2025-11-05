@@ -61,6 +61,7 @@ Tokens tokenizer_token_scan(char* strptr) {
 
   Tokens tokens = token_create();
   int offset = 0;
+  int charoffset = 0;
   size_t line = 1;
   int strlength = str_length(strptr);
   regmatch_t reg_matches[1];
@@ -72,6 +73,7 @@ Tokens tokenizer_token_scan(char* strptr) {
     while (offset < strlength &&
            (strptr[offset] == ' ' || strptr[offset] == '\t')) {
       DEBUG_PRINT("%d/%d:: skipping whitespace\n", offset++, strlength);
+      charoffset++;
     }
 
     // Skip contiguous newlines quickly
@@ -90,8 +92,8 @@ Tokens tokenizer_token_scan(char* strptr) {
       regex_t* reg_expression = &compiled_regex[i];
 
       // Only accept matches that start exactly at current offset // because it
-      // searches for the first substring that matches the goddamn // regex, so
-      // there are stupid instances where you would have to check if // the
+      // searches for the first substring that matches the  // regex, so
+      // there are  instances where you would have to check if // the
       // substring that you are actually looking for is in the  // first
       // match
 
@@ -151,7 +153,8 @@ Tokens tokenizer_token_scan(char* strptr) {
             lexeme, token_type, token_type_special);
 
         if (str_equals(token_type, "comment") != 0) {
-          token_push(&tokens, lexeme, token_type, token_type_special, line);
+          token_push(&tokens, lexeme, token_type, token_type_special, line,
+                     charoffset);
         } else {
           DEBUG_PRINT("COMMENT IGNORED: %s", lexeme);
         }
@@ -159,6 +162,7 @@ Tokens tokenizer_token_scan(char* strptr) {
         // Free allocated memory
         free(lexeme);
         offset += len;
+        charoffset += len;
         DEBUG_PRINT("%d/%d increased offset", offset, strlength);
         break;
       }
@@ -170,43 +174,43 @@ Tokens tokenizer_token_scan(char* strptr) {
   return tokens;
 }
 
-char* tokenizer_parse_lexeme2(char* strptr, char** token_type,
-                              const char** token_type_special) {
-  int len = 0;
-  if ((len = tokenizer_match_comment(strptr)) > 0) {
-    *token_type = "comment";
-  } else if ((len = tokenizer_match_char(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type_special = "char";
-  } else if ((len = tokenizer_match_string(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type_special = "string";
-  } else if ((len = tokenizer_match_float(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type_special = "float";
-  } else if ((len = tokenizer_match_integer(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type = "integer";
-  } else if ((len = tokenizer_match_delimiter(strptr)) > 0) {
-    *token_type = "delimiter";
-  } else if ((len = tokenizer_match_operator(strptr)) > 0) {
-    *token_type = "operator";
-  } else if ((len = tokenizer_match_boolean(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type_special = "boolean";
-  } else if ((len = tokenizer_match_text(strptr)) > 0) {
-    *token_type = "text";
-  } else {
-    len = tokenizer_match_invalid(strptr);
-    *token_type = "INVALID";
-  }
+// char* tokenizer_parse_lexeme2(char* strptr, char** token_type,
+//                               const char** token_type_special) {
+//   int len = 0;
+//   if ((len = tokenizer_match_comment(strptr)) > 0) {
+//     *token_type = "comment";
+//   } else if ((len = tokenizer_match_char(strptr)) > 0) {
+//     *token_type = "constant";
+//     *token_type_special = "char";
+//   } else if ((len = tokenizer_match_string(strptr)) > 0) {
+//     *token_type = "constant";
+//     *token_type_special = "string";
+//   } else if ((len = tokenizer_match_float(strptr)) > 0) {
+//     *token_type = "constant";
+//     *token_type_special = "float";
+//   } else if ((len = tokenizer_match_integer(strptr)) > 0) {
+//     *token_type = "constant";
+//     *token_type = "integer";
+//   } else if ((len = tokenizer_match_delimiter(strptr)) > 0) {
+//     *token_type = "delimiter";
+//   } else if ((len = tokenizer_match_operator(strptr)) > 0) {
+//     *token_type = "operator";
+//   } else if ((len = tokenizer_match_boolean(strptr)) > 0) {
+//     *token_type = "constant";
+//     *token_type_special = "boolean";
+//   } else if ((len = tokenizer_match_text(strptr)) > 0) {
+//     *token_type = "text";
+//   } else {
+//     len = tokenizer_match_invalid(strptr);
+//     *token_type = "INVALID";
+//   }
 
-  DEBUG_PRINT("Found Lexeme with Length %d: %.*s", len, len, strptr);
+//   DEBUG_PRINT("Found Lexeme with Length %d: %.*s", len, len, strptr);
 
-  // copy lexeme
-  char* lexeme = malloc(len + 1);
-  for (int i = 0; i < len; i++) lexeme[i] = strptr[i];
-  lexeme[len] = '\0';
-  DEBUG_PRINT("Returning Lexeme: %s", lexeme);
-  return lexeme;
-}
+//   // copy lexeme
+//   char* lexeme = malloc(len + 1);
+//   for (int i = 0; i < len; i++) lexeme[i] = strptr[i];
+//   lexeme[len] = '\0';
+//   DEBUG_PRINT("Returning Lexeme: %s", lexeme);
+//   return lexeme;
+// }

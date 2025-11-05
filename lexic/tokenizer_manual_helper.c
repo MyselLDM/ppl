@@ -114,6 +114,7 @@ int tokenizer_match_operator(const char* strptr) {
 }
 
 int tokenizer_match_boolean(const char* strptr) {
+  // Returns the length of the token, 0 if ineligible
   if (strptr[0] == 't' && strptr[1] == 'r' && strptr[2] == 'u' &&
       strptr[3] == 'e')
     return 4;

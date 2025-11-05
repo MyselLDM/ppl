@@ -1,0 +1,161 @@
+Lexeme                    Token                     Token Special            
+=================================================================
+
+var                       text                      keyword                  
+char                      text                      noise                    
+first_char                text                      identifier               
+=                         operator                  assignment               
+'a'                       constant                  character                
+'                         INVALID                                            
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+char                      text                      noise                    
+second_char               text                      identifier               
+=                         operator                  assignment               
+'b'                       constant                  character                
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+string                    text                      noise                    
+first_string              text                      identifier               
+=                         operator                  assignment               
+"hello"                   constant                  string                   
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+string                    text                      noise                    
+second_string             text                      identifier               
+=                         operator                  assignment               
+"Hello World"             constant                  string                   
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+float                     text                      noise                    
+fist_float                text                      identifier               
+=                         operator                  assignment               
+32.54                     constant                  float                    
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+float                     text                      noise                    
+fi_float                  text                      identifier               
+=                         operator                  assignment               
+32.54                     constant                  float                    
+-                         operator                  subtract                 
+43.34                     constant                  float                    
++                         operator                  add                      
+32                        constant                  integer                  
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+int                       text                      noise                    
+first_int                 text                      identifier               
+=                         operator                  assignment               
+32                        constant                  integer                  
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+sx                        text                      identifier               
+=                         operator                  assignment               
+32                        constant                  integer                  
+.re                       INVALID                                            
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+third_int                 text                      identifier               
+=                         operator                  assignment               
+34                        constant                  integer                  
+*                         operator                  multiply                 
+32                        constant                  integer                  
+^                         operator                  power                    
+2                         constant                  integer                  
++                         operator                  add                      
+32.43                     constant                  float                    
+.323.54                   INVALID                                            
+-                         operator                  subtract                 
+2                         constant                  integer                  
++                         operator                  add                      
+first_int                 text                      identifier               
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+s                         text                      identifier               
+=                         operator                  assignment               
+'432'                     INVALID                                            
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+xd                        text                      identifier               
++=                        operator                  add_assign               
+32                        constant                  integer                  
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+xs                        text                      identifier               
+-=                        operator                  subtract_assign          
+32                        constant                  integer                  
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+xzx                       text                      identifier               
+%                         operator                  modulo                   
+=                         operator                  assignment               
+32                        constant                  integer                  
+%%                        operator                  divide_floor             
+xs                        text                      identifier               
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+t                         text                      identifier               
+=                         operator                  assignment               
+true                      text                      keyword                  
+;                         delimiter                 semicolon                
+var                       text                      keyword                  
+bool                      text                      noise                    
+f                         text                      identifier               
+=                         operator                  assignment               
+false                     text                      keyword                  
+;                         delimiter                 semicolon                
+// This is my Comment     comment                                            
+/// 
+
+MULTIILNE COMMOOENT
+124
+1245
+hytg THis is still my comment
+
+/// comment                                            
+$356terl                  INVALID                                            
+;                         delimiter                 semicolon                
+;                         delimiter                 semicolon                
+>                         operator                  greater_than             
+;                         delimiter                 semicolon                
+@                         INVALID                                            
+for                       text                      keyword                  
+(                         delimiter                 l_paren                  
+var                       text                      keyword                  
+i                         text                      identifier               
+=                         operator                  assignment               
+0                         constant                  integer                  
+;                         delimiter                 semicolon                
+i                         text                      identifier               
+<=                        operator                  less_equal               
+32                        constant                  integer                  
+;                         delimiter                 semicolon                
+<                         operator                  less_than                
+i                         text                      identifier               
+++                        operator                  increment                
+)                         delimiter                 r_paren                  
+{                         delimiter                 l_brace                  
+first_int                 text                      identifier               
+--                        operator                  decrement                
+;                         delimiter                 semicolon                
+}                         delimiter                 r_brace                  
+if                        text                      keyword                  
+(                         delimiter                 l_paren                  
+first_int                 text                      identifier               
+=                         operator                  assignment               
+=                         operator                  assignment               
+32                        constant                  integer                  
+)                         delimiter                 r_paren                  
+{                         delimiter                 l_brace                  
+first_int                 text                      identifier               
+=                         operator                  assignment               
+2                         constant                  integer                  
+;                         delimiter                 semicolon                
+}                         delimiter                 r_brace                  
+else                      text                      keyword                  
+{                         delimiter                 l_brace                  
+first_int                 text                      identifier               
+=                         operator                  assignment               
+3                         constant                  integer                  
+;                         delimiter                 semicolon                
+}                         delimiter                 r_brace                  

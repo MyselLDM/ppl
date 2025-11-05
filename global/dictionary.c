@@ -15,11 +15,12 @@ int str_length(char* strptr) {
 
 // Custom string comparison checker
 int str_equals(const char* a, const char* b) {
-  while (*a && (*a == *b)) {
+  while (*a && *b) {
+    if (*a != *b) return 1;
     a++;
     b++;
   }
-  return *(const unsigned char*)a - *(const unsigned char*)b;
+  return *a != *b;  // true (1) if both ended at same time
 }
 
 // Symbol table for all the reserved words and symbols
