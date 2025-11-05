@@ -12,6 +12,7 @@
 char* tokenizer_parse_lexeme(char* strptr, char** token_type,
                              const char** token_type_special) {
   int len = 0;
+
   // Fast lookup for comments
   if (*strptr == '/' && strptr[1] == '/') {
     if ((len = tokenizer_match_comment(strptr)) > 0) {
