@@ -51,10 +51,10 @@ Tokens tokenizer_token_scan(char* strptr) {
   }
 
   fprintf(fptoken,
-          "%-25s %-25s "
+          "%-8s %-8s %-25s %-25s "
           "%-25s\n============================================================="
           "====\n\n",
-          "Lexeme", "Token", "Token Special");
+          "Line", "Offset", "Lexeme", "Token", "Token Special");
 
   tokenizer_regexes_init();
   DEBUG_PRINT("created \"lexical.log\"", __func__);
@@ -144,8 +144,8 @@ Tokens tokenizer_token_scan(char* strptr) {
         }
 
         // Prints the lexemes to a file
-        fprintf(fptoken, "%-25s %-25s %-25s\n", lexeme, token_type,
-                token_type_special);
+        fprintf(fptoken, "%-8d %-8d %-25s %-25s %-25s\n", line, charoffset,
+                lexeme, token_type, token_type_special);
 
         DEBUG_PRINT(
             "IDENTIFIED: lexeme: %s, token_type: %s, token_type_special:"

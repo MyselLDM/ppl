@@ -12,6 +12,15 @@
 char* tokenizer_parse_lexeme(char* strptr, char** token_type,
                              const char** token_type_special) {
   int len = 0;
+  // Fast lookup for comments
+  if (*strptr == '/' && strptr[1] == '/') {
+    if ((len = tokenizer_match_comment(strptr)) > 0) {
+      *token_type = "comment";
+      RETURN_LEXEME;
+    } else {
+      RETURN_LEXEME_INVALID;
+    }
+  }
 
   // Fast Lookup for delimiters
   if ((len = tokenizer_match_delimiter(strptr)) > 0) {
@@ -72,16 +81,6 @@ char* tokenizer_parse_lexeme(char* strptr, char** token_type,
     if ((len = tokenizer_match_string(strptr)) > 0) {
       *token_type = "constant";
       *token_type_special = "string";
-      RETURN_LEXEME;
-    } else {
-      RETURN_LEXEME_INVALID;
-    }
-  }
-
-  // Fast lookup for comments
-  if (*strptr == '/' && strptr[1] == '/') {
-    if ((len = tokenizer_match_comment(strptr)) > 0) {
-      *token_type = "comment";
       RETURN_LEXEME;
     } else {
       RETURN_LEXEME_INVALID;

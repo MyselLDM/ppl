@@ -16,7 +16,7 @@ int tokenizer_match_comment(char* strptr) {
         !(strptr[i] == '/' && strptr[i + 1] == '/' && strptr[i + 2] == '/') &&
         strptr[i] != '\0')
       i++;
-    return (strptr[i] == '\0') ? i : i + 3;
+    return (strptr[i] == '\0') ? 0 : i + 3;
   }
 
   // No Comment

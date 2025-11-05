@@ -20,7 +20,7 @@ int str_equals(const char* a, const char* b) {
     a++;
     b++;
   }
-  return *a != *b;  // true (1) if both ended at same time
+  return *a != *b;
 }
 
 // Symbol table for all the reserved words and symbols
@@ -41,9 +41,6 @@ const char* CONST_symbol_delimiter[][2] = {
 };
 
 const char* CONST_constant_boolean[] = {"true", "false"};
-
-// TODO: Add THE FLOOR DIVIDE SYMBOL
-// BOOLEAN VALUES SHOULD BE CONSTANT
 
 const char* CONST_symbol_arithmetic[][2] = {
 
