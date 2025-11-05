@@ -13,42 +13,82 @@ char* tokenizer_parse_lexeme(char* strptr, char** token_type,
                              const char** token_type_special) {
   int len = 0;
 
-  if ((len = tokenizer_match_comment(strptr)) > 0) {
-    *token_type = "comment";
-  } else if ((len = tokenizer_match_char(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type_special = "char";
-  } else if ((len = tokenizer_match_string(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type_special = "string";
-  } else if ((len = tokenizer_match_float(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type_special = "float";
-  } else if ((len = tokenizer_match_integer(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type = "integer";
-  } else if ((len = tokenizer_match_delimiter(strptr)) > 0) {
+  // Fast Lookup for delimiters
+  if ((len = tokenizer_match_delimiter(strptr)) > 0) {
     *token_type = "delimiter";
-  } else if ((len = tokenizer_match_operator(strptr)) > 0) {
-    *token_type = "operator";
-  } else if ((len = tokenizer_match_boolean(strptr)) > 0) {
-    *token_type = "constant";
-    *token_type_special = "boolean";
-  } else if ((len = tokenizer_match_text(strptr)) > 0) {
-    *token_type = "text";
-  } else {
-    len = tokenizer_match_invalid(strptr);
-    *token_type = "INVALID";
+    RETURN_LEXEME;
   }
 
-  DEBUG_PRINT("Found Lexeme with Length %d: %.*s", len, len, strptr);
+  // Fast Lookup for operators
+  if ((len = tokenizer_match_operator(strptr)) > 0) {
+    *token_type = "operator";
+    RETURN_LEXEME;
+  }
 
-  // copy lexeme
-  char* lexeme = malloc(len + 1);
-  for (int i = 0; i < len; i++) lexeme[i] = strptr[i];
-  lexeme[len] = '\0';
-  DEBUG_PRINT("Returning Lexeme: %s", lexeme);
-  return lexeme;
+  // Fast lookup for Text
+  if ((*strptr >= 'a' && *strptr <= 'z') ||
+      (*strptr >= 'A' && *strptr <= 'Z') || *strptr == '_') {
+    if ((len = tokenizer_match_boolean(strptr)) > 0) {
+      *token_type = "constant";
+      *token_type_special = "boolean";
+      RETURN_LEXEME;
+    } else if ((len = tokenizer_match_text(strptr)) > 0) {
+      *token_type = "text";
+      RETURN_LEXEME;
+    } else {
+      RETURN_LEXEME_INVALID;
+    }
+  }
+
+  // Fast lookup for numbers
+  if ((*strptr >= '0' && *strptr <= '9') ||
+      (*strptr == '-' && (strptr[1] >= '0' && strptr[1] <= '9'))) {
+    if ((len = tokenizer_match_float(strptr)) > 0) {
+      *token_type = "constant";
+      *token_type_special = "float";
+      RETURN_LEXEME;
+    } else if ((len = tokenizer_match_integer(strptr)) > 0) {
+      *token_type = "constant";
+      *token_type_special = "integer";
+      RETURN_LEXEME;
+    } else {
+      RETURN_LEXEME_INVALID;
+    }
+  }
+
+  // Fast lookup for characters
+  if (*strptr == '\'') {
+    if ((len = tokenizer_match_char(strptr)) > 0) {
+      *token_type = "constant";
+      *token_type_special = "char";
+      RETURN_LEXEME;
+    } else {
+      RETURN_LEXEME_INVALID;
+    }
+  }
+
+  // Fast lookup for strings
+  if (*strptr == '"') {
+    if ((len = tokenizer_match_string(strptr)) > 0) {
+      *token_type = "constant";
+      *token_type_special = "string";
+      RETURN_LEXEME;
+    } else {
+      RETURN_LEXEME_INVALID;
+    }
+  }
+
+  // Fast lookup for comments
+  if (*strptr == '/' && strptr[1] == '/') {
+    if ((len = tokenizer_match_comment(strptr)) > 0) {
+      *token_type = "comment";
+      RETURN_LEXEME;
+    } else {
+      RETURN_LEXEME_INVALID;
+    }
+  }
+
+  RETURN_LEXEME_INVALID;
 }
 
 // Main scanning loop

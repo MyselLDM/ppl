@@ -102,57 +102,70 @@ Line     Offset   Lexeme                    Token                     Token Spec
 18       11       =                         operator                  assignment               
 18       13       false                     constant                  boolean                  
 18       18       ;                         delimiter                 semicolon                
-20       0        // This is my Comment     comment                                            
-22       0        /// 
-
-MULTIILNE COMMOOENT
-124
-1245
-hytg THis is still my comment
-
-/// comment                                            
-24       0        $356terl                  INVALID                                            
-24       8        ;                         delimiter                 semicolon                
-24       9        ;                         delimiter                 semicolon                
-24       10       >                         operator                  greater_than             
-24       11       ;                         delimiter                 semicolon                
-24       12       @                         INVALID                                            
-26       0        for                       text                      keyword                  
-26       4        (                         delimiter                 l_paren                  
-26       5        var                       text                      keyword                  
-26       9        i                         text                      identifier               
-26       11       =                         operator                  assignment               
-26       13       0                         constant                  float                    
-26       14       ;                         delimiter                 semicolon                
-26       16       i                         text                      identifier               
-26       18       <=                        operator                  less_equal               
-26       21       32                        constant                  float                    
-26       23       ;                         delimiter                 semicolon                
-26       25       <                         operator                  less_than                
-26       27       i                         text                      identifier               
-26       28       ++                        operator                  increment                
-26       30       )                         delimiter                 r_paren                  
-26       32       {                         delimiter                 l_brace                  
-27       2        first_int                 text                      identifier               
-27       11       --                        operator                  decrement                
-27       13       ;                         delimiter                 semicolon                
-28       0        }                         delimiter                 r_brace                  
-30       0        if                        text                      keyword                  
-30       3        (                         delimiter                 l_paren                  
-30       4        first_int                 text                      identifier               
-30       14       ==                        operator                  equal                    
-30       17       32                        constant                  float                    
-30       19       )                         delimiter                 r_paren                  
-30       21       {                         delimiter                 l_brace                  
-31       2        first_int                 text                      identifier               
-31       12       =                         operator                  assignment               
-31       14       2                         constant                  float                    
-31       15       ;                         delimiter                 semicolon                
-32       0        }                         delimiter                 r_brace                  
-32       2        else                      text                      keyword                  
-32       7        {                         delimiter                 l_brace                  
-33       2        first_int                 text                      identifier               
-33       12       =                         operator                  assignment               
-33       14       3                         constant                  float                    
-33       15       ;                         delimiter                 semicolon                
-34       0        }                         delimiter                 r_brace                  
+20       0        /                         operator                  divide                   
+20       1        /                         operator                  divide                   
+20       3        This                      text                      identifier               
+20       8        is                        text                      identifier               
+20       11       my                        text                      identifier               
+20       14       Comment                   text                      identifier               
+22       0        /                         operator                  divide                   
+22       1        /                         operator                  divide                   
+22       2        /                         operator                  divide                   
+24       0        MULTIILNE                 text                      identifier               
+24       10       COMMOOENT                 text                      identifier               
+25       0        124                       constant                  float                    
+26       0        1245                      constant                  float                    
+27       0        hytg                      text                      identifier               
+27       5        THis                      text                      identifier               
+27       10       is                        text                      identifier               
+27       13       still                     text                      identifier               
+27       19       my                        text                      identifier               
+27       22       comment                   text                      identifier               
+29       0        /                         operator                  divide                   
+29       1        /                         operator                  divide                   
+29       2        /                         operator                  divide                   
+31       0        $356terl                  INVALID                                            
+31       8        ;                         delimiter                 semicolon                
+31       9        ;                         delimiter                 semicolon                
+31       10       >                         operator                  greater_than             
+31       11       ;                         delimiter                 semicolon                
+31       12       @                         INVALID                                            
+33       0        for                       text                      keyword                  
+33       4        (                         delimiter                 l_paren                  
+33       5        var                       text                      keyword                  
+33       9        i                         text                      identifier               
+33       11       =                         operator                  assignment               
+33       13       0                         constant                  float                    
+33       14       ;                         delimiter                 semicolon                
+33       16       i                         text                      identifier               
+33       18       <=                        operator                  less_equal               
+33       21       32                        constant                  float                    
+33       23       ;                         delimiter                 semicolon                
+33       25       <                         operator                  less_than                
+33       27       i                         text                      identifier               
+33       28       ++                        operator                  increment                
+33       30       )                         delimiter                 r_paren                  
+33       32       {                         delimiter                 l_brace                  
+34       2        first_int                 text                      identifier               
+34       11       --                        operator                  decrement                
+34       13       ;                         delimiter                 semicolon                
+35       0        }                         delimiter                 r_brace                  
+37       0        if                        text                      keyword                  
+37       3        (                         delimiter                 l_paren                  
+37       4        first_int                 text                      identifier               
+37       14       ==                        operator                  equal                    
+37       17       32                        constant                  float                    
+37       19       )                         delimiter                 r_paren                  
+37       21       {                         delimiter                 l_brace                  
+38       2        first_int                 text                      identifier               
+38       12       =                         operator                  assignment               
+38       14       2                         constant                  float                    
+38       15       ;                         delimiter                 semicolon                
+39       0        }                         delimiter                 r_brace                  
+39       2        else                      text                      keyword                  
+39       7        {                         delimiter                 l_brace                  
+40       2        first_int                 text                      identifier               
+40       12       =                         operator                  assignment               
+40       14       3                         constant                  float                    
+40       15       ;                         delimiter                 semicolon                
+41       0        }                         delimiter                 r_brace                  
