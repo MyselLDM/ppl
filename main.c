@@ -6,7 +6,7 @@
 #include "lexic/scanner.h"
 #include "lexic/token.h"
 #include "lexic/tokenizer.h"
-#include "lexic/tokenizer2.h"
+#include "lexic/tokenizer_manual.h"
 
 int main(int argc, char* argv[]) {
   // CLI Argument Checking
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
   DEBUG_PRINT("[!!MAIN!!] Starting tokenization of '%s'\n", FILE_NAME);
 
   // Tokenizes the file input and stores it in a struct array
-  Tokens tokens = tokenizer_token_scan(fstr);
+  Tokens tokens = tokenizer_token_scan_manual(fstr);
 
   // Tokenizes the file input and stores it in a struct array
   // tokenizer_token_scan_manual(fstr2);

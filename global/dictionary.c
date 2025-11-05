@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 // Custom string comparison checker
 int str_equals(const char* a, const char* b) {
@@ -50,6 +49,7 @@ const char* CONST_symbol_arithmetic[][2] = {
     {"+", "add"},
     {"-", "subtract"},
     {"/", "divide"},
+    {"\%\%", "floor_divide"},
     {"%", "modulo"},
     {"=", "assignment"},
     {"^", "power"},

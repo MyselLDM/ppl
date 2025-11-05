@@ -24,7 +24,7 @@ char* parser_scan_file(char* filename) {
 
   // Compares the stuff of the dot
   // Rejects files with invalid extensions
-  if (!dot || strcmp(dot + 1, LANGUAGE_EXTENSION) != 0) {
+  if (!dot || str_equals(dot + 1, LANGUAGE_EXTENSION) != 0) {
     DEBUG_PRINT(
         "[!!WARNING!!]: Invalid file extension: cannot compile "
         "files that are not \".bx\"");
