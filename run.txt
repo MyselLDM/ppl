@@ -1,1 +1,1 @@
-gcc -I "D:\My Code\School Code\BX\pcre\cmake\interface" lexic/tokenizer.c lexic/token.c main.c global/dictionary.c lexic/scanner.c global/debug_print.c -L "D:\My Code\School Code\BX\pcre\cmake" -lpcre2-posix -lpcre2-8 -o main.exe
+gcc -I "D:\My Code\School Code\BX\pcre\cmake\interface" lexic/tokenizer_manual.c legacy_code/tokenizer.c lexic/tokenizer_manual_helper.c lexic/token.c main.c global/dictionary.c lexic/scanner.c global/debug_print.c -L "D:\My Code\School Code\BX\pcre\cmake" -lpcre2-posix -lpcre2-8 -o main.exe

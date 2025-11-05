@@ -3,6 +3,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Custom strlength
+int str_length(char* strptr) {
+  int len = 0;
+  while (*strptr != '\0') {
+    len++;
+    strptr++;
+  };
+  return len;
+}
+
 // Custom string comparison checker
 int str_equals(const char* a, const char* b) {
   while (*a && (*a == *b)) {
@@ -27,6 +37,8 @@ const char* CONST_symbol_delimiter[][2] = {
     {"}", "r_brace"},   {",", "comma"},   {"\'", "s_quote"}, {"\"", "d_quote"},
 };
 
+const char* CONST_constant_boolean[] = {"true", "false"};
+
 // TODO: Add THE FLOOR DIVIDE SYMBOL
 // BOOLEAN VALUES SHOULD BE CONSTANT
 
@@ -49,16 +61,18 @@ const char* CONST_symbol_arithmetic[][2] = {
     {"+", "add"},
     {"-", "subtract"},
     {"/", "divide"},
-    {"\%\%", "floor_divide"},
+    {"%%", "divide_floor"},
     {"%", "modulo"},
     {"=", "assignment"},
     {"^", "power"},
 };
 
 const char* CONST_symbol_logical[][2] = {
-    {"<", "less_than"}, {">", "greater_than"}, {"!=", "not_equal"},
-    {"==", "equal"},    {"<=", "less_equal"},  {">=", "greater_equal"},
-    {"&&", "and"},      {"||", "or"},          {"!", "not"},
+    {"!=", "not_equal"},   {"==", "equal"},
+    {"<=", "less_equal"},  {">=", "greater_equal"},
+    {"&&", "and"},         {"||", "or"},
+    {"!", "not"},          {"<", "less_than"},
+    {">", "greater_than"},
 };
 
 const int REGEX_ARRAY_LEN = 10;
@@ -71,10 +85,10 @@ const char* REGEX_ARRAY[][2] = {{"comment", REGEX_COMMENT_ALL},
                                 {"text", REGEX_TEXT},
                                 {"arithmetic", REGEX_OPERATORS_ARITHMETIC},
                                 {"logical", REGEX_OPERATORS_LOGICAL},
-                                {"!! INVALID", REGEX_INVALID}};
+                                {"INVALID", REGEX_INVALID}};
 
 // This function confirms the symbol of the lexeme
-char* dictionary_lookup_symbol(char* lexeme) {
+const char* dictionary_lookup_symbol(char* lexeme) {
   // Delimiters Lookup
   for (int i = 0;
        i < sizeof(CONST_symbol_delimiter) / sizeof(CONST_symbol_delimiter[0]);
@@ -107,7 +121,7 @@ char* dictionary_lookup_symbol(char* lexeme) {
 // This function confirms the type of the text lexeme, it returns identifier as
 // a default fallback This is due to that the identifier is the final fallback
 // that isnt an invalid string.
-char* dictionary_lookup_text(char* lexeme) {
+const char* dictionary_lookup_text(char* lexeme) {
   // Keyword Lookup
   for (int i = 0;
        i < sizeof(CONST_words_keyword) / sizeof(CONST_words_keyword[0]); i++) {

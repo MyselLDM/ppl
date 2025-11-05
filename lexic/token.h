@@ -7,6 +7,7 @@
 
 typedef struct {
   size_t line;
+  size_t offset;
   const char* lexeme;
   const char* token_type;
   const char* token_type_special;
@@ -20,5 +21,5 @@ typedef struct {
 
 Tokens token_create();
 void token_push(Tokens* tokens, char* lexeme, char* token_type,
-                char* token_type_special, size_t line);
+                const char* token_type_special, size_t line, size_t offset);
 #endif

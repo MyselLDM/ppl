@@ -3,11 +3,10 @@
 #include <string.h>
 
 #include "global/debug_print.h"
+#include "legacy_code/tokenizer.h"
 #include "lexic/scanner.h"
-#include "lexic/token.h"
-#include "lexic/tokenizer.h"
+// #include "lexic/token.h"
 #include "lexic/tokenizer_manual.h"
-
 int main(int argc, char* argv[]) {
   // CLI Argument Checking
   if (argc < 2) {
@@ -23,13 +22,16 @@ int main(int argc, char* argv[]) {
   DEBUG_PRINT("%s: Successfully parsed CLI arguments\n", __func__);
 
   char* fstr = parser_scan_file(FILE_NAME);
-  char* fstr2 = fstr;
+  // char* fstr2 = fstr;
 
   DEBUG_PRINT("[!!MAIN!!] Successfully parsed '%s'\n", FILE_NAME);
   DEBUG_PRINT("[!!MAIN!!] Starting tokenization of '%s'\n", FILE_NAME);
 
   // Tokenizes the file input and stores it in a struct array
   Tokens tokens = tokenizer_token_scan_manual(fstr);
+  // DEBUG_PRINT("[!!MAIN!!] Starting LEGACY tokenization of '%s'\n",
+  // FILE_NAME);
+  //  Tokens tokensold = tokenizer_token_scan(fstr2);
 
   // Tokenizes the file input and stores it in a struct array
   // tokenizer_token_scan_manual(fstr2);

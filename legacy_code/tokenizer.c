@@ -14,7 +14,7 @@
 
 #include "../global/debug_print.h"
 #include "../global/dictionary.h"
-#include "token.h"
+#include "../lexic/token.h"
 
 #define REGEX_PARSE_INVALID 1
 #define REGEX_PARSE_VALID 0
@@ -45,7 +45,7 @@ void tokenizer_regexes_free() {
 }
 
 Tokens tokenizer_token_scan(char* strptr) {
-  FILE* fptoken = fopen("lexical.log", "w");
+  FILE* fptoken = fopen("Symbol Table (OLD).txt", "w");
   if (!fptoken) {
     perror("Failed to open debug log");
   }
@@ -62,7 +62,7 @@ Tokens tokenizer_token_scan(char* strptr) {
   Tokens tokens = token_create();
   int offset = 0;
   size_t line = 1;
-  int strlength = strlen(strptr);
+  int strlength = str_length(strptr);
   regmatch_t reg_matches[1];
 
   DEBUG_PRINT("STARTING! %d total characters", strlength);
@@ -115,11 +115,29 @@ Tokens tokenizer_token_scan(char* strptr) {
                     offset, strlength, lexeme, len, reg_matches[0].rm_so,
                     reg_matches[0].rm_eo);
 
-        // Checks if the lexeme is a text or a symbol
-        if (str_equals(token_type, "text") == 0) {
-          token_type = dictionary_lookup_text(lexeme);
-          token_type_special = strdup(lexeme);  // safe copy
-        } else {
+        // Group similar regex identifiers into broader classes
+        if (str_equals(R_IDENTIFIER, "arithmetic") == 0 ||
+            str_equals(R_IDENTIFIER, "logical") == 0 ||
+            str_equals(R_IDENTIFIER, "assignment") == 0) {
+          token_type = "operator";
+          token_type_special = dictionary_lookup_symbol(lexeme);
+        }
+
+        else if (str_equals(R_IDENTIFIER, "character") == 0 ||
+                 str_equals(R_IDENTIFIER, "string") == 0 ||
+                 str_equals(R_IDENTIFIER, "float") == 0 ||
+                 str_equals(R_IDENTIFIER, "integer") == 0 ||
+                 str_equals(R_IDENTIFIER, "boolean") == 0) {
+          token_type = "constant";
+          token_type_special = R_IDENTIFIER;  // char, string, etc.
+        }
+
+        else if (str_equals(R_IDENTIFIER, "text") == 0) {
+          token_type = "text";
+          token_type_special = dictionary_lookup_text(lexeme);
+        }
+
+        else if (str_equals(R_IDENTIFIER, "delimiter") == 0) {
           token_type_special = dictionary_lookup_symbol(lexeme);
         }
 

@@ -2,9 +2,20 @@ var char first_char = 'a'';
 var char second_char = 'b';
 var string first_string = "hello";
 var string second_string = "Hello World";
+var float fist_float = 32.54;
+var float fi_float = 32.54 - 43.34 + 32;
 var int first_int = 32;
+var sx = 32.re;
 var third_int = 34 * 32 ^ 2 + 32 - 2 + first_int;
 var s = '432';
+
+
+var xd += 32;
+var xs -= 32;
+var xzx %= 32 %% xs; 
+
+var t = true;
+var bool f = false;
 
 // This is my Comment
 

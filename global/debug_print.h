@@ -39,7 +39,7 @@ static inline void debug_print(const char* FILENAME, const int LINE,
            FUNCNAME);
 
   // Print to console
-  fprintf(stdout, "%-60s", prefix);
+  fprintf(stdout, "%-70s", prefix);
   vfprintf(stdout, format, args);
   fprintf(stdout, "\n");
 
@@ -48,7 +48,7 @@ static inline void debug_print(const char* FILENAME, const int LINE,
     va_list args_copy;
     va_copy(args_copy, args);
 
-    fprintf(debug_log, "%-60s", prefix);
+    fprintf(debug_log, "%-70s", prefix);
     vfprintf(debug_log, format, args_copy);
     fprintf(debug_log, "\n");
 

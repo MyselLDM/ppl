@@ -3,7 +3,6 @@
 
 #include "token.h"
 
-char* tokenizer_parse_lexeme(char* strptr, char** token_type);
 Tokens tokenizer_token_scan_manual(char* strptr);
 
 #endif

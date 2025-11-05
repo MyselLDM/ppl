@@ -7,7 +7,8 @@
 // Regex for seperating tokens
 #define REGEX_CHAR "'[^']'"
 #define REGEX_STRING "\"[^\"]*\""
-#define REGEX_OPERATORS_ARITHMETIC "\\+\\+?=?|\\-\\-?=?|\\*=?|/=?|%=?|\\^=?|="
+#define REGEX_OPERATORS_ARITHMETIC \
+  "\\+\\+?=?|\\-\\-?=?|\\*=?|/=?|%%?|%=?|\\^=?|="
 #define REGEX_OPERATORS_LOGICAL "<=?|>=?|==|!=?|&&|\\|\\|"
 #define REGEX_FLOAT "-?[0-9]+\\.[0-9]+"
 #define REGEX_INT "-?[0-9]+"
@@ -36,12 +37,14 @@ extern const char* CONST_words_noise[5];
 extern const char* CONST_symbol_delimiter[8][2];
 extern const char* CONST_symbol_arithmetic[16][2];
 extern const char* CONST_symbol_logical[9][2];
+extern const char* CONST_constant_boolean[2];
 
 extern const int REGEX_ARRAY_LEN;
 extern const char* REGEX_ARRAY[10][2];
 
+int str_length(char* strptr);
 int str_equals(const char* a, const char* b);
-char* dictionary_lookup_symbol(char* lexeme);
-char* dictionary_lookup_text(char* lexeme);
+const char* dictionary_lookup_symbol(char* lexeme);
+const char* dictionary_lookup_text(char* lexeme);
 
 #endif

@@ -1,3 +1,5 @@
+#include "../global/dictionary.h"
+
 // Detects "//..." or "///...///"
 int tokenizer_match_comment(char* strptr) {
   // Inline Comment Logic
@@ -36,7 +38,7 @@ int tokenizer_match_string(char* strptr) {
   return 0;  // unclosed string
 }
 
-int tokenizer_match_number(char* strptr) {
+int tokenizer_match_float(char* strptr) {
   int i = 0;
   if (strptr[i] == '-') i++;
   int has_digit = 0, has_dot = 0;
@@ -55,6 +57,19 @@ int tokenizer_match_number(char* strptr) {
   return has_digit ? i : 0;
 }
 
+int tokenizer_match_integer(char* strptr) {
+  int i = 0;
+  if (strptr[i] == '-') i++;
+  int has_digit = 0, has_dot = 0;
+
+  while (strptr[i] >= '0' && strptr[i] <= '9') {
+    i++;
+    has_digit = 1;
+  }
+
+  return has_digit ? i : 0;
+}
+
 int tokenizer_match_delimiter(char* strptr) {
   const char* delsymbols = "();{}";
   for (int i = 0; delsymbols[i] != '\0'; i++) {
@@ -63,15 +78,48 @@ int tokenizer_match_delimiter(char* strptr) {
   return 0;
 }
 
-int tokenizer_match_operator(char* strptr) {
-  const char* ops[] = {"++", "--", "+=", "-=", "*=", "/=", "%=", "^=", "==",
-                       "!=", "<=", ">=", "&&", "||", "+",  "-",  "*",  "/",
-                       "%",  "=",  "<",  ">",  "!",  "^",  "%%"};
-  for (int i = 0; i < sizeof(ops) / sizeof(ops[0]); i++) {
+/* Generic symbol matcher */
+int tokenizer_match_symbol(const char* strptr, const char* symbols[][2],
+                           int count) {
+  for (int i = 0; i < count; i++) {
+    const char* op = symbols[i][0];
     int j = 0;
-    while (ops[i][j] && strptr[j] && ops[i][j] == strptr[j]) j++;
-    if (ops[i][j] == '\0') return j;
+    while (op[j] && strptr[j] && op[j] == strptr[j]) j++;
+    if (op[j] == '\0') return (int)j;  // full match length
   }
+  return 0;
+}
+
+/* Category-specific matchers */
+int tokenizer_match_operator_arithmetic(const char* strptr) {
+  return tokenizer_match_symbol(
+      strptr, CONST_symbol_arithmetic,
+      sizeof(CONST_symbol_arithmetic) / sizeof(CONST_symbol_arithmetic[0]));
+}
+
+int tokenizer_match_operator_logical(const char* strptr) {
+  return tokenizer_match_symbol(
+      strptr, CONST_symbol_logical,
+      sizeof(CONST_symbol_logical) / sizeof(CONST_symbol_logical[0]));
+}
+
+int tokenizer_match_operator(const char* strptr) {
+  int len = tokenizer_match_operator_logical(strptr);
+  if (len) return len;
+
+  len = tokenizer_match_operator_arithmetic(strptr);
+  if (len) return len;
+
+  return 0;  // explicit, same logic, more readable to new maintainers
+}
+
+int tokenizer_match_boolean(const char* strptr) {
+  if (strptr[0] == 't' && strptr[1] == 'r' && strptr[2] == 'u' &&
+      strptr[3] == 'e')
+    return 4;
+  if (strptr[0] == 'f' && strptr[1] == 'a' && strptr[2] == 'l' &&
+      strptr[3] == 's' && strptr[4] == 'e')
+    return 5;
   return 0;
 }
 
