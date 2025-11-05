@@ -24,12 +24,14 @@ int str_equals(const char* a, const char* b) {
 }
 
 // Symbol table for all the reserved words and symbols
-const char* CONST_words_keyword[] = {"if",    "else",    "for",   "while",
-                                     "true",  "false",   "break", "var",
-                                     "print", "continue"};
+const char* CONST_words_keyword[] = {"if",    "else", "for",
+                                     "while", "var",  "print"};
 
-const char* CONST_words_reserved[] = {"switch",  "func",  "return", "case",
-                                      "default", "const", "null"};
+const char* CONST_words_reserved[] = {
+    "switch",   "func",   "return", "case",    "default", "const",   "null",
+    "static",   "goto",   "do",     "enum",    "struct",  "typedef", "sizeof",
+    "import",   "export", "extern", "inline",  "yield",   "await",   "break",
+    "continue", "try",    "catch",  "finally", "throw"};
 
 const char* CONST_words_noise[] = {"int", "float", "bool", "char", "string"};
 
