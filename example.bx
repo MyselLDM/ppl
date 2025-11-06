@@ -1,6 +1,5 @@
-32re2
 
-var char first_char = 'a'';
+var char first_char = 'a';
 var char second_char = "re$2@fxc";
 var string first_string = "hello";
 var string second_string = "Hello World";
