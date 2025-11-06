@@ -108,35 +108,3 @@ const char* dictionary_lookup_symbol(char* lexeme) {
   }
   return "";
 }
-
-// This function confirms the type of the text lexeme, it returns identifier as
-// a default fallback This is due to that the identifier is the final fallback
-// that isnt an invalid string.
-const char* dictionary_lookup_text(char* lexeme) {
-  // Keyword Lookup
-  for (int i = 0;
-       i < sizeof(CONST_words_keyword) / sizeof(CONST_words_keyword[0]); i++) {
-    if (str_equals(lexeme, CONST_words_keyword[i]) == 0) {
-      return "keyword";
-    }
-  }
-
-  // Reserved Lookup
-  for (int i = 0;
-       i < sizeof(CONST_words_reserved) / sizeof(CONST_words_reserved[0]);
-       i++) {
-    if (str_equals(lexeme, CONST_words_reserved[i]) == 0) {
-      return "reserved";
-    }
-  }
-
-  // Noise Lookup
-  for (int i = 0; i < sizeof(CONST_words_noise) / sizeof(CONST_words_noise[0]);
-       i++) {
-    if (str_equals(lexeme, CONST_words_noise[i]) == 0) {
-      return "noise";
-    }
-  }
-
-  return "identifier";
-}

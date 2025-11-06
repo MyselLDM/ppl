@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "dictionary.h"
+
 #define CHECK_CHAR(c, next_state) \
   do {                            \
     if (*lexeme == c) {           \
@@ -22,7 +23,7 @@ const char* dictionary_lookup_text(char* lexeme) {
       goto state_e;  // else
     case 'f':
       lexeme++;
-      goto state_f;  // for, float
+      goto state_f;  // for, float, false
     case 'w':
       lexeme++;
       goto state_w;  // while
@@ -50,9 +51,6 @@ const char* dictionary_lookup_text(char* lexeme) {
     case 't':
       lexeme++;
       goto state_t;  // true
-    case 'f':
-      lexeme++;
-      goto state_f_const;  // false
     default:
       return "identifier";
   }
@@ -69,11 +67,11 @@ state_i:
   }
   return "identifier";
 state_if_end:
-  if (*lexeme == '\0') return "keyword";
-  return "identifier";  // if
+  if (*lexeme == '\0') return "keyword";  // if
+  return "identifier";
 state_int:
-  if (*lexeme == '\0') return "noise";
-  return "identifier";  // int
+  if (*lexeme == '\0') return "noise";  // int
+  return "identifier";
 
   // -------- e --------
 state_e:
@@ -86,29 +84,53 @@ state_els:
   CHECK_CHAR('e', state_else_end);
   return "identifier";
 state_else_end:
-  if (*lexeme == '\0') return "keyword";
-  return "identifier";  // else
+  if (*lexeme == '\0') return "keyword";  // else
+  return "identifier";
 
   // -------- f --------
 state_f:
-  CHECK_CHAR('o', state_fo);
-  CHECK_CHAR('l', state_float);
+  CHECK_CHAR('o', state_fo);  // for
+  CHECK_CHAR('l', state_fl);  // float or false
   return "identifier";
+
+  // for
 state_fo:
   CHECK_CHAR('r', state_for_end);
   return "identifier";
 state_for_end:
-  if (*lexeme == '\0') return "keyword";
-  return "identifier";  // for
-state_float:
-  CHECK_CHAR('a', state_flo_a);
+  if (*lexeme == '\0') return "keyword";  // for
   return "identifier";
-state_flo_a:
+
+  // handle both "float" and "false"
+state_fl:
+  CHECK_CHAR('o', state_flo);  // float
+  CHECK_CHAR('a', state_fa);   // false
+  return "identifier";
+
+  // float
+state_flo:
+  CHECK_CHAR('a', state_floa);
+  return "identifier";
+state_floa:
   CHECK_CHAR('t', state_float_end);
   return "identifier";
 state_float_end:
-  if (*lexeme == '\0') return "noise";
-  return "identifier";  // float
+  if (*lexeme == '\0') return "noise";  // float
+  return "identifier";
+
+  // false
+state_fa:
+  CHECK_CHAR('l', state_fal);
+  return "identifier";
+state_fal:
+  CHECK_CHAR('s', state_fals);
+  return "identifier";
+state_fals:
+  CHECK_CHAR('e', state_false_end);
+  return "identifier";
+state_false_end:
+  if (*lexeme == '\0') return "constant";  // false
+  return "identifier";
 
   // -------- w --------
 state_w:
@@ -124,8 +146,8 @@ state_whil:
   CHECK_CHAR('e', state_while_end);
   return "identifier";
 state_while_end:
-  if (*lexeme == '\0') return "keyword";
-  return "identifier";  // while
+  if (*lexeme == '\0') return "keyword";  // while
+  return "identifier";
 
   // -------- v --------
 state_v:
@@ -135,8 +157,8 @@ state_va:
   CHECK_CHAR('r', state_var_end);
   return "identifier";
 state_var_end:
-  if (*lexeme == '\0') return "keyword";
-  return "identifier";  // var
+  if (*lexeme == '\0') return "keyword";  // var
+  return "identifier";
 
   // -------- p --------
 state_p:
@@ -152,8 +174,8 @@ state_prin:
   CHECK_CHAR('t', state_print_end);
   return "identifier";
 state_print_end:
-  if (*lexeme == '\0') return "keyword";
-  return "identifier";  // print
+  if (*lexeme == '\0') return "keyword";  // print
+  return "identifier";
 
   // -------- s --------
 state_s:
@@ -173,8 +195,8 @@ state_switc:
   CHECK_CHAR('h', state_switch_end);
   return "identifier";
 state_switch_end:
-  if (*lexeme == '\0') return "reserved";
-  return "identifier";  // switch
+  if (*lexeme == '\0') return "reserved";  // switch
+  return "identifier";
 state_st:
   CHECK_CHAR('r', state_str);
   return "identifier";
@@ -188,8 +210,8 @@ state_strin:
   CHECK_CHAR('g', state_string_end);
   return "identifier";
 state_string_end:
-  if (*lexeme == '\0') return "noise";
-  return "identifier";  // string
+  if (*lexeme == '\0') return "noise";  // string
+  return "identifier";
 
   // -------- c --------
 state_c:
@@ -204,11 +226,11 @@ state_cas:
   CHECK_CHAR('e', state_case_end);
   return "identifier";
 state_case_end:
-  if (*lexeme == '\0') return "reserved";
-  return "identifier";  // case
+  if (*lexeme == '\0') return "reserved";  // case
+  return "identifier";
 state_char_end:
-  if (*lexeme == '\0') return "noise";
-  return "identifier";  // char
+  if (*lexeme == '\0') return "noise";  // char
+  return "identifier";
 state_co:
   CHECK_CHAR('n', state_con);
   return "identifier";
@@ -228,8 +250,8 @@ state_continu:
   CHECK_CHAR('e', state_continue_end);
   return "identifier";
 state_continue_end:
-  if (*lexeme == '\0') return "reserved";
-  return "identifier";  // continue
+  if (*lexeme == '\0') return "reserved";  // continue
+  return "identifier";
 
   // -------- d --------
 state_d:
@@ -251,8 +273,8 @@ state_defaul:
   CHECK_CHAR('t', state_default_end);
   return "identifier";
 state_default_end:
-  if (*lexeme == '\0') return "reserved";
-  return "identifier";  // default
+  if (*lexeme == '\0') return "reserved";  // default
+  return "identifier";
 
   // -------- b --------
 state_b:
@@ -269,8 +291,8 @@ state_brea:
   CHECK_CHAR('k', state_break_end);
   return "identifier";
 state_break_end:
-  if (*lexeme == '\0') return "reserved";
-  return "identifier";  // break
+  if (*lexeme == '\0') return "reserved";  // break
+  return "identifier";
 state_bo:
   CHECK_CHAR('o', state_boo);
   return "identifier";
@@ -278,8 +300,8 @@ state_boo:
   CHECK_CHAR('l', state_bool_end);
   return "identifier";
 state_bool_end:
-  if (*lexeme == '\0') return "noise";
-  return "identifier";  // bool
+  if (*lexeme == '\0') return "noise";  // bool
+  return "identifier";
 
   // -------- r --------
 state_r:
@@ -298,10 +320,10 @@ state_retur:
   CHECK_CHAR('n', state_return_end);
   return "identifier";
 state_return_end:
-  if (*lexeme == '\0') return "reserved";
-  return "identifier";  // return
+  if (*lexeme == '\0') return "reserved";  // return
+  return "identifier";
 
-  // -------- Boolean Constants --------
+  // -------- t (true) --------
 state_t:
   CHECK_CHAR('r', state_tr);
   return "identifier";
@@ -312,27 +334,9 @@ state_tru:
   CHECK_CHAR('e', state_true_end);
   return "identifier";
 state_true_end:
-  if (*lexeme == '\0') return "constant";
-  return "identifier";  // true
+  if (*lexeme == '\0') return "constant";  // true
+  return "identifier";
 
-state_f_const:
-  CHECK_CHAR('a', state_fal);
-  return "identifier";
-state_fal:
-  CHECK_CHAR('l', state_fal_l);
-  return "identifier";
-state_fal_l:
-  CHECK_CHAR('s', state_fals);
-  return "identifier";
-state_fals:
-  CHECK_CHAR('e', state_false_end);
-  return "identifier";
-state_false_end:
-  if (*lexeme == '\0') return "constant";
-  return "identifier";  // false
-
-  // -------- Fallback --------
+  // fallback
   return "identifier";
 }
-
-const char* lookup(char* lexeme) { return dictionary_lookup(lexeme); }
