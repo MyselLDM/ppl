@@ -41,20 +41,32 @@ int tokenizer_match_string(char* strptr) {
 int tokenizer_match_float(char* strptr) {
   int i = 0;
   if (strptr[i] == '-') i++;
-  int has_digit = 0, has_dot = 0;
 
-  while (strptr[i] >= '0' && strptr[i] <= '9') {
-    i++;
-    has_digit = 1;
+  int start_digits = i;
+  // Parse digits before dot
+  while (strptr[i] >= '0' && strptr[i] <= '9') i++;
+
+  if (i == start_digits) {
+    // No digits before dot  -> invalid float
+    return 0;
   }
 
-  if (strptr[i] == '.') {
-    has_dot = 1;
-    i++;
-    while (strptr[i] >= '0' && strptr[i] <= '9') i++;
+  // Must have a dot
+  if (strptr[i] != '.') {
+    return 0;
+  }
+  i++;  // Skip the dot
+
+  int after_dot_start = i;
+  // Parse digits after dot
+  while (strptr[i] >= '0' && strptr[i] <= '9') i++;
+
+  if (i == after_dot_start) {
+    // No digits after dot -> invalid float
+    return 0;
   }
 
-  return has_digit ? i : 0;
+  return i;
 }
 
 int tokenizer_match_integer(char* strptr) {
