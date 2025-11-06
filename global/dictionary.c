@@ -35,10 +35,11 @@ const char* CONST_words_reserved[] = {
 
 const char* CONST_words_noise[] = {"int", "float", "bool", "char", "string"};
 
-const char* CONST_symbol_delimiter[][2] = {
-    {";", "semicolon"}, {"(", "l_paren"}, {")", "r_paren"},  {"{", "l_brace"},
-    {"}", "r_brace"},   {",", "comma"},   {"\'", "s_quote"}, {"\"", "d_quote"},
-};
+const char* CONST_symbol_delimiter[][2] = {{";", "semicolon"},
+                                           {"(", "l_paren"},
+                                           {")", "r_paren"},
+                                           {"{", "l_brace"},
+                                           {"}", "r_brace"}};
 
 const char* CONST_constant_boolean[] = {"true", "false"};
 
@@ -47,14 +48,6 @@ const char* CONST_symbol_arithmetic[][2] = {
     // Unary Assignment
     {"++", "increment"},
     {"--", "decrement"},
-
-    // Binary Assignment
-    {"+=", "add_assign"},
-    {"-=", "subtract_assign"},
-    {"*=", "multiply_assign"},
-    {"/=", "divide_assign"},
-    {"%=", "modulo_assign"},
-    {"^=", "power_assign"},
 
     // N-ary Assignment
     {"*", "multiply"},

@@ -134,7 +134,8 @@ Tokens tokenizer_token_scan_manual(char* strptr) {
     // Retrieves the proper token type.
     if (str_equals(token_type, "comment") != 0) {
       if (str_equals(token_type, "text") == 0) {
-        token_type_special = dictionary_lookup_text(lexeme);
+        token_type = dictionary_lookup_text(lexeme);
+        token_type_special = lexeme;
       } else if (str_equals(token_type, "constant") != 0) {
         token_type_special = dictionary_lookup_symbol(lexeme);
       }
