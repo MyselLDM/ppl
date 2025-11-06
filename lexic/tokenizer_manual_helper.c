@@ -26,7 +26,7 @@ int tokenizer_match_comment(char* strptr) {
 // Ony returns true if the current string is ' and the one after the character
 // is '
 int tokenizer_match_char(char* strptr) {
-  if (strptr[0] == '\'' && strptr[2] == '\'') return 3;
+  if (strptr[0] == '\'' && strptr[2] == '\'' && strptr[1] != '\'') return 3;
   return 0;
 }
 
@@ -43,27 +43,25 @@ int tokenizer_match_float(char* strptr) {
   if (strptr[i] == '-') i++;
 
   int start_digits = i;
-  // Parse digits before dot
+  // digits before dot
   while (strptr[i] >= '0' && strptr[i] <= '9') i++;
 
-  if (i == start_digits) {
-    // No digits before dot  -> invalid float
-    return 0;
-  }
+  if (i == start_digits) return 0;  // no digits before dot
 
-  // Must have a dot
-  if (strptr[i] != '.') {
-    return 0;
-  }
-  i++;  // Skip the dot
+  if (strptr[i] != '.') return 0;  // must have a dot
+  i++;
 
   int after_dot_start = i;
-  // Parse digits after dot
+  // digits after dot
   while (strptr[i] >= '0' && strptr[i] <= '9') i++;
 
-  if (i == after_dot_start) {
-    // No digits after dot -> invalid float
-    return 0;
+  if (i == after_dot_start) return 0;  // no digits after dot
+
+  // Check terminator: end of string or non-alphanumeric
+  char next = strptr[i];
+  if ((next >= '0' && next <= '9') || (next >= 'A' && next <= 'Z') ||
+      (next >= 'a' && next <= 'z') || next == '_') {
+    return 0;  // invalid if letter, digit, or underscore follows
   }
 
   return i;
@@ -72,14 +70,20 @@ int tokenizer_match_float(char* strptr) {
 int tokenizer_match_integer(char* strptr) {
   int i = 0;
   if (strptr[i] == '-') i++;
-  int has_digit = 0, has_dot = 0;
 
-  while (strptr[i] >= '0' && strptr[i] <= '9') {
-    i++;
-    has_digit = 1;
+  int start_digits = i;
+  while (strptr[i] >= '0' && strptr[i] <= '9') i++;
+
+  if (i == start_digits) return 0;  // no digits
+
+  // Check terminator: end of string or non-alphanumeric
+  char next = strptr[i];
+  if ((next >= '0' && next <= '9') || (next >= 'A' && next <= 'Z') ||
+      (next >= 'a' && next <= 'z') || next == '_') {
+    return 0;  // invalid if letter, digit, or underscore follows
   }
 
-  return has_digit ? i : 0;
+  return i;
 }
 
 int tokenizer_match_delimiter(char* strptr) {

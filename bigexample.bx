@@ -1,0 +1,105 @@
+// Example program covering all lexemes (noise words as decorations)
+
+// Noise words mixed in var declarations
+var x = 3;
+var int y = 32;
+var float z = 3.14;
+var bool flag = true;
+var char letter = 'A';
+var string msg = "Hello, Lexer!";
+
+// Boolean constants
+var t = true;
+var f = false;
+
+// Keywords
+if (x > 2) {
+    print("x is greater than 2");
+} else {
+    print("x is not greater than 2");
+}
+
+for (var i = 0; i < 3; i++) {
+    print(i);
+}
+
+while (flag != false) {
+    flag = false; // terminate loop
+}
+
+// Reserved words as identifiers (invalid but for demonstration)
+var switch_var = 42;
+var func_value = 2.71;
+var return_flag = true;
+var case_letter = 'C';
+var default_text = "default";
+
+// More reserved words
+var const_value = 100;
+var null_flag = false;
+var static_count = 0;
+var goto_label = 'G';
+var do_counter = 1;
+var enum_name = "EnumExample";
+var struct_id = 101;
+var typedef_var = 1.618;
+var sizeof_var = 4;
+var import_text = "imported";
+var export_text = "exported";
+var extern_flag = true;
+var inline_number = 5;
+var yield_flag = false;
+var await_flag = true;
+var break_counter = 0;
+var continue_flag = true;
+var try_var = 0;
+var catch_flag = false;
+var finally_flag = true;
+var throw_flag = false;
+
+// Arithmetic operators
+var a = 5;
+var b = 2;
+a++;         // increment
+b--;         // decrement
+var sum = a + b;
+var diff = a - b;
+var product = a * b;
+var quotient = a / b;
+var floor_div = a %% b; // floor division
+var remainder = a % b;
+var power = a ^ b;
+var assignment = 10;
+
+/// big block comment
+For example purposes!!!
+///
+
+
+// Logical operators
+var equal = (a == b);
+var not_equal = (a != b);
+var less = (a < b);
+var greater = (a > b);
+var less_equal = (a <= b);
+var greater_equal = (a >= b);
+var logic_and = (true && false);
+var logic_or = (true || false);
+var logic_not = !true;
+
+// Delimiters
+print("(");
+print(")");
+print("{");
+print("}");
+print(";");
+
+// Strings and characters
+var single_char = 'X';
+var greeting = "Hello, world!";
+var invalid_str = "Unclosed string
+var invalid_char = 'AB';
+
+// Comments
+// Inline comment
+/// Block-style comment ///
