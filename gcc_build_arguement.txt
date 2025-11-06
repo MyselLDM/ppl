@@ -1,0 +1,3 @@
+// use this to build the file
+
+gcc lexic/tokenizer_manual.c lexic/tokenizer_manual_helper.c lexic/token.c main.c global/dictionary.c lexic/scanner.c global/lookup.c global/debug_print.c -o main.exe
