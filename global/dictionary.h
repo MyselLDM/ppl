@@ -32,7 +32,7 @@
 // Lookup table for constants
 // extern const char* CONST_symbol_logical[9];
 extern const char* CONST_words_keyword[6];
-extern const char* CONST_words_reserved[26];
+extern const char* CONST_words_reserved[7];
 extern const char* CONST_words_noise[5];
 extern const char* CONST_symbol_delimiter[5][2];
 extern const char* CONST_symbol_arithmetic[10][2];
