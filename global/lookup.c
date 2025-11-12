@@ -31,6 +31,7 @@ const char* dictionary_lookup_text(char* lexeme) {
       lexeme++;
       goto state_v;  // var
     case 'p':
+
       lexeme++;
       goto state_p;  // print
     case 's':
@@ -276,7 +277,7 @@ state_default_end:
   if (*lexeme == '\0') return "reserved";  // default
   return "identifier";
 
-  // -------- b --------
+// -------- b --------
 state_b:
   CHECK_CHAR('r', state_br);
   CHECK_CHAR('o', state_bo);

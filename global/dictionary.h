@@ -46,5 +46,6 @@ int str_length(char* strptr);
 int str_equals(const char* a, const char* b);
 const char* dictionary_lookup_symbol(char* lexeme);
 const char* dictionary_lookup_text(char* lexeme);
+const char* dictionary_manual_symbol_lookup(char* lexeme);
 
 #endif

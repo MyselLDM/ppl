@@ -84,27 +84,13 @@ const char* dictionary_lookup_symbol(char* lexeme) {
   for (int i = 0;
        i < sizeof(CONST_symbol_delimiter) / sizeof(CONST_symbol_delimiter[0]);
        i++) {
-    if (str_equals(lexeme, CONST_symbol_delimiter[i][0]) == 0) {
+    if (str_equals(lexeme, CONST_symbol_delimiter[i][0]) == 0)
       return CONST_symbol_delimiter[i][1];
-    }
   }
 
-  // Arithmetic Lookup
-  for (int i = 0;
-       i < sizeof(CONST_symbol_arithmetic) / sizeof(CONST_symbol_arithmetic[0]);
-       i++) {
-    if (str_equals(lexeme, CONST_symbol_arithmetic[i][0]) == 0) {
-      return CONST_symbol_arithmetic[i][1];
-    }
-  }
+  // Manual DFA for arithmetic & logical operators
+  const char* symbol_type = dictionary_manual_symbol_lookup(lexeme);
+  if (symbol_type[0] != '\0') return symbol_type;
 
-  // Logical Lookup
-  for (int i = 0;
-       i < sizeof(CONST_symbol_logical) / sizeof(CONST_symbol_logical[0]);
-       i++) {
-    if (str_equals(lexeme, CONST_symbol_logical[i][0]) == 0) {
-      return CONST_symbol_logical[i][1];
-    }
-  }
   return "";
 }
