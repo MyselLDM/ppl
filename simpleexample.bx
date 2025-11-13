@@ -1,0 +1,39 @@
+if else for var print
+switch func return case default break
+int float bool char string
+
+// Delimiters
+; () {}
+
+// Probably Identifiers
+x y z hello firstchar first_int hell0_w0r1d
+
+// Constants
+32.43
+-0.46
+35566
+-34
+true
+false
+"cool string"
+"String still goes"
+'c'
+'x'
+
+/// Multiline Comment
+Still a Comment
+///
+
+++ -- 
++ - * / % %% ^
+=
+!= == <= >= < > ! && ||
+
+// Some invalid tokens yea,,
+
+, . 23as 43.
+@4fd345 ' "
+
+// Detects invalid char and string
+"Hello!!
+'char'

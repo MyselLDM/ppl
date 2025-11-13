@@ -29,6 +29,22 @@ char* tokenizer_parse_lexeme(char* strptr, char** token_type,
     RETURN_LEXEME;
   }
 
+  // Fast lookup for numbers
+  if ((*strptr >= '0' && *strptr <= '9') ||
+      (*strptr == '-' && (strptr[1] >= '0' && strptr[1] <= '9'))) {
+    if ((len = tokenizer_match_float(strptr)) > 0) {
+      *token_type = "constant";
+      *token_type_special = "float";
+      RETURN_LEXEME;
+    } else if ((len = tokenizer_match_integer(strptr)) > 0) {
+      *token_type = "constant";
+      *token_type_special = "integer";
+      RETURN_LEXEME;
+    } else {
+      RETURN_LEXEME_INVALID;
+    }
+  }
+
   // Fast Lookup for operators
   if ((len = tokenizer_match_operator(strptr)) > 0) {
     *token_type = "operator";
@@ -44,22 +60,6 @@ char* tokenizer_parse_lexeme(char* strptr, char** token_type,
       RETURN_LEXEME;
     } else if ((len = tokenizer_match_text(strptr)) > 0) {
       *token_type = "text";
-      RETURN_LEXEME;
-    } else {
-      RETURN_LEXEME_INVALID;
-    }
-  }
-
-  // Fast lookup for numbers
-  if ((*strptr >= '0' && *strptr <= '9') ||
-      (*strptr == '-' && (strptr[1] >= '0' && strptr[1] <= '9'))) {
-    if ((len = tokenizer_match_float(strptr)) > 0) {
-      *token_type = "constant";
-      *token_type_special = "float";
-      RETURN_LEXEME;
-    } else if ((len = tokenizer_match_integer(strptr)) > 0) {
-      *token_type = "constant";
-      *token_type_special = "integer";
       RETURN_LEXEME;
     } else {
       RETURN_LEXEME_INVALID;

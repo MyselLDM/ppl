@@ -1,267 +1,78 @@
 Line     Offset   Lexeme                    Token                     Token Special            
 =================================================================
 
-1        0        // Sample program using all defined language constructs comment                                            
-3        0        // ------------------ Variables ------------------ comment                                            
-4        0        var                       keyword                   var                      
-4        4        x                         identifier                x                        
-4        6        =                         operator                  assignment               
-4        8        10                        constant                  integer                  
-4        10       ;                         delimiter                 semicolon                
-4        26       // integer                comment                                            
-5        0        var                       keyword                   var                      
-5        4        y                         identifier                y                        
-5        6        =                         operator                  assignment               
-5        8        3.14                      constant                  float                    
-5        12       ;                         delimiter                 semicolon                
-5        26       // float                  comment                                            
-6        0        var                       keyword                   var                      
-6        4        isActive                  identifier                isActive                 
-6        13       =                         operator                  assignment               
-6        15       true                      constant                  boolean                  
-6        19       ;                         delimiter                 semicolon                
-6        26       // boolean                comment                                            
-7        0        var                       keyword                   var                      
-7        4        letter                    identifier                letter                   
-7        11       =                         operator                  assignment               
-7        13       'A'                       constant                  char                     
-7        16       ;                         delimiter                 semicolon                
-7        26       // char                   comment                                            
-8        0        var                       keyword                   var                      
-8        4        name                      identifier                name                     
-8        9        =                         operator                  assignment               
-8        11       "Hello"                   constant                  string                   
-8        18       ;                         delimiter                 semicolon                
-8        26       // string                 comment                                            
-10       0        // ------------------ Control Flow ------------------ comment                                            
-11       0        if                        keyword                   if                       
-11       3        (                         delimiter                 l_paren                  
-11       4        isActive                  identifier                isActive                 
-11       13       &&                        operator                  and                      
-11       16       x                         identifier                x                        
-11       18       >                         operator                  greater_than             
-11       20       0                         constant                  integer                  
-11       21       )                         delimiter                 r_paren                  
-11       23       {                         delimiter                 l_brace                  
-12       4        print                     keyword                   print                    
-12       9        (                         delimiter                 l_paren                  
-12       10       "Active and x positive"   constant                  string                   
-12       33       )                         delimiter                 r_paren                  
-12       34       ;                         delimiter                 semicolon                
-13       0        }                         delimiter                 r_brace                  
-13       2        else                      keyword                   else                     
-13       7        {                         delimiter                 l_brace                  
-14       4        print                     keyword                   print                    
-14       9        (                         delimiter                 l_paren                  
-14       10       "Inactive or x non-positive" constant                  string                   
-14       38       )                         delimiter                 r_paren                  
-14       39       ;                         delimiter                 semicolon                
-15       0        }                         delimiter                 r_brace                  
-17       0        for                       keyword                   for                      
-17       4        (                         delimiter                 l_paren                  
-17       5        var                       keyword                   var                      
-17       9        i                         identifier                i                        
-17       11       =                         operator                  assignment               
-17       13       0                         constant                  integer                  
-17       14       ;                         delimiter                 semicolon                
-17       16       i                         identifier                i                        
-17       18       <                         operator                  less_than                
-17       20       5                         constant                  integer                  
-17       21       ;                         delimiter                 semicolon                
-17       23       i                         identifier                i                        
-17       24       ++                        operator                  increment                
-17       26       )                         delimiter                 r_paren                  
-17       28       {                         delimiter                 l_brace                  
-18       4        print                     keyword                   print                    
-18       9        (                         delimiter                 l_paren                  
-18       10       i                         identifier                i                        
-18       11       )                         delimiter                 r_paren                  
-18       12       ;                         delimiter                 semicolon                
-19       0        }                         delimiter                 r_brace                  
-21       0        while                     keyword                   while                    
-21       6        (                         delimiter                 l_paren                  
-21       7        x                         identifier                x                        
-21       9        !=                        operator                  not_equal                
-21       12       0                         constant                  integer                  
-21       13       )                         delimiter                 r_paren                  
-21       15       {                         delimiter                 l_brace                  
-22       4        x                         identifier                x                        
-22       6        =                         operator                  assignment               
-22       8        x                         identifier                x                        
-22       10       -                         operator                  subtract                 
-22       12       1                         constant                  integer                  
-22       13       ;                         delimiter                 semicolon                
-23       0        }                         delimiter                 r_brace                  
-25       0        switch                    reserved                  switch                   
-25       7        (                         delimiter                 l_paren                  
-25       8        letter                    identifier                letter                   
-25       14       )                         delimiter                 r_paren                  
-25       16       {                         delimiter                 l_brace                  
-26       4        case                      reserved                  case                     
-26       9        'A'                       constant                  char                     
-26       12       :                         INVALID                                            
-27       8        print                     keyword                   print                    
-27       13       (                         delimiter                 l_paren                  
-27       14       "Letter A"                constant                  string                   
-27       24       )                         delimiter                 r_paren                  
-27       25       ;                         delimiter                 semicolon                
-28       8        break                     reserved                  break                    
-28       13       ;                         delimiter                 semicolon                
-29       4        default                   reserved                  default                  
-29       11       :                         INVALID                                            
-30       8        print                     keyword                   print                    
-30       13       (                         delimiter                 l_paren                  
-30       14       "Other letter"            constant                  string                   
-30       28       )                         delimiter                 r_paren                  
-30       29       ;                         delimiter                 semicolon                
-31       8        break                     reserved                  break                    
-31       13       ;                         delimiter                 semicolon                
-32       0        }                         delimiter                 r_brace                  
-34       0        // ------------------ Reserved Words ------------------ comment                                            
-35       0        func                      identifier                func                     
-35       5        multiply                  identifier                multiply                 
-35       13       (                         delimiter                 l_paren                  
-35       14       a                         identifier                a                        
-35       15       ,                         INVALID                                            
-35       17       b                         identifier                b                        
-35       18       )                         delimiter                 r_paren                  
-35       20       {                         delimiter                 l_brace                  
-36       4        return                    reserved                  return                   
-36       11       a                         identifier                a                        
-36       13       *                         operator                  multiply                 
-36       15       b                         identifier                b                        
-36       16       ;                         delimiter                 semicolon                
-37       0        }                         delimiter                 r_brace                  
-39       0        break                     reserved                  break                    
-39       5        ;                         delimiter                 semicolon                
-40       0        continue                  reserved                  continue                 
-40       8        ;                         delimiter                 semicolon                
-42       0        // ------------------ Noise Words ------------------ comment                                            
-43       0        int                       identifier                int                      
-43       4        num                       identifier                num                      
-43       8        =                         operator                  assignment               
-43       10       100                       constant                  integer                  
-43       13       ;                         delimiter                 semicolon                
-44       0        float                     noise                     float                    
-44       6        pi                        identifier                pi                       
-44       9        =                         operator                  assignment               
-44       11       3.1415                    constant                  float                    
-44       17       ;                         delimiter                 semicolon                
-45       0        bool                      noise                     bool                     
-45       5        flag                      identifier                flag                     
-45       10       =                         operator                  assignment               
-45       12       false                     constant                  boolean                  
-45       17       ;                         delimiter                 semicolon                
-46       0        char                      identifier                char                     
-46       5        c                         identifier                c                        
-46       7        =                         operator                  assignment               
-46       9        'Z'                       constant                  char                     
-46       12       ;                         delimiter                 semicolon                
-47       0        string                    noise                     string                   
-47       7        str                       identifier                str                      
-47       11       =                         operator                  assignment               
-47       13       "Test"                    constant                  string                   
-47       19       ;                         delimiter                 semicolon                
-49       0        // ------------------ Operators ------------------ comment                                            
-50       0        x                         identifier                x                        
-50       2        =                         operator                  assignment               
-50       4        x                         identifier                x                        
-50       6        +                         operator                  add                      
-50       8        y                         identifier                y                        
-50       9        ;                         delimiter                 semicolon                
-51       0        y                         identifier                y                        
-51       2        =                         operator                  assignment               
-51       4        y                         identifier                y                        
-51       6        -                         operator                  subtract                 
-51       8        x                         identifier                x                        
-51       9        ;                         delimiter                 semicolon                
-52       0        x                         identifier                x                        
-52       2        =                         operator                  assignment               
-52       4        x                         identifier                x                        
-52       6        *                         operator                  multiply                 
-52       8        2                         constant                  integer                  
-52       9        ;                         delimiter                 semicolon                
-53       0        y                         identifier                y                        
-53       2        =                         operator                  assignment               
-53       4        y                         identifier                y                        
-53       6        /                         operator                  divide                   
-53       8        2                         constant                  integer                  
-53       9        ;                         delimiter                 semicolon                
-54       0        x                         identifier                x                        
-54       2        =                         operator                  assignment               
-54       4        x                         identifier                x                        
-54       6        %%                        operator                  divide_floor             
-54       9        3                         constant                  integer                  
-54       10       ;                         delimiter                 semicolon                
-54       18       // divide_floor           comment                                            
-55       0        y                         identifier                y                        
-55       2        =                         operator                  assignment               
-55       4        y                         identifier                y                        
-55       6        %                         operator                  modulo                   
-55       8        2                         constant                  integer                  
-55       9        ;                         delimiter                 semicolon                
-55       18       // modulo                 comment                                            
-56       0        x                         identifier                x                        
-56       1        ++                        operator                  increment                
-56       3        ;                         delimiter                 semicolon                
-56       18       // increment              comment                                            
-57       0        y                         identifier                y                        
-57       1        --                        operator                  decrement                
-57       3        ;                         delimiter                 semicolon                
-57       18       // decrement              comment                                            
-58       0        z                         identifier                z                        
-58       2        =                         operator                  assignment               
-58       4        x                         identifier                x                        
-58       6        ^                         operator                  power                    
-58       8        2                         constant                  integer                  
-58       9        ;                         delimiter                 semicolon                
-58       18       // power                  comment                                            
-60       0        // ------------------ Logical Operators ------------------ comment                                            
-61       0        if                        keyword                   if                       
-61       3        (                         delimiter                 l_paren                  
-61       4        x                         identifier                x                        
-61       6        >=                        operator                  greater_equal            
-61       9        y                         identifier                y                        
-61       11       &&                        operator                  and                      
-61       14       y                         identifier                y                        
-61       16       <=                        operator                  less_equal               
-61       19       z                         identifier                z                        
-61       21       ||                        operator                  or                       
-61       24       !                         operator                  not                      
-61       25       flag                      identifier                flag                     
-61       29       )                         delimiter                 r_paren                  
-61       31       {                         delimiter                 l_brace                  
-62       4        print                     keyword                   print                    
-62       9        (                         delimiter                 l_paren                  
-62       10       "Logical operators used"  constant                  string                   
-62       34       )                         delimiter                 r_paren                  
-62       35       ;                         delimiter                 semicolon                
-63       0        }                         delimiter                 r_brace                  
-65       0        // ------------------ Delimiters ------------------ comment                                            
-66       0        var                       keyword                   var                      
-66       4        a                         identifier                a                        
-66       6        =                         operator                  assignment               
-66       8        (                         delimiter                 l_paren                  
-66       9        x                         identifier                x                        
-66       11       +                         operator                  add                      
-66       13       y                         identifier                y                        
-66       14       )                         delimiter                 r_paren                  
-66       16       *                         operator                  multiply                 
-66       18       (                         delimiter                 l_paren                  
-66       19       z                         identifier                z                        
-66       21       -                         operator                  subtract                 
-66       23       1                         constant                  integer                  
-66       24       )                         delimiter                 r_paren                  
-66       25       ;                         delimiter                 semicolon                
-67       0        var                       keyword                   var                      
-67       4        b                         identifier                b                        
-67       6        =                         operator                  assignment               
-67       8        {                         delimiter                 l_brace                  
-67       9        1                         constant                  integer                  
-67       10       ,                         INVALID                                            
-67       12       2                         constant                  integer                  
-67       13       ,                         INVALID                                            
-67       15       3                         constant                  integer                  
-67       16       }                         delimiter                 r_brace                  
-67       17       ;                         delimiter                 semicolon                
-67       20       // using braces           comment                                            
+1        0        if                        keyword                   if                       
+1        3        else                      keyword                   else                     
+1        8        for                       keyword                   for                      
+1        12       var                       keyword                   var                      
+1        16       print                     keyword                   print                    
+2        0        switch                    reserved                  switch                   
+2        7        func                      reserved                  func                     
+2        12       return                    reserved                  return                   
+2        19       case                      reserved                  case                     
+2        24       default                   reserved                  default                  
+2        32       break                     reserved                  break                    
+3        0        int                       identifier                int                      
+3        4        float                     noise                     float                    
+3        10       bool                      noise                     bool                     
+3        15       char                      noise                     char                     
+3        20       string                    noise                     string                   
+5        0        // Delimiters             comment                                            
+6        0        ;                         delimiter                 semicolon                
+6        2        (                         delimiter                 l_paren                  
+6        3        )                         delimiter                 r_paren                  
+6        5        {                         delimiter                 l_brace                  
+6        6        }                         delimiter                 r_brace                  
+8        0        // Probably Identifiers   comment                                            
+9        0        x                         identifier                x                        
+9        2        y                         identifier                y                        
+9        4        z                         identifier                z                        
+9        6        hello                     identifier                hello                    
+9        12       firstchar                 identifier                firstchar                
+9        22       first_int                 identifier                first_int                
+9        32       hell0_w0r1d               identifier                hell0_w0r1d              
+11       0        // Constants              comment                                            
+12       0        32.43                     constant                  float                    
+13       0        -0.46                     constant                  float                    
+14       0        35566                     constant                  integer                  
+15       0        -34                       constant                  integer                  
+16       0        true                      constant                  boolean                  
+17       0        false                     constant                  boolean                  
+18       0        "cool string"             constant                  string                   
+19       0        "String still goes"       constant                  string                   
+20       0        'c'                       constant                  char                     
+21       0        'x'                       constant                  char                     
+23       0        /// Multiline Comment
+Still a Comment
+/// comment                                            
+25       0        ++                        operator                  increment                
+25       3        --                        operator                  decrement                
+26       0        +                         operator                  add                      
+26       2        -                         operator                  subtract                 
+26       4        *                         operator                  multiply                 
+26       6        /                         operator                  divide                   
+26       8        %                         operator                  modulo                   
+26       10       %%                        operator                  divide_floor             
+26       13       ^                         operator                  power                    
+27       0        =                         operator                  assignment               
+28       0        !=                        operator                  not_equal                
+28       3        ==                        operator                  equal                    
+28       6        <=                        operator                  less_equal               
+28       9        >=                        operator                  greater_equal            
+28       12       <                         operator                  less_than                
+28       14       >                         operator                  greater_than             
+28       16       !                         operator                  not                      
+28       18       &&                        operator                  and                      
+28       21       ||                        operator                  or                       
+30       0        // Some invalid tokens yea,, comment                                            
+32       0        ,                         INVALID                                            
+32       2        .                         INVALID                                            
+32       4        23as                      INVALID                                            
+32       9        43                        constant                  integer                  
+32       11       .                         INVALID                                            
+33       0        @4fd345                   INVALID                                            
+33       8        '                         INVALID                                            
+33       10       "                         INVALID                                            
+35       0        // Detects invalid char and string comment                                            
+36       0        "Hello!!                  INVALID                                            
+37       0        'char'                    INVALID                                            

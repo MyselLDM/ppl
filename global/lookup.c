@@ -91,7 +91,9 @@ state_else_end:
   // -------- f --------
 state_f:
   CHECK_CHAR('o', state_fo);  // for
-  CHECK_CHAR('l', state_fl);  // float or false
+  CHECK_CHAR('l', state_fl);  // float
+  CHECK_CHAR('a', state_fa);  // false
+  CHECK_CHAR('u', state_fu);  // func
   return "identifier";
 
   // for
@@ -105,7 +107,6 @@ state_for_end:
   // handle both "float" and "false"
 state_fl:
   CHECK_CHAR('o', state_flo);  // float
-  CHECK_CHAR('a', state_fa);   // false
   return "identifier";
 
   // float
@@ -131,6 +132,16 @@ state_fals:
   return "identifier";
 state_false_end:
   if (*lexeme == '\0') return "constant";  // false
+  return "identifier";
+
+state_fu:
+  CHECK_CHAR('n', state_fun);
+  return "identifier";
+state_fun:
+  CHECK_CHAR('c', state_func_end);
+  return "identifier";
+state_func_end:
+  if (*lexeme == '\0') return "reserved";  // func
   return "identifier";
 
   // -------- w --------
@@ -218,16 +229,22 @@ state_string_end:
 state_c:
   CHECK_CHAR('a', state_ca);
   CHECK_CHAR('o', state_co);
+  CHECK_CHAR('h', state_ch);
   return "identifier";
 state_ca:
   CHECK_CHAR('s', state_cas);
-  CHECK_CHAR('h', state_char_end);
   return "identifier";
 state_cas:
   CHECK_CHAR('e', state_case_end);
   return "identifier";
 state_case_end:
   if (*lexeme == '\0') return "reserved";  // case
+  return "identifier";
+state_ch:
+  CHECK_CHAR('a', state_cha);
+  return "identifier";
+state_cha:
+  CHECK_CHAR('r', state_char_end);
   return "identifier";
 state_char_end:
   if (*lexeme == '\0') return "noise";  // char
@@ -340,4 +357,171 @@ state_true_end:
 
   // fallback
   return "identifier";
+}
+
+// This function recognizes multi-character operators like ++, --, ==, etc.
+// Returns the operator type name, or "" if not recognized.
+const char* dictionary_manual_symbol_lookup(char* lexeme) {
+  if (!lexeme || *lexeme == '\0') return "";
+
+  switch (*lexeme) {
+    case '+':
+      lexeme++;
+      goto state_plus;
+    case '-':
+      lexeme++;
+      goto state_minus;
+    case '*':
+      lexeme++;
+      goto state_star;
+    case '/':
+      lexeme++;
+      goto state_slash;
+    case '%':
+      lexeme++;
+      goto state_percent;
+    case '=':
+      lexeme++;
+      goto state_equal;
+    case '!':
+      lexeme++;
+      goto state_exclam;
+    case '<':
+      lexeme++;
+      goto state_less;
+    case '>':
+      lexeme++;
+      goto state_greater;
+    case '&':
+      lexeme++;
+      goto state_amp;
+    case '|':
+      lexeme++;
+      goto state_pipe;
+    case '^':
+      lexeme++;
+      goto state_caret;
+    default:
+      return "";
+  }
+
+  // -------- + --------
+state_plus:
+  if (*lexeme == '+') {
+    lexeme++;
+    if (*lexeme == '\0') return "increment";  // ++
+  }
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "add_assign";  // +=
+  }
+  if (*lexeme == '\0') return "add";  // +
+  return "";
+
+  // -------- - --------
+state_minus:
+  if (*lexeme == '-') {
+    lexeme++;
+    if (*lexeme == '\0') return "decrement";  // --
+  }
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "subtract_assign";  // -=
+  }
+  if (*lexeme == '\0') return "subtract";  // -
+  return "";
+
+  // -------- * --------
+state_star:
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "multiply_assign";  // *=
+  }
+  if (*lexeme == '\0') return "multiply";  // *
+  return "";
+
+  // -------- / --------
+state_slash:
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "divide_assign";  // /=
+  }
+  if (*lexeme == '\0') return "divide";  // /
+  return "";
+
+  // -------- % --------
+state_percent:
+  if (*lexeme == '%') {
+    lexeme++;
+    if (*lexeme == '\0') return "divide_floor";  // %%
+  }
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "mod_assign";  // %=
+  }
+  if (*lexeme == '\0') return "modulo";  // %
+  return "";
+
+  // -------- = --------
+state_equal:
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "equal";  // ==
+  }
+  if (*lexeme == '\0') return "assignment";  // =
+  return "";
+
+  // -------- ! --------
+state_exclam:
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "not_equal";  // !=
+  }
+  if (*lexeme == '\0') return "not";  // !
+  return "";
+
+  // -------- < --------
+state_less:
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "less_equal";  // <=
+  }
+  if (*lexeme == '\0') return "less_than";  // <
+  return "";
+
+  // -------- > --------
+state_greater:
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "greater_equal";  // >=
+  }
+  if (*lexeme == '\0') return "greater_than";  // >
+  return "";
+
+  // -------- && --------
+state_amp:
+  if (*lexeme == '&') {
+    lexeme++;
+    if (*lexeme == '\0') return "and";  // &&
+  }
+  return "";
+
+  // -------- || --------
+state_pipe:
+  if (*lexeme == '|') {
+    lexeme++;
+    if (*lexeme == '\0') return "or";  // ||
+  }
+  return "";
+
+  // -------- ^ --------
+state_caret:
+  if (*lexeme == '=') {
+    lexeme++;
+    if (*lexeme == '\0') return "power_assign";  // ^=
+  }
+  if (*lexeme == '\0') return "power";  // ^
+  return "";
+
+  return "";
 }
