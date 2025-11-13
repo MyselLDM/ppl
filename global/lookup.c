@@ -104,11 +104,10 @@ state_for_end:
   if (*lexeme == '\0') return "keyword";  // for
   return "identifier";
 
-  // handle both "float" and "false"
+  // handle both "float"
 state_fl:
   CHECK_CHAR('o', state_flo);  // float
   return "identifier";
-
   // float
 state_flo:
   CHECK_CHAR('a', state_floa);

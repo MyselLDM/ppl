@@ -6,6 +6,7 @@ Line     Offset   Lexeme                    Token                     Token Spec
 1        8        for                       keyword                   for                      
 1        12       var                       keyword                   var                      
 1        16       print                     keyword                   print                    
+1        22       while                     keyword                   while                    
 2        0        switch                    reserved                  switch                   
 2        7        func                      reserved                  func                     
 2        12       return                    reserved                  return                   
