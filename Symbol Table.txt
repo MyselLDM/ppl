@@ -1,79 +1,81 @@
 Line     Offset   Lexeme                    Token                     Token Special            
 =================================================================
 
-1        0        if                        keyword                   if                       
-1        3        else                      keyword                   else                     
-1        8        for                       keyword                   for                      
-1        12       var                       keyword                   var                      
-1        16       print                     keyword                   print                    
-1        22       while                     keyword                   while                    
-2        0        switch                    reserved                  switch                   
-2        7        func                      reserved                  func                     
-2        12       return                    reserved                  return                   
-2        19       case                      reserved                  case                     
-2        24       default                   reserved                  default                  
-2        32       break                     reserved                  break                    
-3        0        int                       identifier                int                      
-3        4        float                     noise                     float                    
-3        10       bool                      noise                     bool                     
-3        15       char                      noise                     char                     
-3        20       string                    noise                     string                   
-5        0        // Delimiters             comment                                            
-6        0        ;                         delimiter                 semicolon                
-6        2        (                         delimiter                 l_paren                  
-6        3        )                         delimiter                 r_paren                  
-6        5        {                         delimiter                 l_brace                  
-6        6        }                         delimiter                 r_brace                  
-8        0        // Probably Identifiers   comment                                            
-9        0        x                         identifier                x                        
-9        2        y                         identifier                y                        
-9        4        z                         identifier                z                        
-9        6        hello                     identifier                hello                    
-9        12       firstchar                 identifier                firstchar                
-9        22       first_int                 identifier                first_int                
-9        32       hell0_w0r1d               identifier                hell0_w0r1d              
-11       0        // Constants              comment                                            
-12       0        32.43                     constant                  float                    
-13       0        -0.46                     constant                  float                    
-14       0        35566                     constant                  integer                  
-15       0        -34                       constant                  integer                  
-16       0        true                      constant                  boolean                  
-17       0        false                     constant                  boolean                  
-18       0        "cool string"             constant                  string                   
-19       0        "String still goes"       constant                  string                   
-20       0        'c'                       constant                  char                     
-21       0        'x'                       constant                  char                     
+1        0        if                        T_KEYWORD                 TS_IF                    
+1        3        else                      T_KEYWORD                 TS_ELSE                  
+1        8        for                       T_KEYWORD                 TS_FOR                   
+1        12       var                       T_KEYWORD                 TS_VAR                   
+1        16       print                     T_KEYWORD                 TS_PRINT                 
+1        22       while                     T_KEYWORD                 TS_WHILE                 
+2        0        switch                    T_RESERVED                TS_SWITCH                
+2        7        func                      T_RESERVED                TS_FUNC                  
+2        12       return                    T_RESERVED                TS_RETURN                
+2        19       case                      T_RESERVED                TS_CASE                  
+2        24       default                   T_RESERVED                TS_DEFAULT               
+2        32       break                     T_RESERVED                TS_BREAK                 
+3        0        int                       T_IDENTIFIER              TS_IDENTIFIER            
+3        4        float                     T_NOISE                   TS_FLOAT                 
+3        10       bool                      T_NOISE                   TS_BOOL                  
+3        15       char                      T_NOISE                   TS_CHAR                  
+3        20       string                    T_NOISE                   TS_STRING                
+5        0        // Delimiters             T_COMMENT                 TS_COMMENT_LINE          
+6        0        ;                         T_DELIMITER               TS_NONE                  
+6        2        (                         T_DELIMITER               TS_NONE                  
+6        3        )                         T_DELIMITER               TS_NONE                  
+6        5        {                         T_DELIMITER               TS_NONE                  
+6        6        }                         T_DELIMITER               TS_NONE                  
+8        0        // Probably Identifiers   T_COMMENT                 TS_COMMENT_LINE          
+9        0        x                         T_IDENTIFIER              TS_IDENTIFIER            
+9        2        y                         T_IDENTIFIER              TS_IDENTIFIER            
+9        4        z                         T_IDENTIFIER              TS_IDENTIFIER            
+9        6        hello                     T_IDENTIFIER              TS_IDENTIFIER            
+9        12       firstchar                 T_IDENTIFIER              TS_IDENTIFIER            
+9        22       first_int                 T_IDENTIFIER              TS_IDENTIFIER            
+9        32       hell0_w0r1d               T_IDENTIFIER              TS_IDENTIFIER            
+11       0        // Constants              T_COMMENT                 TS_COMMENT_LINE          
+12       0        32.43                     T_CONSTANT                TS_FLOAT                 
+13       0        -0.46                     T_CONSTANT                TS_FLOAT                 
+14       0        35566                     T_CONSTANT                TS_INTEGER_LITERAL       
+15       0        -34                       T_CONSTANT                TS_INTEGER_LITERAL       
+16       0        true                      T_CONSTANT                TS_TRUE                  
+17       0        false                     T_CONSTANT                TS_FALSE                 
+18       0        "cool string"             T_CONSTANT                TS_STRING                
+19       0        "String still goes"       T_CONSTANT                TS_STRING                
+20       0        'c'                       T_CONSTANT                TS_CHAR                  
+21       0        'x'                       T_CONSTANT                TS_CHAR                  
 23       0        /// Multiline Comment
 Still a Comment
-/// comment                                            
-25       0        ++                        operator                  increment                
-25       3        --                        operator                  decrement                
-26       0        +                         operator                  add                      
-26       2        -                         operator                  subtract                 
-26       4        *                         operator                  multiply                 
-26       6        /                         operator                  divide                   
-26       8        %                         operator                  modulo                   
-26       10       %%                        operator                  divide_floor             
-26       13       ^                         operator                  power                    
-27       0        =                         operator                  assignment               
-28       0        !=                        operator                  not_equal                
-28       3        ==                        operator                  equal                    
-28       6        <=                        operator                  less_equal               
-28       9        >=                        operator                  greater_equal            
-28       12       <                         operator                  less_than                
-28       14       >                         operator                  greater_than             
-28       16       !                         operator                  not                      
-28       18       &&                        operator                  and                      
-28       21       ||                        operator                  or                       
-30       0        // Some invalid tokens yea,, comment                                            
-32       0        ,                         INVALID                                            
-32       2        .                         INVALID                                            
-32       4        23as                      INVALID                                            
-32       9        43                        constant                  integer                  
-32       11       .                         INVALID                                            
-33       0        @4fd345                   INVALID                                            
-33       8        '                         INVALID                                            
-33       10       "                         INVALID                                            
-35       0        // Detects invalid char and string comment                                            
-36       0        "Hello!!                  INVALID                                            
-37       0        'char'                    INVALID                                            
+/// T_COMMENT                 TS_COMMENT_BLOCK         
+25       0        +                         T_OPERATOR                TS_NONE                  
+25       1        +                         T_OPERATOR                TS_NONE                  
+25       3        -                         T_OPERATOR                TS_NONE                  
+25       4        -                         T_OPERATOR                TS_NONE                  
+26       0        +                         T_OPERATOR                TS_NONE                  
+26       2        -                         T_OPERATOR                TS_NONE                  
+26       4        *                         T_OPERATOR                TS_NONE                  
+26       6        /                         T_OPERATOR                TS_NONE                  
+26       8        %                         T_OPERATOR                TS_NONE                  
+26       10       %%                        T_OPERATOR                TS_NONE                  
+26       13       ^                         T_OPERATOR                TS_NONE                  
+27       0        =                         T_OPERATOR                TS_NONE                  
+28       0        !=                        T_OPERATOR                TS_NONE                  
+28       3        ==                        T_OPERATOR                TS_NONE                  
+28       6        <=                        T_OPERATOR                TS_NONE                  
+28       9        >=                        T_OPERATOR                TS_NONE                  
+28       12       <                         T_OPERATOR                TS_NONE                  
+28       14       >                         T_OPERATOR                TS_NONE                  
+28       16       !                         T_OPERATOR                TS_NONE                  
+28       18       &&                        T_OPERATOR                TS_NONE                  
+28       21       ||                        T_OPERATOR                TS_NONE                  
+30       0        // Some invalid tokens yea,, T_COMMENT                 TS_COMMENT_LINE          
+32       0        ,                         T_INVALID                 TS_NONE                  
+32       2        .                         T_INVALID                 TS_NONE                  
+32       4        23as                      T_INVALID                 TS_NONE                  
+32       9        43                        T_CONSTANT                TS_INTEGER_LITERAL       
+32       11       .                         T_INVALID                 TS_NONE                  
+33       0        @4fd345                   T_INVALID                 TS_NONE                  
+33       8        '                         T_INVALID                 TS_NONE                  
+33       10       "                         T_INVALID                 TS_NONE                  
+35       0        // Detects invalid char and string T_COMMENT                 TS_COMMENT_LINE          
+36       0        "Hello!!                  T_INVALID                 TS_NONE                  
+37       0        'char'                    T_INVALID                 TS_NONE                  

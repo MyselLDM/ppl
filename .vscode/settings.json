@@ -12,7 +12,8 @@
     "xutility": "c",
     "dictionary.h": "c",
     "token.h": "c",
-    "scanner.h": "c"
+    "scanner.h": "c",
+    "MKTABLES.C": "cpp"
   },
 
   

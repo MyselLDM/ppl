@@ -5,7 +5,7 @@
 #include "global/debug_print.h"
 // #include "legacy_code/tokenizer.h"
 #include "lexic/scanner.h"
-#include "lexic/tokenizer_manual.h"
+#include "lexic/tokenizer.h"
 int main(int argc, char* argv[]) {
   // CLI Argument Checking
   if (argc < 2) {
@@ -36,6 +36,12 @@ int main(int argc, char* argv[]) {
   // tokenizer_token_scan_manual(fstr2);
 
   DEBUG_PRINT("[!!MAIN!!] Successfully tokenized '%s'\n", FILE_NAME);
+
+  for (int i = 0; i < tokens.length; i++) {
+    Token t = tokens.token[i];
+    DEBUG_PRINT("{%s, %s, %s, %d, %d}\n", t.lexeme, tt2str(t.token_type),
+                ts2str(t.token_type_special), t.line, t.offset);
+  }
 
   // TODO: Create the AST from the tokenized file
   // AST ast = ast_create(tokens);

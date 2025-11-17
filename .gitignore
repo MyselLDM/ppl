@@ -3,3 +3,4 @@ pcre
 string_builder.*
 *.log
 *.exe
+legacy_code/

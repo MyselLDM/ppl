@@ -106,47 +106,18 @@ int tokenizer_match_symbol(const char* strptr, const char* symbols[][2],
   return 0;
 }
 
-/* Category-specific matchers */
-int tokenizer_match_operator_arithmetic(const char* strptr) {
-  return tokenizer_match_symbol(
-      strptr, CONST_symbol_arithmetic,
-      sizeof(CONST_symbol_arithmetic) / sizeof(CONST_symbol_arithmetic[0]));
-}
-
-int tokenizer_match_operator_logical(const char* strptr) {
-  return tokenizer_match_symbol(
-      strptr, CONST_symbol_logical,
-      sizeof(CONST_symbol_logical) / sizeof(CONST_symbol_logical[0]));
-}
-
 int tokenizer_match_operator(const char* strptr) {
-  int len = tokenizer_match_operator_logical(strptr);
-  if (len) return len;
+  if (strptr[0] == '=' && strptr[1] == '=') return 2;
+  if (strptr[0] == '&' && strptr[1] == '&') return 2;
+  if (strptr[0] == '|' && strptr[1] == '|') return 2;
 
-  len = tokenizer_match_operator_arithmetic(strptr);
-  if (len) return len;
-
-  return 0;  // explicit, same logic, more readable to new maintainers
-}
-
-int tokenizer_match_boolean(const char* strptr) {
-  // Match "true"
-  if (strptr[0] == 't' && strptr[1] == 'r' && strptr[2] == 'u' &&
-      strptr[3] == 'e') {
-    char next = strptr[4];
-    if (!((next >= 'a' && next <= 'z') || (next >= 'A' && next <= 'Z') ||
-          (next >= '0' && next <= '9') || next == '_')) {
-      return 4;
-    }
-  }
-
-  // Match "false"
-  if (strptr[0] == 'f' && strptr[1] == 'a' && strptr[2] == 'l' &&
-      strptr[3] == 's' && strptr[4] == 'e') {
-    char next = strptr[5];
-    if (!((next >= 'a' && next <= 'z') || (next >= 'A' && next <= 'Z') ||
-          (next >= '0' && next <= '9') || next == '_')) {
-      return 5;
+  // Arithmetic
+  const char* ops = "+-*/%^<>!=";
+  if (strptr[0] == '%' && strptr[1] == '%') return 2;
+  for (int i = 0; ops[i] != '\0'; i++) {
+    if (strptr[0] == ops[i]) {
+      if (strptr[1] == '=') return 2;
+      return 1;
     }
   }
 

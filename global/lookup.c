@@ -1,526 +1,151 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "dictionary.h"
 
-#define CHECK_CHAR(c, next_state) \
-  do {                            \
-    if (*lexeme == c) {           \
-      lexeme++;                   \
-      goto next_state;            \
-    }                             \
-  } while (0)
-
-const char* dictionary_lookup_text(char* lexeme) {
-  if (!lexeme || *lexeme == '\0') return "identifier";
-
-  switch (*lexeme) {
-    case 'i':
-      lexeme++;
-      goto state_i;  // if, int
-    case 'e':
-      lexeme++;
-      goto state_e;  // else
-    case 'f':
-      lexeme++;
-      goto state_f;  // for, float, false
-    case 'w':
-      lexeme++;
-      goto state_w;  // while
-    case 'v':
-      lexeme++;
-      goto state_v;  // var
-    case 'p':
-
-      lexeme++;
-      goto state_p;  // print
-    case 's':
-      lexeme++;
-      goto state_s;  // switch, string
-    case 'c':
-      lexeme++;
-      goto state_c;  // case, char, continue
-    case 'd':
-      lexeme++;
-      goto state_d;  // default
-    case 'b':
-      lexeme++;
-      goto state_b;  // break, bool
-    case 'r':
-      lexeme++;
-      goto state_r;  // return
-    case 't':
-      lexeme++;
-      goto state_t;  // true
+char* tt2str(TokenType token_type) {
+  switch (token_type) {
+    case T_INVALID:
+      return "T_INVALID";
+    case T_KEYWORD:
+      return "T_KEYWORD";
+    case T_RESERVED:
+      return "T_RESERVED";
+    case T_IDENTIFIER:
+      return "T_IDENTIFIER";
+    case T_CONSTANT:
+      return "T_CONSTANT";
+    case T_OPERATOR:
+      return "T_OPERATOR";
+    case T_DELIMITER:
+      return "T_DELIMITER";
+    case T_COMMENT:
+      return "T_COMMENT";
+    case T_NOISE:
+      return "T_NOISE";
     default:
-      return "identifier";
+      return "TS_UNKNOWN";
   }
-
-  // -------- i --------
-state_i:
-  if (*lexeme == 'f') {
-    lexeme++;
-    goto state_if_end;
-  }
-  if (*lexeme == 'n') {
-    lexeme++;
-    goto state_int;
-  }
-  return "identifier";
-state_if_end:
-  if (*lexeme == '\0') return "keyword";  // if
-  return "identifier";
-state_int:
-  if (*lexeme == '\0') return "noise";  // int
-  return "identifier";
-
-  // -------- e --------
-state_e:
-  CHECK_CHAR('l', state_el);
-  return "identifier";
-state_el:
-  CHECK_CHAR('s', state_els);
-  return "identifier";
-state_els:
-  CHECK_CHAR('e', state_else_end);
-  return "identifier";
-state_else_end:
-  if (*lexeme == '\0') return "keyword";  // else
-  return "identifier";
-
-  // -------- f --------
-state_f:
-  CHECK_CHAR('o', state_fo);  // for
-  CHECK_CHAR('l', state_fl);  // float
-  CHECK_CHAR('a', state_fa);  // false
-  CHECK_CHAR('u', state_fu);  // func
-  return "identifier";
-
-  // for
-state_fo:
-  CHECK_CHAR('r', state_for_end);
-  return "identifier";
-state_for_end:
-  if (*lexeme == '\0') return "keyword";  // for
-  return "identifier";
-
-  // handle both "float"
-state_fl:
-  CHECK_CHAR('o', state_flo);  // float
-  return "identifier";
-  // float
-state_flo:
-  CHECK_CHAR('a', state_floa);
-  return "identifier";
-state_floa:
-  CHECK_CHAR('t', state_float_end);
-  return "identifier";
-state_float_end:
-  if (*lexeme == '\0') return "noise";  // float
-  return "identifier";
-
-  // false
-state_fa:
-  CHECK_CHAR('l', state_fal);
-  return "identifier";
-state_fal:
-  CHECK_CHAR('s', state_fals);
-  return "identifier";
-state_fals:
-  CHECK_CHAR('e', state_false_end);
-  return "identifier";
-state_false_end:
-  if (*lexeme == '\0') return "constant";  // false
-  return "identifier";
-
-state_fu:
-  CHECK_CHAR('n', state_fun);
-  return "identifier";
-state_fun:
-  CHECK_CHAR('c', state_func_end);
-  return "identifier";
-state_func_end:
-  if (*lexeme == '\0') return "reserved";  // func
-  return "identifier";
-
-  // -------- w --------
-state_w:
-  CHECK_CHAR('h', state_wh);
-  return "identifier";
-state_wh:
-  CHECK_CHAR('i', state_whi);
-  return "identifier";
-state_whi:
-  CHECK_CHAR('l', state_whil);
-  return "identifier";
-state_whil:
-  CHECK_CHAR('e', state_while_end);
-  return "identifier";
-state_while_end:
-  if (*lexeme == '\0') return "keyword";  // while
-  return "identifier";
-
-  // -------- v --------
-state_v:
-  CHECK_CHAR('a', state_va);
-  return "identifier";
-state_va:
-  CHECK_CHAR('r', state_var_end);
-  return "identifier";
-state_var_end:
-  if (*lexeme == '\0') return "keyword";  // var
-  return "identifier";
-
-  // -------- p --------
-state_p:
-  CHECK_CHAR('r', state_pr);
-  return "identifier";
-state_pr:
-  CHECK_CHAR('i', state_pri);
-  return "identifier";
-state_pri:
-  CHECK_CHAR('n', state_prin);
-  return "identifier";
-state_prin:
-  CHECK_CHAR('t', state_print_end);
-  return "identifier";
-state_print_end:
-  if (*lexeme == '\0') return "keyword";  // print
-  return "identifier";
-
-  // -------- s --------
-state_s:
-  CHECK_CHAR('w', state_sw);
-  CHECK_CHAR('t', state_st);
-  return "identifier";
-state_sw:
-  CHECK_CHAR('i', state_swi);
-  return "identifier";
-state_swi:
-  CHECK_CHAR('t', state_swit);
-  return "identifier";
-state_swit:
-  CHECK_CHAR('c', state_switc);
-  return "identifier";
-state_switc:
-  CHECK_CHAR('h', state_switch_end);
-  return "identifier";
-state_switch_end:
-  if (*lexeme == '\0') return "reserved";  // switch
-  return "identifier";
-state_st:
-  CHECK_CHAR('r', state_str);
-  return "identifier";
-state_str:
-  CHECK_CHAR('i', state_stri);
-  return "identifier";
-state_stri:
-  CHECK_CHAR('n', state_strin);
-  return "identifier";
-state_strin:
-  CHECK_CHAR('g', state_string_end);
-  return "identifier";
-state_string_end:
-  if (*lexeme == '\0') return "noise";  // string
-  return "identifier";
-
-  // -------- c --------
-state_c:
-  CHECK_CHAR('a', state_ca);
-  CHECK_CHAR('o', state_co);
-  CHECK_CHAR('h', state_ch);
-  return "identifier";
-state_ca:
-  CHECK_CHAR('s', state_cas);
-  return "identifier";
-state_cas:
-  CHECK_CHAR('e', state_case_end);
-  return "identifier";
-state_case_end:
-  if (*lexeme == '\0') return "reserved";  // case
-  return "identifier";
-state_ch:
-  CHECK_CHAR('a', state_cha);
-  return "identifier";
-state_cha:
-  CHECK_CHAR('r', state_char_end);
-  return "identifier";
-state_char_end:
-  if (*lexeme == '\0') return "noise";  // char
-  return "identifier";
-state_co:
-  CHECK_CHAR('n', state_con);
-  return "identifier";
-state_con:
-  CHECK_CHAR('t', state_cont);
-  return "identifier";
-state_cont:
-  CHECK_CHAR('i', state_conti);
-  return "identifier";
-state_conti:
-  CHECK_CHAR('n', state_contin);
-  return "identifier";
-state_contin:
-  CHECK_CHAR('u', state_continu);
-  return "identifier";
-state_continu:
-  CHECK_CHAR('e', state_continue_end);
-  return "identifier";
-state_continue_end:
-  if (*lexeme == '\0') return "reserved";  // continue
-  return "identifier";
-
-  // -------- d --------
-state_d:
-  CHECK_CHAR('e', state_de);
-  return "identifier";
-state_de:
-  CHECK_CHAR('f', state_def);
-  return "identifier";
-state_def:
-  CHECK_CHAR('a', state_defa);
-  return "identifier";
-state_defa:
-  CHECK_CHAR('u', state_defau);
-  return "identifier";
-state_defau:
-  CHECK_CHAR('l', state_defaul);
-  return "identifier";
-state_defaul:
-  CHECK_CHAR('t', state_default_end);
-  return "identifier";
-state_default_end:
-  if (*lexeme == '\0') return "reserved";  // default
-  return "identifier";
-
-// -------- b --------
-state_b:
-  CHECK_CHAR('r', state_br);
-  CHECK_CHAR('o', state_bo);
-  return "identifier";
-state_br:
-  CHECK_CHAR('e', state_bre);
-  return "identifier";
-state_bre:
-  CHECK_CHAR('a', state_brea);
-  return "identifier";
-state_brea:
-  CHECK_CHAR('k', state_break_end);
-  return "identifier";
-state_break_end:
-  if (*lexeme == '\0') return "reserved";  // break
-  return "identifier";
-state_bo:
-  CHECK_CHAR('o', state_boo);
-  return "identifier";
-state_boo:
-  CHECK_CHAR('l', state_bool_end);
-  return "identifier";
-state_bool_end:
-  if (*lexeme == '\0') return "noise";  // bool
-  return "identifier";
-
-  // -------- r --------
-state_r:
-  CHECK_CHAR('e', state_re);
-  return "identifier";
-state_re:
-  CHECK_CHAR('t', state_ret);
-  return "identifier";
-state_ret:
-  CHECK_CHAR('u', state_retu);
-  return "identifier";
-state_retu:
-  CHECK_CHAR('r', state_retur);
-  return "identifier";
-state_retur:
-  CHECK_CHAR('n', state_return_end);
-  return "identifier";
-state_return_end:
-  if (*lexeme == '\0') return "reserved";  // return
-  return "identifier";
-
-  // -------- t (true) --------
-state_t:
-  CHECK_CHAR('r', state_tr);
-  return "identifier";
-state_tr:
-  CHECK_CHAR('u', state_tru);
-  return "identifier";
-state_tru:
-  CHECK_CHAR('e', state_true_end);
-  return "identifier";
-state_true_end:
-  if (*lexeme == '\0') return "constant";  // true
-  return "identifier";
-
-  // fallback
-  return "identifier";
 }
 
-// This function recognizes multi-character operators like ++, --, ==, etc.
-// Returns the operator type name, or "" if not recognized.
-const char* dictionary_manual_symbol_lookup(char* lexeme) {
-  if (!lexeme || *lexeme == '\0') return "";
-
-  switch (*lexeme) {
-    case '+':
-      lexeme++;
-      goto state_plus;
-    case '-':
-      lexeme++;
-      goto state_minus;
-    case '*':
-      lexeme++;
-      goto state_star;
-    case '/':
-      lexeme++;
-      goto state_slash;
-    case '%':
-      lexeme++;
-      goto state_percent;
-    case '=':
-      lexeme++;
-      goto state_equal;
-    case '!':
-      lexeme++;
-      goto state_exclam;
-    case '<':
-      lexeme++;
-      goto state_less;
-    case '>':
-      lexeme++;
-      goto state_greater;
-    case '&':
-      lexeme++;
-      goto state_amp;
-    case '|':
-      lexeme++;
-      goto state_pipe;
-    case '^':
-      lexeme++;
-      goto state_caret;
+char* ts2str(TokenSpecial token_type_special) {
+  switch (token_type_special) {
+    case TS_NONE:
+      return "TS_NONE";
+    case TS_IF:
+      return "TS_IF";
+    case TS_ELSE:
+      return "TS_ELSE";
+    case TS_FOR:
+      return "TS_FOR";
+    case TS_WHILE:
+      return "TS_WHILE";
+    case TS_VAR:
+      return "TS_VAR";
+    case TS_PRINT:
+      return "TS_PRINT";
+    case TS_SWITCH:
+      return "TS_SWITCH";
+    case TS_FUNC:
+      return "TS_FUNC";
+    case TS_RETURN:
+      return "TS_RETURN";
+    case TS_CASE:
+      return "TS_CASE";
+    case TS_DEFAULT:
+      return "TS_DEFAULT";
+    case TS_BREAK:
+      return "TS_BREAK";
+    case TS_CONTINUE:
+      return "TS_CONTINUE";
+    case TS_INT:
+      return "TS_INT";
+    case TS_FLOAT:
+      return "TS_FLOAT";
+    case TS_BOOL:
+      return "TS_BOOL";
+    case TS_CHAR:
+      return "TS_CHAR";
+    case TS_STRING:
+      return "TS_STRING";
+    case TS_TRUE:
+      return "TS_TRUE";
+    case TS_FALSE:
+      return "TS_FALSE";
+    case TS_CHAR_LITERAL:
+      return "TS_CHAR_LITERAL";
+    case TS_STRING_LITERAL:
+      return "TS_STRING_LITERAL";
+    case TS_INTEGER_LITERAL:
+      return "TS_INTEGER_LITERAL";
+    case TS_FLOAT_LITERAL:
+      return "TS_FLOAT_LITERAL";
+    case TS_SEMICOLON:
+      return "TS_SEMICOLON";
+    case TS_L_PAREN:
+      return "TS_L_PAREN";
+    case TS_R_PAREN:
+      return "TS_R_PAREN";
+    case TS_L_BRACE:
+      return "TS_L_BRACE";
+    case TS_R_BRACE:
+      return "TS_R_BRACE";
+    case TS_INCREMENT:
+      return "TS_INCREMENT";
+    case TS_DECREMENT:
+      return "TS_DECREMENT";
+    case TS_ADD:
+      return "TS_ADD";
+    case TS_ADD_ASSIGNMENT:
+      return "TS_ADD_ASSIGNMENT";
+    case TS_SUBTRACT_ASSIGNMENT:
+      return "TS_SUBTRACT_ASSIGNMENT";
+    case TS_MULTIPLY_ASSIGNMENT:
+      return "TS_MULTIPLY_ASSIGNMENT";
+    case TS_DIVIDE_ASSIGNMENT:
+      return "TS_DIVIDE_ASSIGNMENT";
+    case TS_MODULO_ASSIGNMENT:
+      return "TS_MODULO_ASSIGNMENT";
+    case TS_DIVIDE_FLOOR_ASSIGNMENT:
+      return "TS_DIVIDE_FLOOR_ASSIGNMENT";
+    case TS_POWER_ASSIGNMENT:
+      return "TS_POWER_ASSIGNMENT";
+    case TS_SUBTRACT:
+      return "TS_SUBTRACT";
+    case TS_MULTIPLY:
+      return "TS_MULTIPLY";
+    case TS_DIVIDE:
+      return "TS_DIVIDE";
+    case TS_MODULO:
+      return "TS_MODULO";
+    case TS_DIVIDE_FLOOR:
+      return "TS_DIVIDE_FLOOR";
+    case TS_ASSIGNMENT:
+      return "TS_ASSIGNMENT";
+    case TS_POWER:
+      return "TS_POWER";
+    case TS_EQUAL:
+      return "TS_EQUAL";
+    case TS_NOT_EQUAL:
+      return "TS_NOT_EQUAL";
+    case TS_LESS_EQUAL:
+      return "TS_LESS_EQUAL";
+    case TS_GREATER_EQUAL:
+      return "TS_GREATER_EQUAL";
+    case TS_AND:
+      return "TS_AND";
+    case TS_OR:
+      return "TS_OR";
+    case TS_NOT:
+      return "TS_NOT";
+    case TS_LESS_THAN:
+      return "TS_LESS_THAN";
+    case TS_GREATER_THAN:
+      return "TS_GREATER_THAN";
+    case TS_IDENTIFIER:
+      return "TS_IDENTIFIER";
+    case TS_COMMENT_LINE:
+      return "TS_COMMENT_LINE";
+    case TS_COMMENT_BLOCK:
+      return "TS_COMMENT_BLOCK";
     default:
-      return "";
+      return "TS_UNKNOWN";
   }
-
-  // -------- + --------
-state_plus:
-  if (*lexeme == '+') {
-    lexeme++;
-    if (*lexeme == '\0') return "increment";  // ++
-  }
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "add_assign";  // +=
-  }
-  if (*lexeme == '\0') return "add";  // +
-  return "";
-
-  // -------- - --------
-state_minus:
-  if (*lexeme == '-') {
-    lexeme++;
-    if (*lexeme == '\0') return "decrement";  // --
-  }
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "subtract_assign";  // -=
-  }
-  if (*lexeme == '\0') return "subtract";  // -
-  return "";
-
-  // -------- * --------
-state_star:
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "multiply_assign";  // *=
-  }
-  if (*lexeme == '\0') return "multiply";  // *
-  return "";
-
-  // -------- / --------
-state_slash:
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "divide_assign";  // /=
-  }
-  if (*lexeme == '\0') return "divide";  // /
-  return "";
-
-  // -------- % --------
-state_percent:
-  if (*lexeme == '%') {
-    lexeme++;
-    if (*lexeme == '\0') return "divide_floor";  // %%
-  }
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "mod_assign";  // %=
-  }
-  if (*lexeme == '\0') return "modulo";  // %
-  return "";
-
-  // -------- = --------
-state_equal:
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "equal";  // ==
-  }
-  if (*lexeme == '\0') return "assignment";  // =
-  return "";
-
-  // -------- ! --------
-state_exclam:
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "not_equal";  // !=
-  }
-  if (*lexeme == '\0') return "not";  // !
-  return "";
-
-  // -------- < --------
-state_less:
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "less_equal";  // <=
-  }
-  if (*lexeme == '\0') return "less_than";  // <
-  return "";
-
-  // -------- > --------
-state_greater:
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "greater_equal";  // >=
-  }
-  if (*lexeme == '\0') return "greater_than";  // >
-  return "";
-
-  // -------- && --------
-state_amp:
-  if (*lexeme == '&') {
-    lexeme++;
-    if (*lexeme == '\0') return "and";  // &&
-  }
-  return "";
-
-  // -------- || --------
-state_pipe:
-  if (*lexeme == '|') {
-    lexeme++;
-    if (*lexeme == '\0') return "or";  // ||
-  }
-  return "";
-
-  // -------- ^ --------
-state_caret:
-  if (*lexeme == '=') {
-    lexeme++;
-    if (*lexeme == '\0') return "power_assign";  // ^=
-  }
-  if (*lexeme == '\0') return "power";  // ^
-  return "";
-
-  return "";
 }
