@@ -21,32 +21,14 @@ int main(int argc, char* argv[]) {
   DEBUG_PRINT("%s: Successfully parsed CLI arguments\n", __func__);
 
   char* fstr = parser_scan_file(FILE_NAME);
-  // char* fstr2 = fstr;
 
   DEBUG_PRINT("[!!MAIN!!] Successfully parsed '%s'\n", FILE_NAME);
   DEBUG_PRINT("[!!MAIN!!] Starting tokenization of '%s'\n", FILE_NAME);
 
-  // Tokenizes the file input and stores it in a struct array
   Tokens tokens = tokenizer_token_scan_manual(fstr);
-  // DEBUG_PRINT("[!!MAIN!!] Starting LEGACY tokenization of '%s'\n",
-  // FILE_NAME);
-  // Tokens tokensold = tokenizer_token_scan(fstr);
-
-  // Tokenizes the file input and stores it in a struct array
-  // tokenizer_token_scan_manual(fstr2);
+  token_optimize(&tokens);
 
   DEBUG_PRINT("[!!MAIN!!] Successfully tokenized '%s'\n", FILE_NAME);
-
-  for (int i = 0; i < tokens.length; i++) {
-    Token t = tokens.token[i];
-    DEBUG_PRINT("{%s, %s, %s, %d, %d}\n", t.lexeme, tt2str(t.token_type),
-                ts2str(t.token_type_special), t.line, t.offset);
-  }
-
-  // TODO: Create the AST from the tokenized file
-  // AST ast = ast_create(tokens);
-
-  // TODO: Analyze the semantics of the AST
 
   debug_close();
 

@@ -1,5 +1,21 @@
 #include "dictionary.h"
 
+// Lookup Table for Token Type from Token Special
+TokenType token_type_lookup(TokenSpecial ts) {
+  if (TS_NONE == ts) return T_INVALID;
+
+  if (TS_IF <= ts && ts <= TS_PRINT) return T_KEYWORD;
+  if (TS_SWITCH <= ts && ts <= TS_CONTINUE) return T_RESERVED;
+  if (TS_INT <= ts && ts <= TS_STRING) return T_NOISE;
+  if (TS_TRUE <= ts && ts <= TS_FLOAT_LITERAL) return T_CONSTANT;
+  if (TS_SEMICOLON <= ts && ts <= TS_R_BRACE) return T_DELIMITER;
+  if (TS_INCREMENT <= ts && ts <= TS_GREATER_THAN) return T_OPERATOR;
+  if (TS_IDENTIFIER == ts) return T_IDENTIFIER;
+  if (TS_COMMENT_BLOCK == ts || ts == TS_COMMENT_LINE) return T_COMMENT;
+
+  return T_UNKNOWN;
+}
+
 char* tt2str(TokenType token_type) {
   switch (token_type) {
     case T_INVALID:

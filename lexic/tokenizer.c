@@ -48,13 +48,6 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
     }
   }
 
-  // Delimiters
-  if ((len = tokenizer_match_delimiter(strptr)) > 0) {
-    TokenSpecial ts = dictionary_lookup_symbol(strptr);
-    return make_lexeme(strptr, len, token_type, token_type_special, T_DELIMITER,
-                       ts);
-  }
-
   // Numbers
   if ((*strptr >= '0' && *strptr <= '9') ||
       (*strptr == '-' && strptr[1] >= '0' && strptr[1] <= '9')) {
@@ -66,30 +59,6 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
                          T_CONSTANT, TS_INTEGER_LITERAL);
     else
       RETURN_LEXEME_INVALID;
-  }
-
-  // Operators
-  if ((len = tokenizer_match_operator(strptr)) > 0) {
-    TokenSpecial ts = dictionary_lookup_symbol(strptr);
-    return make_lexeme(strptr, len, token_type, token_type_special, T_OPERATOR,
-                       ts);
-  }
-
-  // Text / Keywords / Booleans
-  if ((*strptr >= 'a' && *strptr <= 'z') ||
-      (*strptr >= 'A' && *strptr <= 'Z') || *strptr == '_') {
-    if ((len = tokenizer_match_text(strptr)) > 0) {
-      char* temp = malloc(len + 1);
-      for (int i = 0; i < len; i++) temp[i] = strptr[i];
-      temp[len] = '\0';
-
-      TokenSpecial ts = dictionary_lookup_text(temp);
-      TokenType t = token_type_lookup(ts);
-      free(temp);
-      return make_lexeme(strptr, len, token_type, token_type_special, t, ts);
-    } else {
-      RETURN_LEXEME_INVALID;
-    }
   }
 
   // Characters
@@ -110,6 +79,31 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
                          T_CONSTANT, TS_STRING);
     else
       RETURN_LEXEME_INVALID;
+  }
+
+  DEBUG_PRINT("STRINGPOINTER %c entering the TEXT LOOP", *strptr);
+  // Text / Keywords / Booleans
+  if ((*strptr >= 'a' && *strptr <= 'z') ||
+      (*strptr >= 'A' && *strptr <= 'Z') || *strptr == '_') {
+    TokenSpecial ts = dictionary_lookup_text(strptr, &len);
+    if (len > 0) {
+      char* temp = malloc(len + 1);
+      for (int i = 0; i < len; i++) temp[i] = strptr[i];
+      temp[len] = '\0';
+
+      TokenType t = token_type_lookup(ts);
+      free(temp);
+      return make_lexeme(strptr, len, token_type, token_type_special, t, ts);
+    }
+  }
+
+  // Delimiters
+  if (len == 0) {
+    TokenSpecial ts = dictionary_lookup_symbol(strptr, &len);
+    TokenType tt = token_type_lookup(ts);
+    if (len > 0) {
+      return make_lexeme(strptr, len, token_type, token_type_special, tt, ts);
+    }
   }
 
   // Fallback invalid

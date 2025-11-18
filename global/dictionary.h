@@ -93,8 +93,8 @@ typedef enum {
   TS_UNKNOWN
 } TokenSpecial;
 
-TokenSpecial dictionary_lookup_text(char* lexeme);
-TokenSpecial dictionary_lookup_symbol(char* lexeme);
+TokenSpecial dictionary_lookup_text(char* lexeme, int* len);
+TokenSpecial dictionary_lookup_symbol(char* lexeme, int* len);
 TokenType token_type_lookup(TokenSpecial ts);
 char* tt2str(TokenType token_type);
 char* ts2str(TokenSpecial token_special);

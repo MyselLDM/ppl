@@ -24,4 +24,7 @@ typedef struct {
 Tokens token_create();
 void token_push(Tokens* tokens, char* lexeme, TokenType token_type,
                 TokenSpecial token_type_special, size_t line, size_t offset);
+
+void token_optimize(Tokens* tokens);
+
 #endif
