@@ -26,6 +26,12 @@ token_debug_print(&tokens);
 // Incase readmejs isnt enough, heres a more linear explaination:
 
 
+// This is the overview structure of the program. 
+// Thank you for actually reading this!
+// What is presented below is the workflow tree of the program.
+// Your task will be to write the C files for each of the function prototypes.
+// Please select one and notify me of your code progress.
+
 
 
 // -------------------------
