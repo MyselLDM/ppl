@@ -25,9 +25,13 @@ Still a Comment
 ///
 
 ++ -- 
-+ - * / % %% ^
++ - * / % /_ ^
 =
 != == <= >= < > ! && ||
+
+
+// Assignment++
++= -= *= /= %= ^= /_=
 
 // Some invalid tokens yea,,
 

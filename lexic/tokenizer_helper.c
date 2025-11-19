@@ -94,49 +94,6 @@ int tokenizer_match_delimiter(char* strptr) {
   return 0;
 }
 
-/* Generic symbol matcher */
-int tokenizer_match_symbol(const char* strptr, const char* symbols[][2],
-                           int count) {
-  for (int i = 0; i < count; i++) {
-    const char* op = symbols[i][0];
-    int j = 0;
-    while (op[j] && strptr[j] && op[j] == strptr[j]) j++;
-    if (op[j] == '\0') return (int)j;  // full match length
-  }
-  return 0;
-}
-
-int tokenizer_match_operator(const char* strptr) {
-  if (strptr[0] == '=' && strptr[1] == '=') return 2;
-  if (strptr[0] == '&' && strptr[1] == '&') return 2;
-  if (strptr[0] == '|' && strptr[1] == '|') return 2;
-
-  // Arithmetic
-  const char* ops = "+-*/%^<>!=";
-  if (strptr[0] == '%' && strptr[1] == '%') return 2;
-  for (int i = 0; ops[i] != '\0'; i++) {
-    if (strptr[0] == ops[i]) {
-      if (strptr[1] == '=') return 2;
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
-int tokenizer_match_text(char* strptr) {
-  if (!((strptr[0] >= 'a' && strptr[0] <= 'z') ||
-        (strptr[0] >= 'A' && strptr[0] <= 'Z') || strptr[0] == '_'))
-    return 0;
-
-  int i = 1;
-  while ((strptr[i] >= 'a' && strptr[i] <= 'z') ||
-         (strptr[i] >= 'A' && strptr[i] <= 'Z') ||
-         (strptr[i] >= '0' && strptr[i] <= '9') || strptr[i] == '_')
-    i++;
-  return i;
-}
-
 int tokenizer_match_invalid(char* strptr) {
   int i = 0;
   while (strptr[i] != '\0' && strptr[i] != ' ' && strptr[i] != '\t' &&

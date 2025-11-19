@@ -503,17 +503,22 @@ state_slash:
     (*len)++;
     return TS_DIVIDE_ASSIGNMENT;  // /=
   }
+  if (*lexeme == '_') {
+    lexeme++;
+    (*len)++;
+    if (*lexeme == '=') {
+      lexeme++;
+      (*len)++;
+      return TS_DIVIDE_FLOOR_ASSIGNMENT;  // /_=
+    }
+    return TS_DIVIDE_FLOOR;  // /_
+  }
   return TS_DIVIDE;  // /
   (*len) = 0;
   return TS_NONE;
 
   // -------- % --------
 state_percent:
-  if (*lexeme == '%') {
-    lexeme++;
-    (*len)++;
-    return TS_DIVIDE_FLOOR;  // %%
-  }
   if (*lexeme == '=') {
     lexeme++;
     (*len)++;

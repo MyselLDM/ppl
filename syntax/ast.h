@@ -5,15 +5,94 @@
 // AST Structures
 // ========================
 
+/*
+
+
+
+
+
+
+
+
+
+DISREGARD FOR NOW
+Our tree is not finished due to the cfg's not finalized
+will continue after the expression tree
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
 typedef enum {
-  AST_NODE_PROGRAM,     // Root node representing the entire program
-  AST_NODE_STATEMENT,   // Any statement (if, for, var declaration, etc.)
-  AST_NODE_EXPRESSION,  // Expressions like arithmetic or logical operations
-  AST_NODE_LITERAL,     // Literal values (numbers, strings, true/false)
-  AST_NODE_IDENTIFIER,  // Variable names or identifiers
-  AST_NODE_OPERATOR,    // Operators (+, -, *, /, etc.)
-  AST_NODE_UNKNOWN      // For error recovery or unrecognized constructs
+
+  // ————————————————
+  // Program / Statement
+  // ————————————————
+  AST_PROGRAM,
+  AST_STATEMENT_LIST,
+  AST_STATEMENT_EXPR,
+  AST_STATEMENT_ASSIGN,
+
+  // ————————————————
+  // Expression nodes
+  // ————————————————
+
+  // Primary
+  AST_IDENTIFIER,
+  AST_LITERAL_BOOL,
+  AST_LITERAL_INT,
+  AST_LITERAL_FLOAT,
+  AST_LITERAL_STRING,
+  AST_LITERAL_CHAR,
+  AST_GROUPING,  // (expr)
+
+  // Unary operators
+  AST_UNARY_OP,  // !expr, -expr
+
+  // Binary operators (ALL operators of your CFG)
+  AST_BINARY_OP,  // +, -, *, /, %, ^, <, >, <=, >=, ==, !=, &&, ||
+
+  // Assignment
+  AST_ASSIGN,  // id = expr
+
 } ASTNodeType;
+
+typedef enum {
+  // Arithmetic
+  OP_ADD,
+  OP_SUB,
+  OP_MUL,
+  OP_DIV,
+  OP_MOD,
+  OP_EXP,
+  OP_DIV_F,
+
+  // Relational
+  OP_LT,
+  OP_GT,
+  OP_LE,
+  OP_GE,
+  OP_EQ,
+  OP_NE,
+
+  // Logical
+  OP_AND,
+  OP_OR,
+
+  // Unary
+  OP_NOT,
+  OP_NEG
+
+} ASTOperator;
 
 typedef struct ASTNode {
   ASTNodeType type;           // Type of the AST node
