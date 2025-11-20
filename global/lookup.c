@@ -109,20 +109,6 @@ char* ts2str(TokenSpecial token_type_special) {
       return "TS_DECREMENT";
     case TS_ADD:
       return "TS_ADD";
-    case TS_ADD_ASSIGNMENT:
-      return "TS_ADD_ASSIGNMENT";
-    case TS_SUBTRACT_ASSIGNMENT:
-      return "TS_SUBTRACT_ASSIGNMENT";
-    case TS_MULTIPLY_ASSIGNMENT:
-      return "TS_MULTIPLY_ASSIGNMENT";
-    case TS_DIVIDE_ASSIGNMENT:
-      return "TS_DIVIDE_ASSIGNMENT";
-    case TS_MODULO_ASSIGNMENT:
-      return "TS_MODULO_ASSIGNMENT";
-    case TS_DIVIDE_FLOOR_ASSIGNMENT:
-      return "TS_DIVIDE_FLOOR_ASSIGNMENT";
-    case TS_POWER_ASSIGNMENT:
-      return "TS_POWER_ASSIGNMENT";
     case TS_SUBTRACT:
       return "TS_SUBTRACT";
     case TS_MULTIPLY:

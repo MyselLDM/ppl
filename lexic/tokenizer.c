@@ -8,6 +8,24 @@
 #include "token.h"
 #include "tokenizer_helper.h"
 
+#define ISDIGIT(c) (c >= '0' && c <= '9')
+#define CHECKDIGIT                      \
+  TokenType tt = T_CONSTANT;            \
+  TokenSpecial ts = TS_INTEGER_LITERAL; \
+  len++;                                \
+                                        \
+  while (ISDIGIT(strptr[len])) {        \
+    len++;                              \
+  }                                     \
+  if (strptr[len] == '.') {             \
+    ts = TS_FLOAT;                      \
+    len++;                              \
+    while (ISDIGIT(strptr[len])) {      \
+      len++;                            \
+    }                                   \
+  }                                     \
+  return make_lexeme(strptr, len, token_type, token_type_special, tt, ts);
+
 #define RETURN_LEXEME_INVALID                                             \
   return make_lexeme(strptr, tokenizer_match_invalid(strptr), token_type, \
                      token_type_special, T_INVALID, TS_NONE);
@@ -36,29 +54,40 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
   int len = 0;
 
   // Comments
-  if (*strptr == '/' && strptr[1] == '/') {
-    len = tokenizer_match_comment(strptr);
-    if (len > 0) {
-      TokenSpecial ts = (*strptr == '/' && strptr[2] == '/') ? TS_COMMENT_BLOCK
-                                                             : TS_COMMENT_LINE;
-      return make_lexeme(strptr, len, token_type, token_type_special, T_COMMENT,
-                         ts);
+  if (*strptr == '/') {
+    // check if its a comment
+    if (strptr[1] == '/') {
+      len = tokenizer_match_comment(strptr);
+      if (len > 0) {
+        TokenSpecial ts = (*strptr == '/' && strptr[2] == '/')
+                              ? TS_COMMENT_BLOCK
+                              : TS_COMMENT_LINE;
+        return make_lexeme(strptr, len, token_type, token_type_special,
+                           T_COMMENT, ts);
+      } else {
+        RETURN_LEXEME_INVALID;
+      }
+    }
+
+    TokenSpecial ts = dictionary_lookup_symbol(strptr, &len);
+    return make_lexeme(strptr, len, token_type, token_type_special, T_OPERATOR,
+                       ts);
+  }
+
+  if (*strptr == '-') {
+    if (ISDIGIT(strptr[1])) {
+      CHECKDIGIT;
+    }
+    return make_lexeme(strptr, 1, token_type, token_type_special, T_OPERATOR,
+                       TS_SUBTRACT);
+  }
+
+  if (ISDIGIT(*strptr)) {
+    if (ISDIGIT(strptr[1])) {
+      CHECKDIGIT;
     } else {
       RETURN_LEXEME_INVALID;
     }
-  }
-
-  // Numbers
-  if ((*strptr >= '0' && *strptr <= '9') ||
-      (*strptr == '-' && strptr[1] >= '0' && strptr[1] <= '9')) {
-    if ((len = tokenizer_match_float(strptr)) > 0)
-      return make_lexeme(strptr, len, token_type, token_type_special,
-                         T_CONSTANT, TS_FLOAT);
-    else if ((len = tokenizer_match_integer(strptr)) > 0)
-      return make_lexeme(strptr, len, token_type, token_type_special,
-                         T_CONSTANT, TS_INTEGER_LITERAL);
-    else
-      RETURN_LEXEME_INVALID;
   }
 
   // Characters
@@ -97,8 +126,8 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
     }
   }
 
-  // Delimiters
-  if (len == 0) {
+  // Operators
+  if (1) {
     TokenSpecial ts = dictionary_lookup_symbol(strptr, &len);
     TokenType tt = token_type_lookup(ts);
     if (len > 0) {

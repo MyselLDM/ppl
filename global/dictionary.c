@@ -403,33 +403,9 @@ TokenSpecial dictionary_lookup_symbol(char* lexeme, int* len) {
   if (!lexeme || *lexeme == '\0') return TS_NONE;
   (*len)++;
   switch (*lexeme) {
-    case '+':
-      lexeme++;
-      goto state_plus;
-    case '-':
-      lexeme++;
-      goto state_minus;
-    case '*':
-      lexeme++;
-      goto state_star;
-    case '/':
-      lexeme++;
-      goto state_slash;
-    case '%':
-      lexeme++;
-      goto state_percent;
-    case '=':
-      lexeme++;
-      goto state_equal;
-    case '!':
-      lexeme++;
-      goto state_exclam;
     case '<':
       lexeme++;
       goto state_less;
-    case '>':
-      lexeme++;
-      goto state_greater;
     case '&':
       lexeme++;
       goto state_amp;
@@ -437,8 +413,27 @@ TokenSpecial dictionary_lookup_symbol(char* lexeme, int* len) {
       lexeme++;
       goto state_pipe;
     case '^':
+      return TS_POWER;
+    case '>':
       lexeme++;
-      goto state_caret;
+      goto state_greater;
+    case '=':
+      lexeme++;
+      goto state_equal;
+    case '+':
+      lexeme++;
+      goto state_plus;
+    case '-':
+      lexeme++;
+      goto state_minus;
+    case '*':
+      return TS_MULTIPLY;
+    case '/':
+      return TS_DIVIDE;
+    case '%':
+      return TS_MODULO;
+    case '!':
+      return TS_NOT;
     case '(':
       return TS_L_PAREN;
     case ')':
@@ -460,11 +455,6 @@ state_plus:
     (*len)++;
     return TS_INCREMENT;  // ++
   }
-  if (*lexeme == '=') {
-    lexeme++;
-    (*len)++;
-    return TS_ADD_ASSIGNMENT;  // +=
-  }
   return TS_ADD;  // +
   (*len) = 0;
   return TS_NONE;
@@ -476,55 +466,18 @@ state_minus:
     (*len)++;
     return TS_DECREMENT;  // --
   }
-  if (*lexeme == '=') {
-    lexeme++;
-    (*len)++;
-    return TS_SUBTRACT_ASSIGNMENT;  // -=
-  }
   return TS_SUBTRACT;  // -
-  (*len) = 0;
-  return TS_NONE;
-
-  // -------- * --------
-state_star:
-  if (*lexeme == '=') {
-    lexeme++;
-    (*len)++;
-    return TS_MULTIPLY_ASSIGNMENT;  // *=
-  }
-  return TS_MULTIPLY;  // *
   (*len) = 0;
   return TS_NONE;
 
   // -------- / --------
 state_slash:
-  if (*lexeme == '=') {
-    lexeme++;
-    (*len)++;
-    return TS_DIVIDE_ASSIGNMENT;  // /=
-  }
   if (*lexeme == '_') {
     lexeme++;
     (*len)++;
-    if (*lexeme == '=') {
-      lexeme++;
-      (*len)++;
-      return TS_DIVIDE_FLOOR_ASSIGNMENT;  // /_=
-    }
     return TS_DIVIDE_FLOOR;  // /_
   }
   return TS_DIVIDE;  // /
-  (*len) = 0;
-  return TS_NONE;
-
-  // -------- % --------
-state_percent:
-  if (*lexeme == '=') {
-    lexeme++;
-    (*len)++;
-    return TS_MODULO_ASSIGNMENT;  // %=
-  }
-  return TS_MODULO;  // %
   (*len) = 0;
   return TS_NONE;
 
@@ -536,17 +489,6 @@ state_equal:
     return TS_EQUAL;  // ==
   }
   return TS_ASSIGNMENT;  // =
-  (*len) = 0;
-  return TS_NONE;
-
-  // -------- ! --------
-state_exclam:
-  if (*lexeme == '=') {
-    lexeme++;
-    (*len)++;
-    return TS_NOT_EQUAL;  // !=
-  }
-  return TS_NOT;  // !
   (*len) = 0;
   return TS_NONE;
 
@@ -589,17 +531,6 @@ state_pipe:
     (*len)++;
     return TS_OR;  // ||
   }
-  (*len) = 0;
-  return TS_NONE;
-
-  // -------- ^ --------
-state_caret:
-  if (*lexeme == '=') {
-    lexeme++;
-    (*len)++;
-    return TS_POWER_ASSIGNMENT;  // ^=
-  }
-  return TS_POWER;
   (*len) = 0;
   return TS_NONE;
 }
