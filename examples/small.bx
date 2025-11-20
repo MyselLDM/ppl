@@ -30,8 +30,6 @@ Still a Comment
 != == <= >= < > ! && ||
 
 
-// Assignment++
-+= -= *= /= %= ^= /_=
 
 // Some invalid tokens yea,,
 
