@@ -47,16 +47,19 @@ Line     Offset   Lexeme                    Token                     Token Spec
 Still a Comment
 /// T_COMMENT                 TS_COMMENT_BLOCK         
 25       0        ++                        T_OPERATOR                TS_INCREMENT             
-25       3        --                        T_OPERATOR                TS_DECREMENT             
+25       3        -                         T_OPERATOR                TS_SUBTRACT              
+25       4        -                         T_OPERATOR                TS_SUBTRACT              
 26       0        +                         T_OPERATOR                TS_ADD                   
 26       2        -                         T_OPERATOR                TS_SUBTRACT              
 26       4        *                         T_OPERATOR                TS_MULTIPLY              
 26       6        /                         T_OPERATOR                TS_DIVIDE                
 26       8        %                         T_OPERATOR                TS_MODULO                
-26       10       /_                        T_OPERATOR                TS_DIVIDE_FLOOR          
+26       10       /                         T_OPERATOR                TS_DIVIDE                
+26       11       _                         T_IDENTIFIER              TS_IDENTIFIER            
 26       13       ^                         T_OPERATOR                TS_POWER                 
 27       0        =                         T_OPERATOR                TS_ASSIGNMENT            
-28       0        !=                        T_OPERATOR                TS_NOT_EQUAL             
+28       0        !                         T_OPERATOR                TS_NOT                   
+28       1        =                         T_OPERATOR                TS_ASSIGNMENT            
 28       3        ==                        T_OPERATOR                TS_EQUAL                 
 28       6        <=                        T_OPERATOR                TS_LESS_EQUAL            
 28       9        >=                        T_OPERATOR                TS_GREATER_EQUAL         
@@ -65,30 +68,22 @@ Still a Comment
 28       16       !                         T_OPERATOR                TS_NOT                   
 28       18       &&                        T_OPERATOR                TS_AND                   
 28       21       ||                        T_OPERATOR                TS_OR                    
-31       0        // Assignment++           T_COMMENT                 TS_COMMENT_LINE          
-32       0        +=                        T_OPERATOR                TS_ADD_ASSIGNMENT        
-32       3        -=                        T_OPERATOR                TS_SUBTRACT_ASSIGNMENT   
-32       6        *=                        T_OPERATOR                TS_MULTIPLY_ASSIGNMENT   
-32       9        /=                        T_OPERATOR                TS_DIVIDE_ASSIGNMENT     
-32       12       %=                        T_OPERATOR                TS_MODULO_ASSIGNMENT     
-32       15       ^=                        T_OPERATOR                TS_POWER_ASSIGNMENT      
-32       18       /_=                       T_OPERATOR                TS_DIVIDE_FLOOR_ASSIGNMENT
-34       0        // Some invalid tokens yea,, T_COMMENT                 TS_COMMENT_LINE          
-36       0        ,                         T_IDENTIFIER              TS_IDENTIFIER            
-36       2        .                         T_IDENTIFIER              TS_IDENTIFIER            
-36       4        23as                      T_INVALID                 TS_NONE                  
-36       9        43                        T_CONSTANT                TS_INTEGER_LITERAL       
-36       11       .                         T_IDENTIFIER              TS_IDENTIFIER            
-37       0        @                         T_IDENTIFIER              TS_IDENTIFIER            
-37       1        4fd345                    T_INVALID                 TS_NONE                  
-37       8        '                         T_INVALID                 TS_NONE                  
-37       10       "                         T_INVALID                 TS_NONE                  
-38       0        helli                     T_IDENTIFIER              TS_IDENTIFIER            
-38       5        $                         T_IDENTIFIER              TS_IDENTIFIER            
-38       6        25                        T_CONSTANT                TS_INTEGER_LITERAL       
-38       8        $                         T_IDENTIFIER              TS_IDENTIFIER            
-38       9        #                         T_IDENTIFIER              TS_IDENTIFIER            
-38       10       @                         T_IDENTIFIER              TS_IDENTIFIER            
-40       0        // Detects invalid char and string T_COMMENT                 TS_COMMENT_LINE          
-41       0        "Hello!!                  T_INVALID                 TS_NONE                  
-42       0        'char'                    T_INVALID                 TS_NONE                  
+32       0        // Some invalid tokens yea,, T_COMMENT                 TS_COMMENT_LINE          
+34       0        ,                         T_IDENTIFIER              TS_IDENTIFIER            
+34       2        .                         T_IDENTIFIER              TS_IDENTIFIER            
+34       4        23                        T_CONSTANT                TS_INTEGER_LITERAL       
+34       6        as                        T_IDENTIFIER              TS_IDENTIFIER            
+34       9        43.                       T_CONSTANT                TS_FLOAT                 
+35       0        @                         T_IDENTIFIER              TS_IDENTIFIER            
+35       1        4fd345                    T_INVALID                 TS_NONE                  
+35       8        '                         T_INVALID                 TS_NONE                  
+35       10       "                         T_INVALID                 TS_NONE                  
+36       0        helli                     T_IDENTIFIER              TS_IDENTIFIER            
+36       5        $                         T_IDENTIFIER              TS_IDENTIFIER            
+36       6        25                        T_CONSTANT                TS_INTEGER_LITERAL       
+36       8        $                         T_IDENTIFIER              TS_IDENTIFIER            
+36       9        #                         T_IDENTIFIER              TS_IDENTIFIER            
+36       10       @                         T_IDENTIFIER              TS_IDENTIFIER            
+38       0        // Detects invalid char and string T_COMMENT                 TS_COMMENT_LINE          
+39       0        "Hello!!                  T_INVALID                 TS_NONE                  
+40       0        'char'                    T_INVALID                 TS_NONE                  

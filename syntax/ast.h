@@ -5,94 +5,93 @@
 // AST Structures
 // ========================
 
-/*
-
-
-
-
-
-
-
-
-
-DISREGARD FOR NOW
-Our tree is not finished due to the cfg's not finalized
-will continue after the expression tree
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
 typedef enum {
 
-  // ————————————————
-  // Program / Statement
-  // ————————————————
-  AST_PROGRAM,
-  AST_STATEMENT_LIST,
-  AST_STATEMENT_EXPR,
-  AST_STATEMENT_ASSIGN,
-
-  // ————————————————
-  // Expression nodes
-  // ————————————————
-
-  // Primary
-  AST_IDENTIFIER,
-  AST_LITERAL_BOOL,
-  AST_LITERAL_INT,
-  AST_LITERAL_FLOAT,
-  AST_LITERAL_STRING,
-  AST_LITERAL_CHAR,
-  AST_GROUPING,  // (expr)
-
-  // Unary operators
-  AST_UNARY_OP,  // !expr, -expr
-
-  // Binary operators (ALL operators of your CFG)
-  AST_BINARY_OP,  // +, -, *, /, %, ^, <, >, <=, >=, ==, !=, &&, ||
-
-  // Assignment
-  AST_ASSIGN,  // id = expr
-
-} ASTNodeType;
-
-typedef enum {
   // Arithmetic
-  OP_ADD,
-  OP_SUB,
-  OP_MUL,
-  OP_DIV,
-  OP_MOD,
-  OP_EXP,
-  OP_DIV_F,
+  OP_ADD,    // +
+  OP_SUB,    // -
+  OP_MUL,    // *
+  OP_DIV,    // /
+  OP_MOD,    // %
+  OP_DIV_F,  // // (integer division)
+  OP_EXP,    // ^
 
   // Relational
-  OP_LT,
-  OP_GT,
-  OP_LE,
-  OP_GE,
-  OP_EQ,
-  OP_NE,
+  OP_LT,  // <
+  OP_LE,  // <=
+  OP_GT,  // >
+  OP_GE,  // >=
+
+  // Equality
+  OP_EQ,  // ==
+  OP_NE,  // !=
 
   // Logical
-  OP_AND,
-  OP_OR,
+  OP_AND,  // &&
+  OP_OR,   // ||
 
-  // Unary
-  OP_NOT,
-  OP_NEG
+  // Unary Prefix
+  OP_NOT,  // !
+  OP_NEG,  // -
+
+  // Unary Postfix
+  OP_INC,  // ++
+  OP_DEC   // --
 
 } ASTOperator;
+
+typedef enum {
+
+  // ——————————————————————
+  // Program / High-Level Structure
+  // ——————————————————————
+  AST_PROGRAM,         // <Program>
+  AST_STATEMENT_LIST,  // <StatementList>
+
+  // ——————————————————————
+  // Statement Types
+  // ——————————————————————
+  AST_STMT_EMPTY,  // ";" alone
+  AST_STMT_BLOCK,  // <BlockStatement>  { ... }
+
+  AST_STMT_ASSIGN,  // <AssignmentSTMT>   (var x = expr; OR x = expr;)
+  AST_STMT_EXPR,    // Expression statement (expr;)
+
+  AST_STMT_IF,       // if (...) block
+  AST_STMT_IF_ELSE,  // if (...) block else block
+
+  AST_STMT_PRINT,  // print(expr)
+  AST_STMT_WHILE,  // while(expr) block
+  AST_STMT_FOR,    // for(init; cond; post) block
+
+  // for (…) condition parts separated for AST clarity
+  AST_FOR_INIT,  // <AssignmentEXP> or NULL
+  AST_FOR_COND,  // Expression
+  AST_FOR_POST,  // Assignment or Expression
+
+  // ——————————————————————
+  // Expression Types
+  // ——————————————————————
+
+  // Primary (literals & identifiers)
+  AST_IDENTIFIER,
+  AST_LITERAL_INT,
+  AST_LITERAL_FLOAT,
+  AST_LITERAL_BOOL,
+  AST_LITERAL_STRING,
+  AST_LITERAL_CHAR,
+
+  AST_GROUPING,  // (expr) use this for each expression parsing & grouping
+                 // untill the true expression
+
+  // Unary
+  AST_UNARY_OP,    // !expr, -expr
+  AST_POSTFIX_OP,  // expr++, expr--
+
+  // Binary
+  AST_BINARY_OP,  // + - * / % // ^ < > <= >= == != && ||
+
+} ASTNodeType;
 
 typedef struct ASTNode {
   ASTNodeType type;           // Type of the AST node
