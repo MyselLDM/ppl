@@ -37,7 +37,7 @@ ASTNode* ast_create_node(ASTNodeType type, Token* token) {
   node->child_capacity = 0;  // No children initially
   node->child_current = 0;
 
-  DEBUG_PRINT("Created node of type %d\n", type);
+  DEBUG_PRINT("Created node of type %s", print_ast_type_node(type));
   return node;
 }
 
@@ -63,17 +63,16 @@ void ast_add_child(ASTNode* parent, ASTNode* child) {
     parent->child_capacity = 1;
     parent->children = (ASTNode**)resize_array((void**)parent->children,
                                                parent->child_capacity);
-    DEBUG_PRINT("Creating children array for parent of type %d\n",
-                parent->type);
+    DEBUG_PRINT("Creating children array for parent of type %d", parent->type);
   } else if (parent->child_current == parent->child_capacity) {
     parent->child_capacity *= 2;
     parent->children = (ASTNode**)resize_array((void**)parent->children,
                                                parent->child_capacity);
-    DEBUG_PRINT("Resizing children to %d for parent of type %d\n",
+    DEBUG_PRINT("Resizing children to %d for parent of type %d",
                 parent->child_capacity, parent->type);
   }
 
-  DEBUG_PRINT("Adding child to parent of type %d\n", parent->type);
+  DEBUG_PRINT("Adding child to parent of type %d", parent->type);
   parent->children[parent->child_current++] = child;
 }
 
@@ -109,41 +108,36 @@ void ast_free(ASTNode* root) {
   free(root);
 }
 
+void parse_error(const char* message, size_t line, size_t offset) {
+  DEBUG_PRINT("[PARSE ERROR] '%s' at line %zu, offset %zu\n", message, line,
+              offset);
+  exit(EXIT_FAILURE);
+}
+
 char* print_ast_type_op(ASTOperator type) {
   switch (type) {
     case OP_ADD:
       return "OP_ADD";
-      break;
     case OP_SUB:
       return "OP_SUB";
-      break;
     case OP_MUL:
       return "OP_MUL";
-      break;
     case OP_DIV:
       return "OP_DIV";
-      break;
     case OP_MOD:
       return "OP_MOD";
-      break;
     case OP_AND:
       return "OP_AND";
-      break;
     case OP_OR:
       return "OP_OR";
-      break;
     case OP_NOT:
       return "OP_NOT";
-      break;
     case OP_NEG:
       return "OP_NEG";
-      break;
     case OP_INC:
       return "OP_INC";
-      break;
     case OP_DEC:
       return "OP_DEC";
-      break;
   }
 }
 
@@ -151,75 +145,79 @@ char* print_ast_type_node(ASTNodeType type) {
   switch (type) {
     case AST_PROGRAM:
       return "AST_PROGRAM";
-      break;
     case AST_STATEMENT_LIST:
       return "AST_STATEMENT_LIST";
-      break;
     case AST_STMT_EMPTY:
       return "AST_STMT_EMPTY";
-      break;
     case AST_STMT_BLOCK:
       return "AST_STMT_BLOCK";
-      break;
     case AST_STMT_ASSIGN:
       return "AST_STMT_ASSIGN";
-      break;
     case AST_STMT_EXPR:
       return "AST_STMT_EXPR";
-      break;
     case AST_STMT_IF:
       return "AST_STMT_IF";
-      break;
     case AST_STMT_IF_ELSE:
       return "AST_STMT_IF_ELSE";
-      break;
     case AST_STMT_PRINT:
       return "AST_STMT_PRINT";
-      break;
     case AST_STMT_WHILE:
       return "AST_STMT_WHILE";
-      break;
     case AST_STMT_FOR:
       return "AST_STMT_FOR";
-      break;
     case AST_FOR_INIT:
       return "AST_FOR_INIT";
-      break;
     case AST_FOR_COND:
       return "AST_FOR_COND";
-      break;
     case AST_FOR_POST:
       return "AST_FOR_POST";
-      break;
     case AST_IDENTIFIER:
       return "AST_IDENTIFIER";
-      break;
     case AST_LITERAL_INT:
       return "AST_LITERAL_INT";
-      break;
     case AST_LITERAL_FLOAT:
       return "AST_LITERAL_FLOAT";
-      break;
     case AST_LITERAL_BOOL:
       return "AST_LITERAL_BOOL";
-      break;
     case AST_LITERAL_STRING:
       return "AST_LITERAL_STRING";
-      break;
     case AST_LITERAL_CHAR:
       return "AST_LITERAL_CHAR";
-      break;
-    case AST_GROUPING:
-      return "AST_GROUPING";
-      break;
-    case AST_UNARY_OP:
-      return "AST_UNARY_OP";
-      break;
-    case AST_POSTFIX_OP:
-      return "AST_POSTFIX_OP";
-      break;
-    case AST_BINARY_OP:
-      return "AST_BINARY_OP";
-      break;
+    case AST_LOGICAL_OR:
+      return "||";
+    case AST_LOGICAL_AND:
+      return "&&";
+    case AST_RELATIONAL_EQ:
+      return "==";
+    case AST_RELATIONAL_NEQ:
+      return "!=";
+    case AST_RELATIONAL_GT:
+      return ">";
+    case AST_RELATIONAL_LT:
+      return "<";
+    case AST_RELATIONAL_GTE:
+      return ">=";
+    case AST_RELATIONAL_LTE:
+      return "<=";
+    case AST_ADD:
+      return "+";
+    case AST_SUB:
+      return "-";
+    case AST_MUL:
+      return "*";
+    case AST_DIV:
+      return "/";
+    case AST_DIV_F:
+      return "/_";
+    case AST_MOD:
+      return "%";
+    case AST_NOT:
+      return "!";
+    case AST_NEG:
+      return "-";
+    case AST_POW:
+      return "^";
+    default:
+      return "AST_UNKNOWN";
   }
 }

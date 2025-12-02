@@ -1,4 +1,6 @@
 # MUST be at the very top
+cls
+
 gcc lexic/tokenizer.c `
     lexic/tokenizer_helper.c `
     lexic/token.c `
@@ -12,6 +14,7 @@ gcc lexic/tokenizer.c `
     syntax/putils.c `
     syntax/parse_stmt.c `
     syntax/parse_expr.c `
+    syntax/astprint.c `
     -o main.exe
 
 if ($LASTEXITCODE -ne 0) {

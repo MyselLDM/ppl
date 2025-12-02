@@ -1,4 +1,5 @@
-var x = 34;
+
+var y = 32 * 23 + 21 - 32;
 
 if(x > 3) {
   print("Its definitely greater than 3");
@@ -11,6 +12,6 @@ while(23 > x && x < 5) {
   x++;
 }
 
-for(var y = 0; y < 54; y++) {
+for(var u = 0; y < 54; y++) {
   print(y);
 }

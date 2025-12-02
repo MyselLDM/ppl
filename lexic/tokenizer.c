@@ -83,11 +83,7 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
   }
 
   if (ISDIGIT(*strptr)) {
-    if (ISDIGIT(strptr[1])) {
-      CHECKDIGIT;
-    } else {
-      RETURN_LEXEME_INVALID;
-    }
+    CHECKDIGIT;  // just call CHECKDIGIT for any digit
   }
 
   // Characters

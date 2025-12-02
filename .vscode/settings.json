@@ -14,7 +14,9 @@
     "token.h": "c",
     "scanner.h": "c",
     "MKTABLES.C": "cpp",
-    "debug_print.h": "c"
+    "debug_print.h": "c",
+    "bxparser.h": "c",
+    "ast.h": "c"
   },
 
   

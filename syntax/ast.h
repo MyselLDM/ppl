@@ -1,9 +1,31 @@
 #pragma once
 #include "../lexic/token.h"
 
+#define CURRENT_TOKEN tokens->token[*index]
 // ========================
 // AST Structures
 // ========================
+
+#define PARSE_ERROR(message) \
+  parse_error(message, CURRENT_TOKEN.line, CURRENT_TOKEN.offset)
+
+// ========================
+// Parsing Error Function
+// ========================
+
+/**
+ * parse_error
+ * ------------
+ * Reports a parsing error and terminates the program.
+ *
+ * This function prints a formatted error message to stderr with the error
+ * location and then exits the program with a failure status. In a production
+ * parser, this could be enhanced to support error recovery.
+ *
+ * @param message Description of the parsing error
+ * @param line Line number where the error occurred
+ * @param offset Character offset within the line where the error occurred
+ */
 
 typedef enum {
 
@@ -74,22 +96,37 @@ typedef enum {
   // ——————————————————————
 
   // Primary (literals & identifiers)
+  AST_LOGICAL_OR,
+  AST_LOGICAL_AND,
+  AST_RELATIONAL_EQ,
+  AST_RELATIONAL_NEQ,
+  AST_RELATIONAL_LT,
+  AST_RELATIONAL_LTE,
+  AST_RELATIONAL_GT,
+  AST_RELATIONAL_GTE,
+
+  AST_ADD,
+  AST_SUB,
+  AST_MUL,
+  AST_DIV,
+  AST_MOD,
+  AST_DIV_F,
+  AST_EXP,
+  AST_NOT,
+  AST_NEG,
+  AST_POW,
+
+  // Unary
+  AST_INC,
+  AST_DEC,
+
+  // Binary
   AST_IDENTIFIER,
   AST_LITERAL_INT,
   AST_LITERAL_FLOAT,
   AST_LITERAL_BOOL,
   AST_LITERAL_STRING,
   AST_LITERAL_CHAR,
-
-  AST_GROUPING,  // (expr) use this for each expression parsing & grouping
-                 // untill the true expression
-
-  // Unary
-  AST_UNARY_OP,    // !expr, -expr
-  AST_POSTFIX_OP,  // expr++, expr--
-
-  // Binary
-  AST_BINARY_OP,  // + - * / % // ^ < > <= >= == != && ||
 
 } ASTNodeType;
 
@@ -158,3 +195,4 @@ void ast_free(ASTNode* root);
 
 char* print_ast_type_op(ASTOperator type);
 char* print_ast_type_node(ASTNodeType node);
+void parse_error(const char* message, size_t line, size_t offset);

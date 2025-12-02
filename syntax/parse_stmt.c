@@ -8,49 +8,23 @@
 #include "parse_expr.h"
 #include "putils.h"
 
-#define TOKEN tokens->token[*index]
-#define PARSE_ERROR(message) parse_error(message, TOKEN.line, TOKEN.offset)
-
-// ========================
-// Parsing Error Function
-// ========================
-
-/**
- * parse_error
- * ------------
- * Reports a parsing error and terminates the program.
- *
- * This function prints a formatted error message to stderr with the error
- * location and then exits the program with a failure status. In a production
- * parser, this could be enhanced to support error recovery.
- *
- * @param message Description of the parsing error
- * @param line Line number where the error occurred
- * @param offset Character offset within the line where the error occurred
- */
-void parse_error(const char* message, size_t line, size_t offset) {
-  DEBUG_PRINT("[PARSE ERROR] '%s' at line %zu, offset %zu\n", message, line,
-              offset);
-  exit(EXIT_FAILURE);
-}
-
 ASTNode* parse_var(const Tokens* tokens, size_t* index) {
   (*index)++;
 
   // Noise Word
-  if (TOKEN.token_type == T_NOISE) {
+  if (CURRENT_TOKEN.token_type == T_NOISE) {
     (*index)++;
   }
 
-  if (TOKEN.token_type != T_IDENTIFIER) {
+  if (CURRENT_TOKEN.token_type != T_IDENTIFIER) {
     PARSE_ERROR("Expected variable name");
   }
 
-  Token* identifier = &TOKEN;
+  Token* identifier = &CURRENT_TOKEN;
 
   (*index)++;
 
-  if (TOKEN.token_type_special != TS_ASSIGNMENT) {
+  if (CURRENT_TOKEN.token_type_special != TS_ASSIGNMENT) {
     PARSE_ERROR("Expected \"=\"");
   }
 
@@ -62,7 +36,7 @@ ASTNode* parse_var(const Tokens* tokens, size_t* index) {
 
   ast_add_child(node_as, node_ident);
   ast_add_child(node_as, expr_node);
-  return NULL;
+  return node_as;
 }
 
 ASTNode* parse_print(const Tokens* tokens, size_t* index) {

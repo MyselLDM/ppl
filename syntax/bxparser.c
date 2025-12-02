@@ -49,6 +49,8 @@ ASTNode* parse_tokens(const Tokens* tokens) {
       DEBUG_PRINT("Skipping invalid token\n");
     }
 
+    DEBUG_PRINT("Current token: %s\n", token->lexeme);
+
     ASTNode* statement = parse_statement(tokens, &index);
     if (statement) {
       ast_add_child(program, statement);
