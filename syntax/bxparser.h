@@ -22,6 +22,8 @@
  */
 ASTNode* parse_tokens(const Tokens* tokens);
 
+ASTNode* parse_statement_list(const Tokens* tokens, size_t* index);
+
 /**
  * parse_expression
  * -----------------

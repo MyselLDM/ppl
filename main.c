@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
 
   ASTNode* ast_root = parse_tokens(&tokens);
 
-  ast_print(ast_root, 0);
+  ast_print_root(ast_root);
 
   debug_close();
 

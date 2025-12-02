@@ -8,6 +8,9 @@
 #include "parse_stmt.h"
 #include "putils.h"
 
+ASTNode* parse_tokens(const Tokens* tokens);
+ASTNode* parse_statement_list(const Tokens* tokens, size_t* index);
+
 // ========================
 // Parsing Functions
 // ========================
@@ -21,8 +24,8 @@
  * repeatedly to fill the program. It automatically skips noise tokens
  * (whitespace, comments) to focus on meaningful syntax.
  *
- * The resulting AST represents the complete program structure and can be used
- * for semantic analysis, code generation, or interpretation.
+ * The resulting AST represents the complete program structure and can be
+ * used for semantic analysis, code generation, or interpretation.
  *
  * @param tokens Pointer to the Tokens structure containing all lexed tokens
  * @return Pointer to the root ASTNode (AST_PROGRAM), or NULL if tokens are
@@ -41,72 +44,38 @@ ASTNode* parse_tokens(const Tokens* tokens) {
   size_t index = 0;
 
   // Iterate through all tokens in the stream
-  while (index < tokens->length) {
-    // Access token using the correct structure member
-    Token* token = &tokens->token[index];
-
-    if (token->token_type == T_INVALID) {
-      DEBUG_PRINT("Skipping invalid token\n");
-    }
-
-    DEBUG_PRINT("Current token: %s\n", token->lexeme);
-
-    ASTNode* statement = parse_statement(tokens, &index);
-    if (statement) {
-      ast_add_child(program, statement);
-    } else {
-      index++;
-    }
-  }
-
+  ASTNode* STMTList = parse_statement_list(tokens, &index);
+  ast_add_child(program, STMTList);
   return program;
 }
 
-/**
- * parse_statement (Step 5 - TO BE IMPLEMENTED)
- * ---------------------------------------------
- * Parses a single statement from the token stream.
- *
- * This function will determine what kind of statement is being parsed based
- * on the current token and delegate to specialized parsing functions.
- *
- * Planned support:
- * - Variable declarations (var x = 5;)
- * - Print statements (print(x);)
- * - Control flow (if/else, for, while)
- * - Blocks ({ ... })
- * - Assignments (x = 5;)
- *
- * @param tokens Pointer to the Tokens structure
- * @param index Pointer to current token index (updated as tokens are consumed)
- * @return Pointer to the ASTNode representing the parsed statement
- */
-ASTNode* parse_statement(const Tokens* tokens, size_t* index) {
-  Token* token = &tokens->token[*index];
-
-  switch (token->token_type_special) {
-    case TS_VAR:
-      DEBUG_PRINT("Parsing variable declaration\n");
-      return parse_var(tokens, index);
-      break;
-
-    case TS_PRINT:
-      DEBUG_PRINT("Parsing print statement\n");
-      break;
-
-    case TS_IF:
-      DEBUG_PRINT("Parsing if statement\n");
-      break;
-
-    case TS_WHILE:
-      DEBUG_PRINT("Parsing else statement\n");
-      break;
-
-    case TS_FOR:
-      DEBUG_PRINT("Parsing for statement\n");
-      break;
+ASTNode* parse_statement_list(const Tokens* tokens, size_t* index) {
+  ASTNode* STMTList = ast_create_node(AST_STATEMENT_LIST, NULL);
+  while (tokens->length > *index &&
+         CURRENT_TOKEN.token_type_special != TS_R_BRACE) {
+    ASTNode* stmt = parse_statement(tokens, index);
+    ast_add_child(STMTList, stmt);
   }
 
-  (*index)++;
-  return NULL;
+  return STMTList;
+}
+
+ASTNode* parse_statement(const Tokens* tokens, size_t* index) {
+  switch (CURRENT_TOKEN.token_type_special) {
+    case TS_IDENTIFIER:
+    case TS_VAR:
+      return parse_assignment(tokens, index);
+    case TS_PRINT:
+      return parse_print(tokens, index);
+    case TS_IF:
+      return parse_if(tokens, index);
+    case TS_WHILE:
+      return parse_while(tokens, index);
+    case TS_FOR:
+      return parse_for(tokens, index);
+    case TS_L_BRACE:
+      return parse_block(tokens, index);
+    default:
+      PARSE_ERROR("Unexpected token in statement");
+  }
 }

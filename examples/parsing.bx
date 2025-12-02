@@ -12,6 +12,4 @@ while(23 > x && x < 5) {
   x++;
 }
 
-for(var u = 0; y < 54; y++) {
-  print(y);
-}
+y = 3 + 2;

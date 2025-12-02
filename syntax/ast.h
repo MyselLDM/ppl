@@ -9,6 +9,12 @@
 #define PARSE_ERROR(message) \
   parse_error(message, CURRENT_TOKEN.line, CURRENT_TOKEN.offset)
 
+#define CHECK_SEMICOLON                                   \
+  if (CURRENT_TOKEN.token_type_special != TS_SEMICOLON) { \
+    PARSE_ERROR("Expected \";\"");                        \
+  }                                                       \
+  (*index)++;
+
 // ========================
 // Parsing Error Function
 // ========================
@@ -76,20 +82,25 @@ typedef enum {
   AST_STMT_EMPTY,  // ";" alone
   AST_STMT_BLOCK,  // <BlockStatement>  { ... }
 
-  AST_STMT_ASSIGN,  // <AssignmentSTMT>   (var x = expr; OR x = expr;)
-  AST_STMT_EXPR,    // Expression statement (expr;)
+  AST_STMT_ASSIGN,   // <AssignmentSTMT>
+  AST_STMT_DECLARE,  // var x,   (var x = expr; OR x = expr;)
+  AST_STMT_EXPR,     // Expression statement (expr;)
 
-  AST_STMT_IF,       // if (...) block
-  AST_STMT_IF_ELSE,  // if (...) block else block
+  AST_STMT_IF,            // if (...) block
+  AST_STMT_IF_MATCHED,    // if (...) block else block
+  AST_STMT_IF_UNMATCHED,  // if (...) ELSE
 
   AST_STMT_PRINT,  // print(expr)
   AST_STMT_WHILE,  // while(expr) block
   AST_STMT_FOR,    // for(init; cond; post) block
 
   // for (…) condition parts separated for AST clarity
+  AST_FOR_CONDITION,
   AST_FOR_INIT,  // <AssignmentEXP> or NULL
-  AST_FOR_COND,  // Expression
+  AST_FOR_EXPR,  // Expression
   AST_FOR_POST,  // Assignment or Expression
+
+  AST_CONDITION,
 
   // ——————————————————————
   // Expression Types

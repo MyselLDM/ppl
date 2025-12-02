@@ -144,80 +144,92 @@ char* print_ast_type_op(ASTOperator type) {
 char* print_ast_type_node(ASTNodeType type) {
   switch (type) {
     case AST_PROGRAM:
-      return "AST_PROGRAM";
+      return "PROGRAM";
     case AST_STATEMENT_LIST:
-      return "AST_STATEMENT_LIST";
+      return "STMT_LIST";
     case AST_STMT_EMPTY:
-      return "AST_STMT_EMPTY";
+      return "STMT_EMPTY";
     case AST_STMT_BLOCK:
-      return "AST_STMT_BLOCK";
+      return "STMT_BLOCK";
     case AST_STMT_ASSIGN:
-      return "AST_STMT_ASSIGN";
+      return "STMT_ASSIGN";
+    case AST_STMT_DECLARE:
+      return "STMT_DECLARE";
+    case AST_CONDITION:
+      return "CONDITION";
     case AST_STMT_EXPR:
-      return "AST_STMT_EXPR";
+      return "STMT_EXPR";
     case AST_STMT_IF:
-      return "AST_STMT_IF";
-    case AST_STMT_IF_ELSE:
-      return "AST_STMT_IF_ELSE";
+      return "STMT_IF";
+    case AST_STMT_IF_MATCHED:
+      return "STMT_IF_MATCHED";
+    case AST_STMT_IF_UNMATCHED:
+      return "STMT_IF_UNMATCHED";
     case AST_STMT_PRINT:
-      return "AST_STMT_PRINT";
+      return "STMT_PRINT";
     case AST_STMT_WHILE:
-      return "AST_STMT_WHILE";
+      return "STMT_WHILE";
     case AST_STMT_FOR:
-      return "AST_STMT_FOR";
+      return "STMT_FOR";
     case AST_FOR_INIT:
-      return "AST_FOR_INIT";
-    case AST_FOR_COND:
-      return "AST_FOR_COND";
+      return "FOR_INIT";
+    case AST_FOR_EXPR:
+      return "FOR_EXPR";
     case AST_FOR_POST:
-      return "AST_FOR_POST";
+      return "FOR_POST";
+    case AST_FOR_CONDITION:
+      return "FOR_CONDITION";
     case AST_IDENTIFIER:
-      return "AST_IDENTIFIER";
+      return "IDENTIFIER";
     case AST_LITERAL_INT:
-      return "AST_LITERAL_INT";
+      return "LITERAL_INT";
     case AST_LITERAL_FLOAT:
-      return "AST_LITERAL_FLOAT";
+      return "LITERAL_FLOAT";
     case AST_LITERAL_BOOL:
-      return "AST_LITERAL_BOOL";
+      return "LITERAL_BOOL";
     case AST_LITERAL_STRING:
-      return "AST_LITERAL_STRING";
+      return "LITERAL_STRING";
     case AST_LITERAL_CHAR:
-      return "AST_LITERAL_CHAR";
+      return "LITERAL_CHAR";
     case AST_LOGICAL_OR:
-      return "||";
+      return "OR";
     case AST_LOGICAL_AND:
-      return "&&";
+      return "AND";
     case AST_RELATIONAL_EQ:
-      return "==";
+      return "EQUAL";
     case AST_RELATIONAL_NEQ:
-      return "!=";
+      return "NOT_EQUAL";
     case AST_RELATIONAL_GT:
-      return ">";
+      return "GREATER";
     case AST_RELATIONAL_LT:
-      return "<";
+      return "LESSER";
     case AST_RELATIONAL_GTE:
-      return ">=";
+      return "GREATER_EQ";
     case AST_RELATIONAL_LTE:
-      return "<=";
+      return "LESSER_EQ";
     case AST_ADD:
-      return "+";
+      return "ADD";
     case AST_SUB:
-      return "-";
+      return "SUBTRACT";
     case AST_MUL:
-      return "*";
+      return "MULTIPLY";
     case AST_DIV:
-      return "/";
+      return "DIVIDE";
     case AST_DIV_F:
-      return "/_";
+      return "DIVIDE_FLOOR";
     case AST_MOD:
-      return "%";
+      return "MODULO";
     case AST_NOT:
-      return "!";
+      return "NOT";
     case AST_NEG:
-      return "-";
+      return "NEGATIVE";
     case AST_POW:
-      return "^";
+      return "POWER";
+    case AST_INC:
+      return "INCREMENT";
+    case AST_DEC:
+      return "DECREMENT";
     default:
-      return "AST_UNKNOWN";
+      return "UNKNOWN";
   }
 }

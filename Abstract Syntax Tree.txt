@@ -1,0 +1,47 @@
+PROGRAM
++- STMT_LIST
+|  |- STMT_DECLARE
+|  |  |- IDENTIFIER: 'y'
+|  |  +- SUBTRACT: '-'
+|  |  |  |- ADD: '+'
+|  |  |  |  |- MULTIPLY: '*'
+|  |  |  |  |  |- LITERAL_INT: '32'
+|  |  |  |  |  +- LITERAL_INT: '23'
+|  |  |  |  +- LITERAL_INT: '21'
+|  |  |  +- LITERAL_INT: '32'
+|  |- STMT_IF_MATCHED
+|  |  |- CONDITION
+|  |  |  +- GREATER: '>'
+|  |  |  |  |- IDENTIFIER: 'x'
+|  |  |  |  +- LITERAL_INT: '3'
+|  |  |- STMT_BLOCK
+|  |  |  +- STMT_LIST
+|  |  |  |  +- STMT_PRINT
+|  |  |  |  |  +- CONDITION
+|  |  |  |  |  |  +- LITERAL_STRING: '"Its definitely greater than 3"'
+|  |  +- STMT_BLOCK
+|  |  |  +- STMT_LIST
+|  |  |  |  +- STMT_PRINT
+|  |  |  |  |  +- CONDITION
+|  |  |  |  |  |  +- LITERAL_STRING: '"Its less than 3 lol"'
+|  |- STMT_WHILE
+|  |  |- CONDITION
+|  |  |  +- AND: '&&'
+|  |  |  |  |- GREATER: '>'
+|  |  |  |  |  |- LITERAL_INT: '23'
+|  |  |  |  |  +- IDENTIFIER: 'x'
+|  |  |  |  +- LESSER: '<'
+|  |  |  |  |  |- IDENTIFIER: 'x'
+|  |  |  |  |  +- LITERAL_INT: '5'
+|  |  +- STMT_BLOCK
+|  |  |  +- STMT_LIST
+|  |  |  |  |- STMT_PRINT
+|  |  |  |  |  +- CONDITION
+|  |  |  |  |  |  +- IDENTIFIER: 'x'
+|  |  |  |  +- INCREMENT: '++'
+|  |  |  |  |  +- IDENTIFIER: 'x'
+|  +- STMT_ASSIGN
+|  |  |- IDENTIFIER: 'y'
+|  |  +- ADD: '+'
+|  |  |  |- LITERAL_INT: '3'
+|  |  |  +- LITERAL_INT: '2'
