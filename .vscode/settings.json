@@ -13,7 +13,8 @@
     "dictionary.h": "c",
     "token.h": "c",
     "scanner.h": "c",
-    "MKTABLES.C": "cpp"
+    "MKTABLES.C": "cpp",
+    "debug_print.h": "c"
   },
 
   

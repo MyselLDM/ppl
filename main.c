@@ -6,6 +6,8 @@
 // #include "legacy_code/tokenizer.h"
 #include "lexic/scanner.h"
 #include "lexic/tokenizer.h"
+#include "syntax/bxparser.h"
+
 int main(int argc, char* argv[]) {
   // CLI Argument Checking
   if (argc < 2) {
@@ -29,6 +31,8 @@ int main(int argc, char* argv[]) {
   token_optimize(&tokens);
 
   DEBUG_PRINT("[!!MAIN!!] Successfully tokenized '%s'\n", FILE_NAME);
+
+  ASTNode* ast_root = parse_tokens(&tokens);
 
   debug_close();
 

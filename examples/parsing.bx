@@ -1,0 +1,16 @@
+var x = 34;
+
+if(x > 3) {
+  print("Its definitely greater than 3");
+} else {
+  print("Its less than 3 lol");
+}
+
+while(23 > x && x < 5) {
+  print(x);
+  x++;
+}
+
+for(var y = 0; y < 54; y++) {
+  print(y);
+}

@@ -1,94 +1,70 @@
 Line     Offset   Lexeme                    Token                     Token Special            
 =================================================================
 
+1        0        var                       T_KEYWORD                 TS_VAR                   
+1        4        x                         T_IDENTIFIER              TS_IDENTIFIER            
+1        6        =                         T_OPERATOR                TS_ASSIGNMENT            
+1        8        34                        T_CONSTANT                TS_INTEGER_LITERAL       
+1        10       ;                         T_DELIMITER               TS_SEMICOLON             
 1        0        if                        T_KEYWORD                 TS_IF                    
-1        3        else                      T_KEYWORD                 TS_ELSE                  
-1        8        for                       T_KEYWORD                 TS_FOR                   
-1        12       var                       T_KEYWORD                 TS_VAR                   
-1        16       print                     T_KEYWORD                 TS_PRINT                 
-1        22       while                     T_KEYWORD                 TS_WHILE                 
-2        0        switch                    T_RESERVED                TS_SWITCH                
-2        7        func                      T_RESERVED                TS_FUNC                  
-2        12       return                    T_RESERVED                TS_RETURN                
-2        19       case                      T_RESERVED                TS_CASE                  
-2        24       default                   T_RESERVED                TS_DEFAULT               
-2        32       break                     T_RESERVED                TS_BREAK                 
-3        0        int                       T_IDENTIFIER              TS_IDENTIFIER            
-3        4        float                     T_NOISE                   TS_FLOAT                 
-3        10       bool                      T_NOISE                   TS_BOOL                  
-3        15       char                      T_NOISE                   TS_CHAR                  
-3        20       string                    T_NOISE                   TS_STRING                
-5        0        // Delimiters             T_COMMENT                 TS_COMMENT_LINE          
-6        0        ;                         T_DELIMITER               TS_SEMICOLON             
-6        2        (                         T_DELIMITER               TS_L_PAREN               
-6        3        )                         T_DELIMITER               TS_R_PAREN               
-6        5        {                         T_DELIMITER               TS_L_BRACE               
-6        6        }                         T_DELIMITER               TS_R_BRACE               
-8        0        // Probably Identifiers   T_COMMENT                 TS_COMMENT_LINE          
-9        0        x                         T_IDENTIFIER              TS_IDENTIFIER            
-9        2        y                         T_IDENTIFIER              TS_IDENTIFIER            
-9        4        z                         T_IDENTIFIER              TS_IDENTIFIER            
-9        6        hello                     T_IDENTIFIER              TS_IDENTIFIER            
-9        12       firstchar                 T_IDENTIFIER              TS_IDENTIFIER            
-9        22       first_int                 T_IDENTIFIER              TS_IDENTIFIER            
-9        32       hell0_w0r1d               T_IDENTIFIER              TS_IDENTIFIER            
-11       0        // Constants              T_COMMENT                 TS_COMMENT_LINE          
-12       0        32.43                     T_CONSTANT                TS_FLOAT                 
-13       0        -0.46                     T_CONSTANT                TS_FLOAT                 
-14       0        35566                     T_CONSTANT                TS_INTEGER_LITERAL       
-15       0        -34                       T_CONSTANT                TS_INTEGER_LITERAL       
-16       0        true                      T_CONSTANT                TS_TRUE                  
-17       0        false                     T_CONSTANT                TS_FALSE                 
-18       0        "cool string"             T_CONSTANT                TS_STRING                
-19       0        "String still goes"       T_CONSTANT                TS_STRING                
-20       0        'c'                       T_CONSTANT                TS_CHAR                  
-21       0        'x'                       T_CONSTANT                TS_CHAR                  
-23       0        /// Multiline Comment
-Still a Comment
-/// T_COMMENT                 TS_COMMENT_BLOCK         
-25       0        ++                        T_OPERATOR                TS_INCREMENT             
-25       3        --                        T_OPERATOR                TS_DECREMENT             
-26       0        +                         T_OPERATOR                TS_ADD                   
-26       2        -                         T_OPERATOR                TS_SUBTRACT              
-26       4        *                         T_OPERATOR                TS_MULTIPLY              
-26       6        /                         T_OPERATOR                TS_DIVIDE                
-26       8        %                         T_OPERATOR                TS_MODULO                
-26       10       /_                        T_OPERATOR                TS_DIVIDE_FLOOR          
-26       13       ^                         T_OPERATOR                TS_POWER                 
-27       0        =                         T_OPERATOR                TS_ASSIGNMENT            
-28       0        !=                        T_OPERATOR                TS_NOT_EQUAL             
-28       3        ==                        T_OPERATOR                TS_EQUAL                 
-28       6        <=                        T_OPERATOR                TS_LESS_EQUAL            
-28       9        >=                        T_OPERATOR                TS_GREATER_EQUAL         
-28       12       <                         T_OPERATOR                TS_LESS_THAN             
-28       14       >                         T_OPERATOR                TS_GREATER_THAN          
-28       16       !                         T_OPERATOR                TS_NOT                   
-28       18       &&                        T_OPERATOR                TS_AND                   
-28       21       ||                        T_OPERATOR                TS_OR                    
-31       0        // Assignment++           T_COMMENT                 TS_COMMENT_LINE          
-32       0        +=                        T_OPERATOR                TS_ADD_ASSIGNMENT        
-32       3        -=                        T_OPERATOR                TS_SUBTRACT_ASSIGNMENT   
-32       6        *=                        T_OPERATOR                TS_MULTIPLY_ASSIGNMENT   
-32       9        /=                        T_OPERATOR                TS_DIVIDE_ASSIGNMENT     
-32       12       %=                        T_OPERATOR                TS_MODULO_ASSIGNMENT     
-32       15       ^=                        T_OPERATOR                TS_POWER_ASSIGNMENT      
-32       18       /_=                       T_OPERATOR                TS_DIVIDE_FLOOR_ASSIGNMENT
-34       0        // Some invalid tokens yea,, T_COMMENT                 TS_COMMENT_LINE          
-36       0        ,                         T_IDENTIFIER              TS_IDENTIFIER            
-36       2        .                         T_IDENTIFIER              TS_IDENTIFIER            
-36       4        23as                      T_INVALID                 TS_NONE                  
-36       9        43                        T_CONSTANT                TS_INTEGER_LITERAL       
-36       11       .                         T_IDENTIFIER              TS_IDENTIFIER            
-37       0        @                         T_IDENTIFIER              TS_IDENTIFIER            
-37       1        4fd345                    T_INVALID                 TS_NONE                  
-37       8        '                         T_INVALID                 TS_NONE                  
-37       10       "                         T_INVALID                 TS_NONE                  
-38       0        helli                     T_IDENTIFIER              TS_IDENTIFIER            
-38       5        $                         T_IDENTIFIER              TS_IDENTIFIER            
-38       6        25                        T_CONSTANT                TS_INTEGER_LITERAL       
-38       8        $                         T_IDENTIFIER              TS_IDENTIFIER            
-38       9        #                         T_IDENTIFIER              TS_IDENTIFIER            
-38       10       @                         T_IDENTIFIER              TS_IDENTIFIER            
-40       0        // Detects invalid char and string T_COMMENT                 TS_COMMENT_LINE          
-41       0        "Hello!!                  T_INVALID                 TS_NONE                  
-42       0        'char'                    T_INVALID                 TS_NONE                  
+1        2        (                         T_DELIMITER               TS_L_PAREN               
+1        3        x                         T_IDENTIFIER              TS_IDENTIFIER            
+1        5        >                         T_OPERATOR                TS_GREATER_THAN          
+1        7        3                         T_INVALID                 TS_NONE                  
+1        8        )                         T_DELIMITER               TS_R_PAREN               
+1        10       {                         T_DELIMITER               TS_L_BRACE               
+1        2        print                     T_KEYWORD                 TS_PRINT                 
+1        7        (                         T_DELIMITER               TS_L_PAREN               
+1        8        "Its definitely greater than 3" T_CONSTANT                TS_STRING                
+1        39       )                         T_DELIMITER               TS_R_PAREN               
+1        40       ;                         T_DELIMITER               TS_SEMICOLON             
+1        0        }                         T_DELIMITER               TS_R_BRACE               
+1        2        else                      T_KEYWORD                 TS_ELSE                  
+1        7        {                         T_DELIMITER               TS_L_BRACE               
+1        2        print                     T_KEYWORD                 TS_PRINT                 
+1        7        (                         T_DELIMITER               TS_L_PAREN               
+1        8        "Its less than 3 lol"     T_CONSTANT                TS_STRING                
+1        29       )                         T_DELIMITER               TS_R_PAREN               
+1        30       ;                         T_DELIMITER               TS_SEMICOLON             
+1        0        }                         T_DELIMITER               TS_R_BRACE               
+1        0        while                     T_KEYWORD                 TS_WHILE                 
+1        5        (                         T_DELIMITER               TS_L_PAREN               
+1        6        23                        T_CONSTANT                TS_INTEGER_LITERAL       
+1        9        >                         T_OPERATOR                TS_GREATER_THAN          
+1        11       x                         T_IDENTIFIER              TS_IDENTIFIER            
+1        13       &&                        T_OPERATOR                TS_AND                   
+1        16       x                         T_IDENTIFIER              TS_IDENTIFIER            
+1        18       <                         T_OPERATOR                TS_LESS_THAN             
+1        20       5                         T_INVALID                 TS_NONE                  
+1        21       )                         T_DELIMITER               TS_R_PAREN               
+1        23       {                         T_DELIMITER               TS_L_BRACE               
+1        2        print                     T_KEYWORD                 TS_PRINT                 
+1        7        (                         T_DELIMITER               TS_L_PAREN               
+1        8        x                         T_IDENTIFIER              TS_IDENTIFIER            
+1        9        )                         T_DELIMITER               TS_R_PAREN               
+1        10       ;                         T_DELIMITER               TS_SEMICOLON             
+1        2        x                         T_IDENTIFIER              TS_IDENTIFIER            
+1        3        ++                        T_OPERATOR                TS_INCREMENT             
+1        5        ;                         T_DELIMITER               TS_SEMICOLON             
+1        0        }                         T_DELIMITER               TS_R_BRACE               
+1        0        for                       T_KEYWORD                 TS_FOR                   
+1        3        (                         T_DELIMITER               TS_L_PAREN               
+1        4        var                       T_KEYWORD                 TS_VAR                   
+1        8        y                         T_IDENTIFIER              TS_IDENTIFIER            
+1        10       =                         T_OPERATOR                TS_ASSIGNMENT            
+1        12       0                         T_INVALID                 TS_NONE                  
+1        13       ;                         T_DELIMITER               TS_SEMICOLON             
+1        15       y                         T_IDENTIFIER              TS_IDENTIFIER            
+1        17       <                         T_OPERATOR                TS_LESS_THAN             
+1        19       54                        T_CONSTANT                TS_INTEGER_LITERAL       
+1        21       ;                         T_DELIMITER               TS_SEMICOLON             
+1        23       y                         T_IDENTIFIER              TS_IDENTIFIER            
+1        24       ++                        T_OPERATOR                TS_INCREMENT             
+1        26       )                         T_DELIMITER               TS_R_PAREN               
+1        28       {                         T_DELIMITER               TS_L_BRACE               
+1        2        print                     T_KEYWORD                 TS_PRINT                 
+1        7        (                         T_DELIMITER               TS_L_PAREN               
+1        8        y                         T_IDENTIFIER              TS_IDENTIFIER            
+1        9        )                         T_DELIMITER               TS_R_PAREN               
+1        10       ;                         T_DELIMITER               TS_SEMICOLON             
+1        0        }                         T_DELIMITER               TS_R_BRACE               

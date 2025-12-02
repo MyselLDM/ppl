@@ -3,6 +3,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 // Global debug flag
 extern int debug;
@@ -59,6 +60,10 @@ static inline void debug_print(const char* FILENAME, const int LINE,
 }
 
 // Optional macro for legacy code
-#define DEBUG_PRINT(...) debug_print(__FILE__, __LINE__, __func__, __VA_ARGS__)
+#define DEBUG_PRINT(...)                                    \
+  if (strstr(__FILE__, "lexic/") == NULL &&                 \
+      strstr(__FILE__, "global/") == NULL) {                \
+    debug_print(__FILE__, __LINE__, __func__, __VA_ARGS__); \
+  };
 
 #endif
