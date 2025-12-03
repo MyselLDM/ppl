@@ -30,6 +30,7 @@ typedef enum {
   TS_FOR,
   TS_WHILE,
   TS_VAR,
+  TS_WRITE,
   TS_PRINT,
   // Reserved
   TS_SWITCH,

@@ -59,6 +59,8 @@ char* ts2str(TokenSpecial token_type_special) {
       return "TS_PRINT";
     case TS_SWITCH:
       return "TS_SWITCH";
+    case TS_WRITE:
+      return "TS_WRITE";
     case TS_FUNC:
       return "TS_FUNC";
     case TS_RETURN:

@@ -92,16 +92,8 @@ TokenSpecial dictionary_lookup_text(char* lexeme, int* len) {
 
   // -------- i --------
 state_i:
-  if (*lexeme == 'f') {
-    lexeme++;
-    (*len)++;
-    goto state_if_end;
-  }
-  if (*lexeme == 'n') {
-    lexeme++;
-    (*len)++;
-    goto state_int;
-  }
+  CHECK_CHAR('f', state_if_end);
+  CHECK_CHAR('n', state_int);
   MATCH_IDENTIFIER;
 state_if_end:
   if (!ISALPHANUM) return TS_IF;  // if
@@ -182,6 +174,7 @@ state_func_end:
   // -------- w --------
 state_w:
   CHECK_CHAR('h', state_wh);
+  CHECK_CHAR('r', state_wr);
   MATCH_IDENTIFIER;
 state_wh:
   CHECK_CHAR('i', state_whi);
@@ -194,6 +187,19 @@ state_whil:
   MATCH_IDENTIFIER;
 state_while_end:
   if (!ISALPHANUM) return TS_WHILE;  // while
+  MATCH_IDENTIFIER;
+
+state_wr:
+  CHECK_CHAR('i', state_wri);
+  MATCH_IDENTIFIER;
+state_wri:
+  CHECK_CHAR('t', state_writ);
+  MATCH_IDENTIFIER;
+state_writ:
+  CHECK_CHAR('e', state_write_end);
+  MATCH_IDENTIFIER;
+state_write_end:
+  if (!ISALPHANUM) return TS_WRITE;  // write
   MATCH_IDENTIFIER;
 
   // -------- v --------
