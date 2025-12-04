@@ -11,7 +11,9 @@
   } while (0)
 
 void ast_print(const ASTNode* node, int depth, int is_last, FILE* ast_log) {
-  if (!node) return;
+  if (!node) return;  // skip null node
+
+  if (!node->token && node->child_current == 0) return;
 
   // Print prefix for current node
   for (int i = 0; i < depth; i++) {
@@ -22,7 +24,6 @@ void ast_print(const ASTNode* node, int depth, int is_last, FILE* ast_log) {
     }
   }
 
-  // Print node type and token if available
   if (node->token && node->token->lexeme) {
     PRINT_BOTH(ast_log, "%s: '%s'\n", print_ast_type_node(node->type),
                node->token->lexeme);
@@ -30,9 +31,16 @@ void ast_print(const ASTNode* node, int depth, int is_last, FILE* ast_log) {
     PRINT_BOTH(ast_log, "%s\n", print_ast_type_node(node->type));
   }
 
-  // Print children recursively
   for (size_t i = 0; i < node->child_current; i++) {
-    int child_is_last = (i == node->child_current - 1);
+    if (!node->children[i]) continue;  // skip null
+    int child_is_last = 1;
+
+    for (size_t j = node->child_current; j > i; j--) {
+      if (node->children[j - 1] != NULL) {
+        child_is_last = (j - 1 == i);
+        break;
+      }
+    }
     ast_print(node->children[i], depth + 1, child_is_last, ast_log);
   }
 }

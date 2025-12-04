@@ -85,6 +85,9 @@ TokenSpecial dictionary_lookup_text(char* lexeme, int* len) {
     case 't':
       lexeme++;
       goto state_t;  // true
+    case 'P':
+      lexeme++;
+      goto state_P;  // PROGRAM
     default:
       *len = 0;
       MATCH_IDENTIFIER;
@@ -93,10 +96,14 @@ TokenSpecial dictionary_lookup_text(char* lexeme, int* len) {
   // -------- i --------
 state_i:
   CHECK_CHAR('f', state_if_end);
-  CHECK_CHAR('n', state_int);
+  CHECK_CHAR('n', state_in);
   MATCH_IDENTIFIER;
 state_if_end:
   if (!ISALPHANUM) return TS_IF;  // if
+  MATCH_IDENTIFIER;
+
+state_in:
+  CHECK_CHAR('t', state_int);
   MATCH_IDENTIFIER;
 state_int:
   if (!ISALPHANUM) return TS_INT;  // int
@@ -228,6 +235,28 @@ state_prin:
   MATCH_IDENTIFIER;
 state_print_end:
   if (!ISALPHANUM) return TS_PRINT;  // print
+  MATCH_IDENTIFIER;
+
+state_P:
+  CHECK_CHAR('R', state_PR);
+  MATCH_IDENTIFIER;
+state_PR:
+  CHECK_CHAR('O', state_PRO);
+  MATCH_IDENTIFIER;
+state_PRO:
+  CHECK_CHAR('G', state_PROG);
+  MATCH_IDENTIFIER;
+state_PROG:
+  CHECK_CHAR('R', state_PROGR);
+  MATCH_IDENTIFIER;
+state_PROGR:
+  CHECK_CHAR('A', state_PROGRA);
+  MATCH_IDENTIFIER;
+state_PROGRA:
+  CHECK_CHAR('M', state_PROGRAM_END);
+  MATCH_IDENTIFIER;
+state_PROGRAM_END:
+  if (!ISALPHANUM) return TS_PROGRAM;  // program
   MATCH_IDENTIFIER;
 
   // -------- s --------
@@ -435,11 +464,13 @@ TokenSpecial dictionary_lookup_symbol(char* lexeme, int* len) {
     case '*':
       return TS_MULTIPLY;
     case '/':
-      return TS_DIVIDE;
+      lexeme++;
+      goto state_slash;
     case '%':
       return TS_MODULO;
     case '!':
-      return TS_NOT;
+      lexeme++;
+      goto state_not;
     case '(':
       return TS_L_PAREN;
     case ')':
@@ -451,7 +482,8 @@ TokenSpecial dictionary_lookup_symbol(char* lexeme, int* len) {
     case ';':
       return TS_SEMICOLON;
     default:
-      MATCH_IDENTIFIER;
+      *len = 0;        // no character matched
+      return TS_NONE;  // unknown operator
   }
 
   // -------- + --------
@@ -484,6 +516,16 @@ state_slash:
     return TS_DIVIDE_FLOOR;  // /_
   }
   return TS_DIVIDE;  // /
+  (*len) = 0;
+  return TS_NONE;
+
+state_not:
+  if (*lexeme == '=') {
+    lexeme++;
+    (*len)++;
+    return TS_NOT_EQUAL;  // !=
+  }
+  return TS_NOT;  // !
   (*len) = 0;
   return TS_NONE;
 

@@ -14,6 +14,7 @@ gcc lexic/tokenizer.c `
     syntax/putils.c `
     syntax/parse_stmt.c `
     syntax/parse_expr.c `
+    syntax/parse_error.c `
     syntax/astprint.c `
     -o main.exe
 

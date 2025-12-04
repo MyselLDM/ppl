@@ -63,16 +63,18 @@ void ast_add_child(ASTNode* parent, ASTNode* child) {
     parent->child_capacity = 1;
     parent->children = (ASTNode**)resize_array((void**)parent->children,
                                                parent->child_capacity);
-    DEBUG_PRINT("Creating children array for parent of type %d", parent->type);
+    DEBUG_PRINT("Creating children array for parent of type %s",
+                print_ast_type_node(parent->type));
   } else if (parent->child_current == parent->child_capacity) {
     parent->child_capacity *= 2;
     parent->children = (ASTNode**)resize_array((void**)parent->children,
                                                parent->child_capacity);
-    DEBUG_PRINT("Resizing children to %d for parent of type %d",
-                parent->child_capacity, parent->type);
+    DEBUG_PRINT("Resizing children to %d for parent of type %s",
+                parent->child_capacity, print_ast_type_node(parent->type));
   }
 
-  DEBUG_PRINT("Adding child to parent of type %d", parent->type);
+  DEBUG_PRINT("Adding child to parent of type %s",
+              print_ast_type_node(parent->type));
   parent->children[parent->child_current++] = child;
 }
 
@@ -106,12 +108,6 @@ void ast_free(ASTNode* root) {
   // Finally, free the node itself
   // Note: We don't free the token pointer as tokens are managed separately
   free(root);
-}
-
-void parse_error(const char* message, size_t line, size_t offset) {
-  DEBUG_PRINT("[PARSE ERROR] '%s' at line %zu, offset %zu\n", message, line,
-              offset);
-  exit(EXIT_FAILURE);
 }
 
 char* print_ast_type_op(ASTOperator type) {
@@ -156,7 +152,7 @@ char* print_ast_type_node(ASTNodeType type) {
     case AST_STMT_DECLARE:
       return "STMT_DECLARE";
     case AST_CONDITION:
-      return "CONDITION";
+      return "CLOSED_EXPRESSION";
     case AST_STMT_EXPR:
       return "STMT_EXPR";
     case AST_STMT_IF:
@@ -167,6 +163,8 @@ char* print_ast_type_node(ASTNodeType type) {
       return "STMT_IF_UNMATCHED";
     case AST_STMT_PRINT:
       return "STMT_PRINT";
+    case AST_STMT_WRITE:
+      return "STMT_WRITE";
     case AST_STMT_WHILE:
       return "STMT_WHILE";
     case AST_STMT_FOR:

@@ -53,6 +53,8 @@ char* ts2str(TokenSpecial token_type_special) {
       return "TS_FOR";
     case TS_WHILE:
       return "TS_WHILE";
+    case TS_PROGRAM:
+      return "TS_PROGRAM";
     case TS_VAR:
       return "TS_VAR";
     case TS_PRINT:

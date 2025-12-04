@@ -1,6 +1,10 @@
-if else for var print while
-switch func return case default break
-int float bool char string
+if else for var print while write
+func float return
+
+string switch 
+char case 
+break bool 
+int default
 
 // Delimiters
 ; () {}

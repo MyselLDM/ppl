@@ -28,6 +28,7 @@ typedef enum {
   TS_IF,
   TS_ELSE,
   TS_FOR,
+  TS_PROGRAM,
   TS_WHILE,
   TS_VAR,
   TS_WRITE,

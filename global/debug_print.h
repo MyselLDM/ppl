@@ -62,8 +62,12 @@ static inline void debug_print(const char* FILENAME, const int LINE,
 // Optional macro for legacy code
 #define DEBUG_PRINT(...)                                    \
   if (strstr(__FILE__, "lexic/") == NULL &&                 \
-      strstr(__FILE__, "global/") == NULL) {                \
+      strstr(__FILE__, "global/") == NULL &&                \
+      strstr(__FILE__, "ast.c") == NULL) {                  \
     debug_print(__FILE__, __LINE__, __func__, __VA_ARGS__); \
   };
 
 #endif
+
+//strstr(__FILE__, "lexic/") == NULL &&                 \
+      strstr(__FILE__, "global/") == NULL

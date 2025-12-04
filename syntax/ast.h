@@ -1,19 +1,11 @@
 #pragma once
 #include "../lexic/token.h"
+#include "parse_error.h"
 
 #define CURRENT_TOKEN tokens->token[*index]
 // ========================
 // AST Structures
 // ========================
-
-#define PARSE_ERROR(message) \
-  parse_error(message, CURRENT_TOKEN.line, CURRENT_TOKEN.offset)
-
-#define CHECK_SEMICOLON                                   \
-  if (CURRENT_TOKEN.token_type_special != TS_SEMICOLON) { \
-    PARSE_ERROR("Expected \";\"");                        \
-  }                                                       \
-  (*index)++;
 
 // ========================
 // Parsing Error Function
@@ -91,6 +83,7 @@ typedef enum {
   AST_STMT_IF_UNMATCHED,  // if (...) ELSE
 
   AST_STMT_PRINT,  // print(expr)
+  AST_STMT_WRITE,  // return expr
   AST_STMT_WHILE,  // while(expr) block
   AST_STMT_FOR,    // for(init; cond; post) block
 
@@ -206,4 +199,3 @@ void ast_free(ASTNode* root);
 
 char* print_ast_type_op(ASTOperator type);
 char* print_ast_type_node(ASTNodeType node);
-void parse_error(const char* message, size_t line, size_t offset);

@@ -43,6 +43,8 @@ int main(int argc, char* argv[]) {
 
   ASTNode* ast_root = parse_tokens(&tokens);
 
+  DEBUG_PRINT("[!!MAIN!!] Successfully created AST");
+
   ast_print_root(ast_root);
 
   debug_close();
