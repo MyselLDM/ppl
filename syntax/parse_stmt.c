@@ -125,14 +125,19 @@ ASTNode* parse_if(const Tokens* tokens, size_t* index) {
 
   // --------- CASE 1: Matched IF -----------
   if (CURRENT_TOKEN.token_type_special == TS_ELSE) {
-    NEXT_TOKEN();
-    ASTNode* block_false = parse_block(tokens, index);
+    NEXT_TOKEN();  // consume "else"
+
+    ASTNode* block_false = NULL;
+    if (CURRENT_TOKEN.token_type_special == TS_IF) {
+      block_false = parse_if(tokens, index);
+    } else {
+      block_false = parse_block(tokens, index);
+    }
 
     ASTNode* if_matched = ast_create_node(AST_STMT_IF_MATCHED, NULL);
     ast_add_child(if_matched, condition);
     ast_add_child(if_matched, block_true);
     ast_add_child(if_matched, block_false);
-
     return if_matched;
   }
 

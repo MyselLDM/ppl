@@ -3,8 +3,7 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
-                "D:/My Code/School Code/BX/pcre"
+                "${workspaceFolder}/**"
             ],
             "defines": [
                 "_DEBUG",

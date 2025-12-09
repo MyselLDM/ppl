@@ -37,17 +37,15 @@ ASTNode* parse_tokens(const Tokens* tokens) {
     return NULL;
   }
 
-  FILE* f = fopen("Errors - Syntax.txt", "w");
+  FILE* f = fopen("logs/error - syntax.log", "w");
   if (!f) {
     fprintf(stderr, "Failed to open syntax_errors.txt for writing\n");
   } else {
     fclose(f);
   }
 
-  // Create the root program node (no associated token)
   ASTNode* program = ast_create_node(AST_PROGRAM, NULL);
 
-  // Initialize index to track position in token stream
   size_t i = 0;
   size_t* index = &i;
 
@@ -56,7 +54,7 @@ ASTNode* parse_tokens(const Tokens* tokens) {
               CURRENT_TOKEN.lexeme);
     DEBUG_PRINT("[PARSE ERROR] Expected 'program' but found '%s'\n",
                 CURRENT_TOKEN.lexeme);
-    panic_to_sync_point(tokens, index);  // skip to next safe token
+    panic_to_sync_point(tokens, index);
   } else {
     NEXT_TOKEN();
   }
@@ -71,7 +69,6 @@ ASTNode* parse_tokens(const Tokens* tokens) {
     NEXT_TOKEN();
   }
 
-  // Iterate through all tokens in the stream
   ASTNode* STMTList = parse_statement_list(tokens, index);
   ast_add_child(program, STMTList);
   return program;
@@ -90,14 +87,36 @@ ASTNode* parse_statement_list(const Tokens* tokens, size_t* index) {
 }
 
 ASTNode* parse_statement(const Tokens* tokens, size_t* index) {
+  while (*index < tokens->length &&
+         CURRENT_TOKEN.token_type_special != TS_IDENTIFIER &&
+         CURRENT_TOKEN.token_type_special != TS_VAR &&
+         CURRENT_TOKEN.token_type_special != TS_PRINT &&
+         CURRENT_TOKEN.token_type_special != TS_WRITE &&
+         CURRENT_TOKEN.token_type_special != TS_IF &&
+         CURRENT_TOKEN.token_type_special != TS_WHILE &&
+         CURRENT_TOKEN.token_type_special != TS_FOR &&
+         CURRENT_TOKEN.token_type_special != TS_L_BRACE) {
+    WRITE_ERR("[PARSE ERROR] Unexpected token '%s', skipping...\n",
+              CURRENT_TOKEN.lexeme);
+    (*index)++;
+  }
+
+  if (*index >= tokens->length) {
+    WRITE_ERR(
+        "[PARSE ERROR] Unexpected end of input while looking for statement.\n");
+    return NULL;
+  }
+
   DEBUG_PRINT("CURRENT LEXEME %s TYPE: %s", CURRENT_TOKEN.lexeme,
               ts2str(CURRENT_TOKEN.token_type_special));
+
   switch (CURRENT_TOKEN.token_type_special) {
     case TS_IDENTIFIER:
-    case TS_VAR:
+    case TS_VAR: {
       ASTNode* as = parse_assignment(tokens, index);
       CHECK_SEMICOLON;
       return as;
+    }
     case TS_PRINT:
       return parse_print(tokens, index);
     case TS_WRITE:
@@ -110,7 +129,9 @@ ASTNode* parse_statement(const Tokens* tokens, size_t* index) {
       return parse_for(tokens, index);
     case TS_L_BRACE:
       return parse_block(tokens, index);
+
     default:
-      PARSE_ERROR_UNEXPECTED_TOKEN("Expected statement start");
+      WRITE_ERR("[FATAL] Unreachable parser state at statement.\n");
+      return NULL;
   }
 }

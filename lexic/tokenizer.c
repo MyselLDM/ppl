@@ -129,7 +129,7 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
 
 // Main scanning loop
 Tokens tokenizer_token_scan_manual(char* strptr) {
-  FILE* fptoken = fopen("Symbol Table.txt", "w");
+  FILE* fptoken = fopen("logs/output - lexic.log", "w");
   if (!fptoken) {
     perror("Failed to open debug log");
   }

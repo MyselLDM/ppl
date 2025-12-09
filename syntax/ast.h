@@ -142,59 +142,9 @@ typedef struct ASTNode {
   size_t child_current;       // Current child being processed
 } ASTNode;
 
-// ========================
-// AST Functions
-// ========================
-
-/**
- * ast_create_node
- * ----------------
- * Creates a new AST node of the given type and associates it with a token.
- * The token may be NULL for non-terminal nodes that don't directly correspond
- * to a specific token (e.g., program or block nodes).
- *
- * @param type The type of AST node (ASTNodeType).
- * @param token Pointer to a Token struct associated with this node. Can be
- * NULL.
- * @return Pointer to the newly created ASTNode.
- *
- * Notes:
- * - Initializes the child array to NULL and child_count to 0.
- * - Memory allocation should be handled safely (use safe_malloc from utils).
- */
 ASTNode* ast_create_node(ASTNodeType type, Token* token);
 
-/**
- * ast_add_child
- * --------------
- * Adds a child node to a parent node's children array.
- * Dynamically resizes the children array if needed.
- *
- * @param parent Pointer to the parent ASTNode.
- * @param child Pointer to the child ASTNode to add.
- *
- * Notes:
- * - Useful for building hierarchical structures like blocks, expressions, and
- * statements.
- * - Child nodes should have been allocated separately (e.g., via
- * ast_create_node).
- * - Updates the parent node's child_count.
- */
 void ast_add_child(ASTNode* parent, ASTNode* child);
-
-/**
- * ast_free
- * ---------
- * Recursively frees an AST and all associated memory.
- *
- * @param root Pointer to the root ASTNode to free.
- *
- * Notes:
- * - Frees the children array and all child nodes recursively.
- * - Does NOT free the tokens themselves (tokens are managed separately by
- * Tokens).
- * - Should be called after parsing is done to avoid memory leaks.
- */
 void ast_free(ASTNode* root);
 
 char* print_ast_type_op(ASTOperator type);

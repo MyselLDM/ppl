@@ -27,14 +27,12 @@
  * @return Pointer to the newly created and initialized ASTNode
  */
 ASTNode* ast_create_node(ASTNodeType type, Token* token) {
-  // Allocate memory for the new node using safe_malloc (exits on failure)
   ASTNode* node = (ASTNode*)safe_malloc(sizeof(ASTNode));
 
-  // Initialize node fields
   node->type = type;
-  node->token = token;       // May be NULL for container nodes
-  node->children = NULL;     // Children array starts empty
-  node->child_capacity = 0;  // No children initially
+  node->token = token;
+  node->children = NULL;
+  node->child_capacity = 0;
   node->child_current = 0;
 
   DEBUG_PRINT("Created node of type %s", print_ast_type_node(type));

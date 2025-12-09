@@ -18,7 +18,7 @@ typedef enum {
 } ParseErrorType;
 
 #define WRITE_ERR(...)                                                 \
-  FILE* f = fopen("Errors - Syntax.txt", "a");                         \
+  FILE* f = fopen("logs/error - syntax.log", "a");                     \
   if (!f) {                                                            \
     fprintf(stderr, "Failed to open syntax_errors.txt for writing\n"); \
   } else {                                                             \

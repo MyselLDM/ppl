@@ -31,7 +31,6 @@
     }                                                         \
   } while (0)
 
-// Custom strlength
 int str_length(char* strptr) {
   int len = 0;
   while (*strptr != '\0') {
@@ -428,9 +427,6 @@ state_true_end:
   // fallback
   MATCH_IDENTIFIER;
 }
-
-// This function recognizes multi-character operators like ++, --, ==, etc.
-// Returns the operator type name, or TS_NONE if not recognized.
 
 TokenSpecial dictionary_lookup_symbol(char* lexeme, int* len) {
   (*len) = 0;

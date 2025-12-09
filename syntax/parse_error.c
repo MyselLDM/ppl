@@ -56,13 +56,6 @@ void parse_error(ParseErrorType type, const char* message, const Token* token,
   print_line_tokens(tokens, line, offset);
 
   switch (type) {
-    case PARSE_ERR_MISSING_SEMICOLON:
-      while (*index < tokens->length &&
-             CURRENT_TOKEN.token_type_special != TS_SEMICOLON &&
-             CURRENT_TOKEN.token_type_special != TS_R_BRACE) {
-        (*index)++;
-      }
-      break;
     case PARSE_ERR_MISSING_PAREN:
       while (*index < tokens->length &&
              CURRENT_TOKEN.token_type_special != TS_R_PAREN &&
@@ -76,13 +69,10 @@ void parse_error(ParseErrorType type, const char* message, const Token* token,
         (*index)++;
       }
       break;
+    case PARSE_ERR_MISSING_SEMICOLON:
     case PARSE_ERR_UNEXPECTED_TOKEN:
       (*index)++;
-
-      if (*index < tokens->length &&
-          CURRENT_TOKEN.token_type_special == TS_NONE) {
-        panic_to_sync_point(tokens, index);
-      }
+      parse_statement(tokens, index);
       break;
   }
 }

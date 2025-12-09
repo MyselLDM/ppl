@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
   char* FILE_NAME = argv[1];
 
   // Initializes the debug system
-  debug_init("debug.log");
+  debug_init("logs/debug.log");
   DEBUG_PRINT("%s: Successfully parsed CLI arguments\n", __func__);
 
   char* fstr = parser_scan_file(FILE_NAME);

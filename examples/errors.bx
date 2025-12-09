@@ -32,21 +32,12 @@ if x > 5 {             // invalid: missing parentheses
 } else
     print("broken else"); // invalid: missing braces
 
-// GOOD LOOP
-while (z > 0) {
-    print(z);
-    z = z - 1;
-}
 
 // JUNKY LOOP
 while z < 10 {          // invalid: missing parentheses
     z++; 
 }
 
-// GOOD FOR LOOP
-for (var i = 0; i < 5; i = i + 1) {
-    print(i);
-}
 
 // JUNKY FOR LOOP
 for var j = 0; j < 5; j++ {   // invalid: missing parentheses
