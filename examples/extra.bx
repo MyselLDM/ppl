@@ -1,0 +1,8 @@
+PROGRAM;
+
+// Variable declarations
+var x = 10;
+var x = 10;
+var y = 32 * 23 + 21 - 32;
+var z = 54 + "hello" + (32 - 43);
+var string greeting = "Hello, World!";

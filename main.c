@@ -6,6 +6,7 @@
 // #include "legacy_code/tokenizer.h"
 #include "lexic/scanner.h"
 #include "lexic/tokenizer.h"
+#include "semantic/analyze.h"
 #include "syntax/astprint.h"
 #include "syntax/bxparser.h"
 
@@ -33,14 +34,6 @@ int main(int argc, char* argv[]) {
 
   DEBUG_PRINT("[!!MAIN!!] Successfully tokenized '%s'\n", FILE_NAME);
 
-  // for (size_t i = 0; i < tokens.length; i++) {
-  //   Token* t = &tokens.token[i];
-  //   DEBUG_PRINT(
-  //       "Line %d Offset %d Lexeme: %s Token Type: %s Token Special: %s \n",
-  //       t->line, t->offset, t->lexeme, tt2str(t->token_type),
-  //       ts2str(t->token_type_special));
-  // }
-
   ASTNode* ast_root = parse_tokens(&tokens);
 
   if (ast_root == NULL) {
@@ -51,6 +44,8 @@ int main(int argc, char* argv[]) {
   DEBUG_PRINT("[!!MAIN!!] Successfully created AST");
 
   ast_print_root(ast_root);
+
+  semantic_analyze(ast_root);
 
   debug_close();
 
