@@ -10,7 +10,7 @@
 typedef struct {
   size_t line;
   size_t offset;
-  const char* lexeme;
+  char* lexeme;
   TokenType token_type;
   TokenSpecial token_type_special;
 } Token;

@@ -1,0 +1,8 @@
+var x = 32;
+var e y = 235;
+char c = 'c';
+int x = 43;
+
+while(x<3) {
+  x++;
+}

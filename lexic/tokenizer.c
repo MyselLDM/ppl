@@ -74,20 +74,8 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
                        ts);
   }
 
-  if (*strptr == '-') {
-    if (ISDIGIT(strptr[1])) {
-      CHECKDIGIT;
-    }
-    return make_lexeme(strptr, 1, token_type, token_type_special, T_OPERATOR,
-                       TS_SUBTRACT);
-  }
-
   if (ISDIGIT(*strptr)) {
-    if (ISDIGIT(strptr[1])) {
-      CHECKDIGIT;
-    } else {
-      RETURN_LEXEME_INVALID;
-    }
+    CHECKDIGIT;  // just call CHECKDIGIT for any digit
   }
 
   // Characters
@@ -141,7 +129,7 @@ char* tokenizer_parse_lexeme(char* strptr, TokenType* token_type,
 
 // Main scanning loop
 Tokens tokenizer_token_scan_manual(char* strptr) {
-  FILE* fptoken = fopen("Symbol Table.txt", "w");
+  FILE* fptoken = fopen("logs/output - lexic.log", "w");
   if (!fptoken) {
     perror("Failed to open debug log");
   }
@@ -162,7 +150,8 @@ Tokens tokenizer_token_scan_manual(char* strptr) {
     while (*strptr == ' ' || *strptr == '\t' || *strptr == '\r' ||
            *strptr == '\n') {
       if (*strptr == '\n') {
-        DEBUG_PRINT("New Line: %d", ++line);
+        ++line;
+        DEBUG_PRINT("New Line: %d", line);
         offset = 0;
       } else {
         DEBUG_PRINT("Skipping whitespace");
@@ -172,6 +161,7 @@ Tokens tokenizer_token_scan_manual(char* strptr) {
     }
 
     if (*strptr == '\0') break;
+    DEBUG_PRINT("CURRENT LINE %d CURRENT OFFSET %d", line, offset);
 
     TokenType token_type = 0;
     TokenSpecial token_type_special = 0;

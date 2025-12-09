@@ -1,6 +1,10 @@
-if else for var print while
-switch func return case default break
-int float bool char string
+if else for var print while write
+func float return
+
+string switch 
+char case 
+break bool 
+int default
 
 // Delimiters
 ; () {}
@@ -10,9 +14,9 @@ x y z hello firstchar first_int hell0_w0r1d
 
 // Constants
 32.43
--0.46
+0.46
 35566
--34
+34
 true
 false
 "cool string"

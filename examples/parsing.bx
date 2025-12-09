@@ -1,0 +1,107 @@
+PROGRAM;
+
+// Variable declarations
+var x = 10;
+var x = 10;
+var y = 32 * 23 + 21 - 32;
+var string greeting = "Hello, World!";
+
+var z;
+
+// Assignment statements
+x = y + 15;
+z = x * 2 - 5;
+xy = f;
+vcx;
+// Print and write statements
+print("The value of x is:");
+print(x);
+print(32 * 43 + (23 ^ 1) + x > y);
+print(32 * 43);
+write(greeting);
+write(your_number);
+
+if (x < 10) {
+    print("small");
+}
+
+if (flag == true) {
+    print("enabled");
+} else {
+    print("disabled");
+}
+
+// If-else statements
+if (x > y) {
+    print("x is greater than y");
+} else if (32 < 34) {
+    print("x is less than or equal to y");
+} else {
+    print(x);
+}
+
+// While loop
+while (x > 0) {
+    print(x);
+    x = x - 1;
+}
+
+var int i = 1;
+while (i <= 3) {
+    var int j = 1;
+    while (j <= i + 1) {
+        var int k = 5;
+        while (k > 0) {
+            print("i=" + i + " j=" + j + " k=" + k);
+            if ((i + j + k) % 4 == 0)
+                {print(">>> divisible by 4!");}
+            if (k == 3 && j == 2)
+                {print("=== special middle state ===");}
+            k--;   // inner loop
+        }
+        j++;   // mid loop
+    }
+    i++;   // outer loop
+}
+
+// For loop
+for (var i = 0; i < 5; i++) {
+    print("Iteration number:");
+    print(i);
+    y = y + i;
+}
+
+// For loop
+for (var i = 0; i < 5; i++) {
+    for (var i = 0; y < 5; i++) {
+        y++;
+        x++;
+    } 
+    x++;
+}
+
+// More assignments with arithmetic
+z = (y + x) / 2;
+y = y - z;
+
+// Nested if inside while
+var counter = 0;
+while (counter < 3) {
+    if (counter % 2 == 0) {
+        print("Even counter:");
+        print(counter);
+    } else {
+        print("Odd counter:");
+        print(counter);
+    }
+    counter++;
+}
+
+var int guess;
+while(guess != 100) {
+  print("Guess the number: ");
+  write(guess);
+}
+
+// End of program
+print("Program completed successfully.");

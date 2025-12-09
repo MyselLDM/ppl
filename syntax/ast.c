@@ -1,0 +1,234 @@
+#include "ast.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "../global/debug_print.h"
+#include "putils.h"
+
+// ========================
+// AST Management Functions
+// ========================
+
+/**
+ * ast_create_node
+ * ----------------
+ * Creates and initializes a new AST node.
+ *
+ * This function allocates memory for a new AST node and initializes all its
+ * fields. The node is created with the specified type and optional token
+ * reference. The children array is initially NULL and will be allocated
+ * dynamically as children are added.
+ *
+ * @param type The type of AST node to create (e.g., AST_PROGRAM,
+ * AST_STATEMENT_LIST)
+ * @param token Pointer to the token associated with this node (can be NULL for
+ * non-terminal nodes)
+ * @return Pointer to the newly created and initialized ASTNode
+ */
+
+size_t parser_error_count = 0;
+
+ASTNode* ast_create_node(ASTNodeType type, Token* token) {
+  ASTNode* node = (ASTNode*)safe_malloc(sizeof(ASTNode));
+
+  node->type = type;
+  node->token = token;
+  node->children = NULL;
+  node->child_capacity = 0;
+  node->child_current = 0;
+
+  DEBUG_PRINT("Created node of type %s", print_ast_type_node(type));
+  return node;
+}
+
+/**
+ * ast_add_child
+ * --------------
+ * Adds a child node to a parent node's children array.
+ *
+ * This function dynamically expands the parent's children array to accommodate
+ * the new child. It uses resize_array to safely reallocate memory for the
+ * growing array. This is essential for building the hierarchical AST structure.
+ *
+ * @param parent Pointer to the parent ASTNode that will receive the child
+ * @param child Pointer to the child ASTNode to be added
+ */
+void ast_add_child(ASTNode* parent, ASTNode* child) {
+  // Safety check: ensure both parent and child are valid
+  if (!parent || !child) {
+    return;
+  }
+
+  if (parent->child_capacity == 0) {
+    parent->child_capacity = 1;
+    parent->children = (ASTNode**)resize_array((void**)parent->children,
+                                               parent->child_capacity);
+    DEBUG_PRINT("Creating children array for parent of type %s",
+                print_ast_type_node(parent->type));
+  } else if (parent->child_current == parent->child_capacity) {
+    parent->child_capacity *= 2;
+    parent->children = (ASTNode**)resize_array((void**)parent->children,
+                                               parent->child_capacity);
+    DEBUG_PRINT("Resizing children to %d for parent of type %s",
+                parent->child_capacity, print_ast_type_node(parent->type));
+  }
+
+  DEBUG_PRINT("Adding child to parent of type %s",
+              print_ast_type_node(parent->type));
+  parent->children[parent->child_current++] = child;
+}
+
+/**
+ * ast_free
+ * ---------
+ * Recursively frees an entire AST and all its allocated memory.
+ *
+ * This function performs a post-order traversal (children first, then parent)
+ * to safely free all nodes in the AST. It frees the children array and the node
+ * itself, but NOT the tokens, as those are managed by the Tokens structure.
+ *
+ * @param root Pointer to the root ASTNode to free (can be any subtree)
+ */
+void ast_free(ASTNode* root) {
+  // Base case: NULL node requires no action
+  if (!root) {
+    return;
+  }
+
+  // Recursively free all children first (post-order traversal)
+  for (size_t i = 0; i < root->child_capacity; i++) {
+    ast_free(root->children[i]);
+  }
+
+  // Free the children array itself
+  if (root->children) {
+    free(root->children);
+  }
+
+  // Finally, free the node itself
+  // Note: We don't free the token pointer as tokens are managed separately
+  free(root);
+}
+
+char* print_ast_type_op(ASTOperator type) {
+  switch (type) {
+    case OP_ADD:
+      return "OP_ADD";
+    case OP_SUB:
+      return "OP_SUB";
+    case OP_MUL:
+      return "OP_MUL";
+    case OP_DIV:
+      return "OP_DIV";
+    case OP_MOD:
+      return "OP_MOD";
+    case OP_AND:
+      return "OP_AND";
+    case OP_OR:
+      return "OP_OR";
+    case OP_NOT:
+      return "OP_NOT";
+    case OP_NEG:
+      return "OP_NEG";
+    case OP_INC:
+      return "OP_INC";
+    case OP_DEC:
+      return "OP_DEC";
+  }
+}
+
+char* print_ast_type_node(ASTNodeType type) {
+  switch (type) {
+    case AST_PROGRAM:
+      return "PROGRAM";
+    case AST_STATEMENT_LIST:
+      return "STMT_LIST";
+    case AST_STMT_EMPTY:
+      return "STMT_EMPTY";
+    case AST_STMT_BLOCK:
+      return "STMT_BLOCK";
+    case AST_STMT_ASSIGN:
+      return "STMT_ASSIGN";
+    case AST_STMT_DECLARE:
+      return "STMT_DECLARE";
+    case AST_CONDITION:
+      return "CLOSED_EXPRESSION";
+    case AST_STMT_EXPR:
+      return "STMT_EXPR";
+    case AST_STMT_IF:
+      return "STMT_IF";
+    case AST_STMT_IF_MATCHED:
+      return "STMT_IF_MATCHED";
+    case AST_STMT_IF_UNMATCHED:
+      return "STMT_IF_UNMATCHED";
+    case AST_STMT_PRINT:
+      return "STMT_PRINT";
+    case AST_STMT_WRITE:
+      return "STMT_WRITE";
+    case AST_STMT_WHILE:
+      return "STMT_WHILE";
+    case AST_STMT_FOR:
+      return "STMT_FOR";
+    case AST_FOR_INIT:
+      return "FOR_INIT";
+    case AST_FOR_EXPR:
+      return "FOR_EXPR";
+    case AST_FOR_POST:
+      return "FOR_POST";
+    case AST_FOR_CONDITION:
+      return "FOR_CONDITION";
+    case AST_IDENTIFIER:
+      return "IDENTIFIER";
+    case AST_LITERAL_INT:
+      return "LITERAL_INT";
+    case AST_LITERAL_FLOAT:
+      return "LITERAL_FLOAT";
+    case AST_LITERAL_BOOL:
+      return "LITERAL_BOOL";
+    case AST_LITERAL_STRING:
+      return "LITERAL_STRING";
+    case AST_LITERAL_CHAR:
+      return "LITERAL_CHAR";
+    case AST_LOGICAL_OR:
+      return "OR";
+    case AST_LOGICAL_AND:
+      return "AND";
+    case AST_RELATIONAL_EQ:
+      return "EQUAL";
+    case AST_RELATIONAL_NEQ:
+      return "NOT_EQUAL";
+    case AST_RELATIONAL_GT:
+      return "GREATER";
+    case AST_RELATIONAL_LT:
+      return "LESSER";
+    case AST_RELATIONAL_GTE:
+      return "GREATER_EQ";
+    case AST_RELATIONAL_LTE:
+      return "LESSER_EQ";
+    case AST_ADD:
+      return "ADD";
+    case AST_SUB:
+      return "SUBTRACT";
+    case AST_MUL:
+      return "MULTIPLY";
+    case AST_DIV:
+      return "DIVIDE";
+    case AST_DIV_F:
+      return "DIVIDE_FLOOR";
+    case AST_MOD:
+      return "MODULO";
+    case AST_NOT:
+      return "NOT";
+    case AST_NEG:
+      return "NEGATIVE";
+    case AST_POW:
+      return "POWER";
+    case AST_INC:
+      return "INCREMENT";
+    case AST_DEC:
+      return "DECREMENT";
+    default:
+      return "UNKNOWN";
+  }
+}

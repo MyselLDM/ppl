@@ -1,0 +1,45 @@
+// GOOD DECLARATIONS
+var x = 10;
+var y;
+int z = 5;
+string name = "Alice";
+
+// JUNKY DECLARATIONS
+var int a b = 3;       // invalid: extra identifier
+var float = 4.5;       // invalid: missing variable name
+char c = ;             // invalid: missing literal
+var d 7;               // invalid: missing '='
+
+// GOOD CONDITIONALS
+if (x > 5) {
+    print("x is greater than 5");
+} else {
+    print("x is 5 or less");
+}
+
+// NESTED CONDITIONAL
+if (y) {
+    if (x < 3) {
+        print("x is tiny");
+    }
+} else {
+    print("y is false");
+}
+
+// JUNKY CONDITIONALS
+if x > 5 {             // invalid: missing parentheses
+    print("broken if");
+} else
+    print("broken else"); // invalid: missing braces
+
+
+// JUNKY LOOP
+while z < 10 {          // invalid: missing parentheses
+    z++; 
+}
+
+
+// JUNKY FOR LOOP
+for var j = 0; j < 5; j++ {   // invalid: missing parentheses
+    print(j);
+}

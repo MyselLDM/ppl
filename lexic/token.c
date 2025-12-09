@@ -25,7 +25,7 @@ void token_push(Tokens* tokens, char* lexeme, TokenType token_type,
                 tokens->capacity);
   }
   tokens->token[tokens->length++] =
-      (Token){line, offset, lexeme, token_type, token_type_special};
+      (Token){line, offset, strdup(lexeme), token_type, token_type_special};
   DEBUG_PRINT("{%s, %s, %s} at line %d offset %d token pushed\n", lexeme,
               tt2str(token_type), ts2str(token_type_special), line, offset);
 }
