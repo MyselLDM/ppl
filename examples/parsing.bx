@@ -12,7 +12,7 @@ var z;
 x = y + 15;
 z = x * 2 - 5;
 xy = f;
-
+vcx;
 // Print and write statements
 print("The value of x is:");
 print(x);

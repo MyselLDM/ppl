@@ -43,6 +43,11 @@ int main(int argc, char* argv[]) {
 
   ASTNode* ast_root = parse_tokens(&tokens);
 
+  if (ast_root == NULL) {
+    DEBUG_PRINT("[!!MAIN!!] Failed to parse '%s'\n", FILE_NAME);
+    return 1;
+  }
+
   DEBUG_PRINT("[!!MAIN!!] Successfully created AST");
 
   ast_print_root(ast_root);

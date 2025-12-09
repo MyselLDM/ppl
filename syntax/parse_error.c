@@ -2,6 +2,7 @@
 #include "parse_error.h"
 
 #include "../global/debug_print.h"
+#include "ast.h"
 #include "bxparser.h"
 
 void print_line_tokens(const Tokens* tokens, size_t line, size_t offset) {
@@ -44,6 +45,8 @@ void parse_error(ParseErrorType type, const char* message, const Token* token,
   const char* lexeme = token ? token->lexeme : "EOF";
   size_t line = token ? token->line : 0;
   size_t offset = token ? token->offset : 0;
+
+  parser_error_count++;
 
   DEBUG_PRINT(
       "[PARSE ERROR] Type: %d, '%s' at line %zu, offset %zu (token: '%s')\n",

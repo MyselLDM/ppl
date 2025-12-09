@@ -26,6 +26,9 @@
  * non-terminal nodes)
  * @return Pointer to the newly created and initialized ASTNode
  */
+
+size_t parser_error_count = 0;
+
 ASTNode* ast_create_node(ASTNodeType type, Token* token) {
   ASTNode* node = (ASTNode*)safe_malloc(sizeof(ASTNode));
 

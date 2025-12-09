@@ -32,6 +32,7 @@ ASTNode* parse_statement_list(const Tokens* tokens, size_t* index);
  * empty
  */
 ASTNode* parse_tokens(const Tokens* tokens) {
+  parser_error_count = 0;
   // Validate input: ensure we have tokens to parse
   if (!tokens || tokens->length == 0) {
     return NULL;
@@ -71,7 +72,12 @@ ASTNode* parse_tokens(const Tokens* tokens) {
 
   ASTNode* STMTList = parse_statement_list(tokens, index);
   ast_add_child(program, STMTList);
-  return program;
+
+  if (parser_error_count > 0) {
+    return NULL;
+  } else {
+    return program;
+  }
 }
 
 ASTNode* parse_statement_list(const Tokens* tokens, size_t* index) {

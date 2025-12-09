@@ -25,6 +25,8 @@
  * @param offset Character offset within the line where the error occurred
  */
 
+extern size_t parser_error_count;
+
 typedef enum {
 
   // Arithmetic
