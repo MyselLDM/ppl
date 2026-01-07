@@ -50,12 +50,16 @@ ASTNode* parse_assignment(const Tokens* tokens, size_t* index) {
 
     ASTNode* node_ident = ast_create_node(AST_IDENTIFIER, identifier);
     ASTNode* expr_node = parse_expression(tokens, index);
+    ASTNode* expr_parent = ast_create_node(AST_EXP, NULL);
 
     DEBUG_PRINT("RETURNED TO ASSIGNMENT");
     ast_add_child(node_as, node_ident);
-    ast_add_child(node_as, expr_node);
+    ast_add_child(node_as, expr_parent);
+    ast_add_child(expr_parent, expr_node);
+
     return node_as;
   }
+
   ASTNode* node_as = ast_create_node(AST_STMT_ASSIGN, &CURRENT_TOKEN);
 
   if (CURRENT_TOKEN.token_type != T_IDENTIFIER) {
@@ -68,7 +72,12 @@ ASTNode* parse_assignment(const Tokens* tokens, size_t* index) {
   if (CURRENT_TOKEN.token_type_special != TS_ASSIGNMENT) {
     (*index)--;
     ASTNode* expr_node = parse_expression(tokens, index);
-    ast_add_child(node_as, expr_node);
+    ASTNode* node_ident = ast_create_node(AST_IDENTIFIER, identifier);
+    ASTNode* expr_parent = ast_create_node(AST_EXP, NULL);
+
+    ast_add_child(node_as, node_ident);
+    ast_add_child(node_as, expr_parent);
+    ast_add_child(expr_parent, expr_node);
     return node_as;
   }
 
@@ -76,19 +85,38 @@ ASTNode* parse_assignment(const Tokens* tokens, size_t* index) {
 
   ASTNode* node_ident = ast_create_node(AST_IDENTIFIER, identifier);
   ASTNode* expr_node = parse_expression(tokens, index);
+  ASTNode* expr_parent = ast_create_node(AST_EXP, NULL);
 
   ast_add_child(node_as, node_ident);
-  ast_add_child(node_as, expr_node);
+  ast_add_child(node_as, expr_parent);
+  ast_add_child(expr_parent, expr_node);
+
   return node_as;
 }
 
 ASTNode* parse_print(const Tokens* tokens, size_t* index) {
-  ASTNode* print = ast_create_node(AST_STMT_PRINT, &CURRENT_TOKEN);
+  ASTNode* print_node = ast_create_node(AST_STMT_PRINT, &CURRENT_TOKEN);
   NEXT_TOKEN();
-  ASTNode* expr_node = parse_condition(tokens, index);
+
+  if (CURRENT_TOKEN.token_type_special != TS_L_PAREN) {
+    PARSE_ERROR_PAREN();
+  }
+  NEXT_TOKEN();
+
+  ASTNode* expr_node = parse_expression(tokens, index);
+
+  if (CURRENT_TOKEN.token_type_special != TS_R_PAREN) {
+    PARSE_ERROR_PAREN();
+  }
+  NEXT_TOKEN();
+
+  // Add the expression as a child of the print node
+  ast_add_child(print_node, expr_node);
+
+  // Expect semicolon at the end
   CHECK_SEMICOLON;
-  ast_add_child(print, expr_node);
-  return print;
+
+  return print_node;
 }
 
 ASTNode* parse_write(const Tokens* tokens, size_t* index) {
@@ -153,6 +181,8 @@ ASTNode* parse_if(const Tokens* tokens, size_t* index) {
 ASTNode* parse_while(const Tokens* tokens, size_t* index) {
   ASTNode* while_node = ast_create_node(AST_STMT_WHILE, &CURRENT_TOKEN);
   NEXT_TOKEN();
+  if (CURRENT_TOKEN.token_type_special != TS_L_PAREN) {
+  }
   ASTNode* condition = parse_condition(tokens, index);
   ASTNode* block = parse_block(tokens, index);
 
@@ -219,6 +249,7 @@ ASTNode* parse_condition(const Tokens* tokens, size_t* index) {
   }
 
   PARSE_ERROR_PAREN();
+  return NULL;
 }
 
 ASTNode* parse_block(const Tokens* tokens, size_t* index) {

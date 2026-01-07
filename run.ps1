@@ -16,6 +16,8 @@ gcc lexic/tokenizer.c `
     syntax/parse_expr.c `
     syntax/parse_error.c `
     syntax/astprint.c `
+    semantic/semantic.c `
+    semantic/analyze.c `
     -o main.exe
 
 if ($LASTEXITCODE -ne 0) {

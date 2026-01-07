@@ -228,6 +228,8 @@ char* print_ast_type_node(ASTNodeType type) {
       return "INCREMENT";
     case AST_DEC:
       return "DECREMENT";
+    case AST_EXP:
+      return "EXPRESSION";
     default:
       return "UNKNOWN";
   }
