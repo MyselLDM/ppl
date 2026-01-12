@@ -10,6 +10,7 @@
 void analyze_statement_list(ASTNode* curr);
 void analyze_scope(ASTNode* curr);
 void analyze_declaration(ASTNode* curr);
+void analyze_expression(ASTNode* curr);
 
 void semantic_analyze(ASTNode* root) {
   if (root == NULL) return;
@@ -45,6 +46,18 @@ void analyze_statement_list(ASTNode* curr) {
     case AST_STMT_BLOCK:
       analyze_scope(curr);
       break;
+    case AST_STMT_EXPR:
+    case AST_STMT_ASSIGN:
+    case AST_STMT_PRINT:
+    case AST_STMT_WRITE:
+    case AST_STMT_IF:
+    case AST_STMT_IF_MATCHED:
+    case AST_STMT_IF_UNMATCHED:
+    case AST_STMT_WHILE:
+    case AST_STMT_FOR:
+      // These statements may contain expressions with identifiers
+      analyze_expression(curr);
+      break;
   }
 
   for (int i = 0; i < curr->child_current; i++) {
@@ -62,4 +75,24 @@ void analyze_declaration(ASTNode* curr) {
   }
 
   DEBUG_PRINT("Declaration: %s\n", identifier);
+}
+
+void analyze_expression(ASTNode* curr) {
+  if (curr == NULL) return;
+
+  // If this node is an identifier, mark it as used
+  if (curr->type == AST_IDENTIFIER) {
+    char* identifier = curr->token->lexeme;
+    if (semantic_symbol_peek(identifier)) {
+      semantic_symbol_mark_used(identifier);
+      DEBUG_PRINT("Variable used: %s", identifier);
+    } else {
+      DEBUG_PRINT("Undeclared variable used: %s", identifier);
+    }
+  }
+
+  // Recursively analyze all child expressions
+  for (int i = 0; i < curr->child_current; i++) {
+    analyze_expression(curr->children[i]);
+  }
 }

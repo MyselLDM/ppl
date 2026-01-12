@@ -34,9 +34,12 @@ void semantic_scope_pop() {
   Scope* curr = parser_semantic_context->current_scope;
   parser_semantic_context->current_scope = curr->parent;
 
-  // free symbols
+  // Check for unused variables and free symbols
   Symbol* sym = curr->symbol_list;
   while (sym) {
+    if (!sym->used) {
+      DEBUG_PRINT("Warning: Unused variable: %s", sym->name);
+    }
     Symbol* next = sym->next;
     free(sym->name);
     free(sym);
@@ -71,8 +74,29 @@ int semantic_symbol_peek(char* name) {
 void semantic_symbol_insert(char* name) {
   Symbol* symbol = malloc(sizeof(Symbol));
   symbol->name = strdup(name);
+  symbol->used = 0;  // Initially not used
   symbol->next = parser_semantic_context->current_scope->symbol_list;
   parser_semantic_context->current_scope->symbol_list = symbol;
 
   DEBUG_PRINT("Symbol inserted: %s", name);
+}
+
+void semantic_symbol_mark_used(char* name) {
+  Scope* curr = parser_semantic_context->current_scope;
+
+  // Scope Traversal
+  while (curr != NULL) {
+    Symbol* curr_symbol = curr->symbol_list;
+
+    // Symbol Traversal
+    while (curr_symbol != NULL) {
+      if (strcmp(curr_symbol->name, name) == 0) {
+        curr_symbol->used = 1;
+        DEBUG_PRINT("Symbol marked as used: %s", name);
+        return;
+      }
+      curr_symbol = curr_symbol->next;
+    }
+    curr = curr->parent;
+  }
 }

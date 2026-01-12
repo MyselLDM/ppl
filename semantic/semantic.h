@@ -9,6 +9,7 @@ extern SemanticContext* parser_semantic_context;
 
 struct Symbol {
   char* name;
+  int used;  // Track if the variable has been used
   Symbol* next;
 };
 
@@ -28,5 +29,6 @@ void semantic_scope_push();
 void semantic_scope_pop();
 void semantic_symbol_insert(char* name);
 int semantic_symbol_peek(char* name);
+void semantic_symbol_mark_used(char* name);
 
 #endif
