@@ -1,8 +1,11 @@
-var x = 32;
-var e y = 235;
-char c = 'c';
-int x = 43;
+PROGRAM;
 
-while(x<3) {
-  x++;
+var x = 6;
+
+if(x<4) {
+  if(x == 3){
+    print("its" + (3-2+2));
+  }
+} else {
+  print("no" + 4*x);
 }

@@ -26,7 +26,7 @@ void semantic_scope_push() {
   new_scope->symbol_list = NULL;
 
   parser_semantic_context->current_scope = new_scope;
-  DEBUG_PRINT("Pushed scope");
+  // DEBUG_PRINT("Pushed scope");
   return;
 }
 
@@ -47,7 +47,7 @@ void semantic_scope_pop() {
   }
   free(curr);
 
-  DEBUG_PRINT("Popped scope");
+  //  DEBUG_PRINT("Popped scope");
 }
 
 int semantic_symbol_peek(char* name) {
@@ -60,7 +60,7 @@ int semantic_symbol_peek(char* name) {
     // Symbol Traversal
     while (curr_symbol != NULL) {
       if (strcmp(curr_symbol->name, name) == 0) {
-        DEBUG_PRINT("Symbol found: %s", name);
+        //      DEBUG_PRINT("Symbol found: %s", name);
         return 1;
       };
       curr_symbol = curr_symbol->next;
@@ -78,7 +78,7 @@ void semantic_symbol_insert(char* name) {
   symbol->next = parser_semantic_context->current_scope->symbol_list;
   parser_semantic_context->current_scope->symbol_list = symbol;
 
-  DEBUG_PRINT("Symbol inserted: %s", name);
+  //  DEBUG_PRINT("Symbol inserted: %s", name);
 }
 
 void semantic_symbol_mark_used(char* name) {
@@ -92,7 +92,7 @@ void semantic_symbol_mark_used(char* name) {
     while (curr_symbol != NULL) {
       if (strcmp(curr_symbol->name, name) == 0) {
         curr_symbol->used = 1;
-        DEBUG_PRINT("Symbol marked as used: %s", name);
+        //       DEBUG_PRINT("Symbol marked as used: %s", name);
         return;
       }
       curr_symbol = curr_symbol->next;

@@ -4,6 +4,7 @@
 
 #include "global/debug_print.h"
 // #include "legacy_code/tokenizer.h"
+#include "interpreter/interpret_stmt.h"
 #include "lexic/scanner.h"
 #include "lexic/tokenizer.h"
 #include "semantic/analyze.h"
@@ -46,6 +47,8 @@ int main(int argc, char* argv[]) {
   ast_print_root(ast_root);
 
   semantic_analyze(ast_root);
+
+  interpret(ast_root);
 
   debug_close();
 

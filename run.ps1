@@ -18,6 +18,9 @@ gcc lexic/tokenizer.c `
     syntax/astprint.c `
     semantic/semantic.c `
     semantic/analyze.c `
+    interpreter/interpret_stmt.c `
+    interpreter/struct.c `
+    interpreter/interpret_expr.c `
     -o main.exe
 
 if ($LASTEXITCODE -ne 0) {
